@@ -15,7 +15,6 @@
         회원가입
       </h2>
       <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
-        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <div class="mt-8">
           <div class="id mt-5">
             <label class="inline-block mb-2">아이디</label>
@@ -89,6 +88,6 @@
   </div>
 </div>
 <script src="/js/jquery-3.7.0.min.js"></script>
-<script src="/js/sendEmail.js"></script>
+<script src="/js/signup_check_func.js"></script>
 </body>
 </html>

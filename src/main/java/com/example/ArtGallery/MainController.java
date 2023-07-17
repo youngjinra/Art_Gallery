@@ -12,19 +12,9 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/user/login")
-    public String login(){
-        return "login_form";
-    }
-
     @GetMapping("/user/logout")
     public String logout(){
         return "/";
-    }
-
-    @GetMapping("/user/signup")
-    public String signup(){
-        return "signup_form";
     }
 
     @GetMapping("/user/detail_form")
