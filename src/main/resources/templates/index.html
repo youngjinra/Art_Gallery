@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/index.css">
+  <meta charset="UTF-8">
+  <title>메인페이지</title>
+</head>
+<body>
+<!-- Top View -->
+<div class="main_top">
+  <div class="top-bar-bg"></div>
+  <div class="menu container">
+    <div class="logo_box flex gap-4">
+      <a href="/" class="logo">ArtGallery</a>
+      <form class="search small-search-bar flex gap-3">
+        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <input type="text" name="search" placeholder="검색어를 입력하세요">
+      </form>
+    </div>
+    <div class="flex flex-grow"></div>
+    <div class="flex gap-3 side_menu">
+      <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
+        로그인
+      </a>
+      <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}" class="sign-in">
+        로그아웃
+      </a>
+      <a th:href="@{/user/signup}" class="sign-up">
+        가입
+      </a>
+      <a href="/user/detail_form" class="member_thumbnail">
+        <img src="https://picsum.photos/300/300" alt="">
+      </a>
+      <a href="/upload" class="upload gap-2 bg-green-500">
+        <div>
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        </div>
+        <span>
+          업로드
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="search-wrapper">
+    <span class="big">놀라운 아트갤러리</span>
+    <span class="small">재능 있는 크리에이터들이 공유하는 최고의 사진과 작품들입니다.</span>
+    <form class="search search-bar flex gap-3 mt-6">
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <input type="text" name="search" placeholder="검색어를 입력하세요">
+    </form>
+  </div>
+</div>
+
+<!-- slide -->
+<div class="slide container mx-auto mt-12">
+  <div class="slide-text">
+    <span class="slide-text_sm">Explore</span>
+    <span class="slide-text_bd">Topics</span>
+  </div>
+  <div class="swiper slide-1">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">ai Art</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e62808d8-bcb0-43b7-8b1e-0535d71ff9b0/dfog2ot-c33a16c6-6aa4-477d-90ba-ec711920517b.jpg/v1/fill/w_300,h_200,q_70,strp/demeisen_flowers_589e6f320037_by_fractaliciousai_dfog2ot-200h.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODU0IiwicGF0aCI6IlwvZlwvZTYyODA4ZDgtYmNiMC00M2I3LThiMWUtMDUzNWQ3MWZmOWIwXC9kZm9nMm90LWMzM2ExNmM2LTZhYTQtNDc3ZC05MGJhLWVjNzExOTIwNTE3Yi5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.5yaQ4CN3e4muqGnaBDJmIVDxYvYqMLNZhsYhukJ3sFs" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">digital Art</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4ef8149f-d1c8-484e-9c56-83dda099a9c5/dfw1vw4-9c206aa8-6515-4805-bd0e-56a6cc5ab53e.jpg/v1/fill/w_280,h_200,q_70,strp/home_by_apetruk_dfw1vw4-200h.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTE1IiwicGF0aCI6IlwvZlwvNGVmODE0OWYtZDFjOC00ODRlLTljNTYtODNkZGEwOTlhOWM1XC9kZncxdnc0LTljMjA2YWE4LTY1MTUtNDgwNS1iZDBlLTU2YTZjYzVhYjUzZS5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.R52QU9s3VTFWT0KQQbP5LRA2jPQxEwJ_p_3RUNoL5q4" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">fan Art</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/bcdbac5b-cdc4-410e-8020-c863a7210f66/desjf2j-94cd470e-918b-4221-9efe-48ff7aa8bd04.jpg/v1/fill/w_300,h_146,q_70,strp/flee_puny_mortals_fleeeee__by_neytirix_desjf2j-200h.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9Nzc5IiwicGF0aCI6IlwvZlwvYmNkYmFjNWItY2RjNC00MTBlLTgwMjAtYzg2M2E3MjEwZjY2XC9kZXNqZjJqLTk0Y2Q0NzBlLTkxOGItNDIyMS05ZWZlLTQ4ZmY3YWE4YmQwNC5qcGciLCJ3aWR0aCI6Ijw9MTYwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.zHzI0JZssd0wjxsFD22l04EVlfOCLJ4ViOf5JT6HmEg" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">photography</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e561dddd-e56c-4cbe-897a-9300a797cdb3/dbhox06-3d02cd69-bae7-4667-896e-6a88c9decaae.jpg/v1/fill/w_300,h_200,q_70,strp/yellow_line_by_burningmonk_dbhox06-200h.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODUzIiwicGF0aCI6IlwvZlwvZTU2MWRkZGQtZTU2Yy00Y2JlLTg5N2EtOTMwMGE3OTdjZGIzXC9kYmhveDA2LTNkMDJjZDY5LWJhZTctNDY2Ny04OTZlLTZhODhjOWRlY2FhZS5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.n57LIMxFHmvGaBezLb0Qq3xqIlXl0yv6lEWGlih59l0" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">fantasy</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0c6e0590-011b-4912-bfe4-9353b6e5dc98/ddn4c9i-8560bfd6-2236-47a5-8bf5-a73b5dc67328.jpg/v1/fill/w_300,h_163,q_70,strp/canal_town_by_eddie_mendoza_ddn4c9i-200h.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTI1IiwicGF0aCI6IlwvZlwvMGM2ZTA1OTAtMDExYi00OTEyLWJmZTQtOTM1M2I2ZTVkYzk4XC9kZG40YzlpLTg1NjBiZmQ2LTIyMzYtNDdhNS04YmY1LWE3M2I1ZGM2NzMyOC5qcGciLCJ3aWR0aCI6Ijw9MTcwMCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.xgGzUkprTYO2Tg4vvz7Ctq56tFR58q4mNxhpoMl_14Y" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">resources</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/dffb56c9-6a0a-4c4d-bb99-0e9c5e55b06b/dffl3pm-cf7727d4-27cb-46d8-b866-402168c05d34.png/v1/fill/w_300,h_150,q_70,strp/minimalistic_v4__black_and_white___6_colors__by_skyeo84_dffl3pm-200h.jpg" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">cosplay</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d8b28cbd-dd5e-4fa3-a815-af81282eee79/df96x12-42adaefc-1256-4b84-9494-32b0d46feb09.jpg/v1/fill/w_300,h_174,q_70,strp/jinx_by_azproduction_df96x12-200h.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzQzIiwicGF0aCI6IlwvZlwvZDhiMjhjYmQtZGQ1ZS00ZmEzLWE4MTUtYWY4MTI4MmVlZTc5XC9kZjk2eDEyLTQyYWRhZWZjLTEyNTYtNGI4NC05NDk0LTMyYjBkNDZmZWIwOS5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.EAuUgNLOTb1FSphWKxpYYWzJY28ehypkoX8p8HyrvKQ" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">3D</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a40f4d8e-6cae-4a15-98d0-a3b3ec8cc098/dg1v787-a6f8b730-844e-41fd-92b9-6fd4e4ca786d.jpg/v1/fill/w_613,h_350,q_70,strp/owl_r29_by_arv07_flex_dg1v787-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzMyIiwicGF0aCI6IlwvZlwvYTQwZjRkOGUtNmNhZS00YTE1LTk4ZDAtYTNiM2VjOGNjMDk4XC9kZzF2Nzg3LWE2ZjhiNzMwLTg0NGUtNDFmZC05MmI5LTZmZDRlNGNhNzg2ZC5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.urIa4wCC1YpF-WgV32nbfvlESU-GMcN6Q88pdsnbkwE" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">fractal</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8b8c30b9-5b27-4a89-8aed-8a67a38385cc/dg1vk3j-c8df2df9-0dd6-4f32-8a27-cc0a804cf1b4.png/v1/fill/w_622,h_350,q_70,strp/feathers_by_jim373_dg1vk3j-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTA4MCIsInBhdGgiOiJcL2ZcLzhiOGMzMGI5LTViMjctNGE4OS04YWVkLThhNjdhMzgzODVjY1wvZGcxdmszai1jOGRmMmRmOS0wZGQ2LTRmMzItOGEyNy1jYzBhODA0Y2YxYjQucG5nIiwid2lkdGgiOiI8PTE5MjAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.Rfx8hkUlVKHjhCz5ABcVI9KF2SOlyUoMGijfZej_hZ0" alt="">
+        </a>
+      </div>
+      <div class="swiper-slide">
+        <a href="/by_topic" class="slide-text_center">emoji</a>
+        <a href="/by_topic">
+          <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7a6ccc82-d10c-4b3e-87e9-30f93e29cd2e/dg1vcdd-e9bc1fa9-4497-4f79-99f8-e697ed53d9b5.jpg/v1/fill/w_272,h_250,q_70,strp/0axscreenshot___chrome_by_aphroditegoddess777_dg1vcdd-250t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9OTkzIiwicGF0aCI6IlwvZlwvN2E2Y2NjODItZDEwYy00YjNlLTg3ZTktMzBmOTNlMjljZDJlXC9kZzF2Y2RkLWU5YmMxZmE5LTQ0OTctNGY3OS05OWY4LWU2OTdlZDUzZDliNS5qcGciLCJ3aWR0aCI6Ijw9MTA4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.lnT25wInB9KqjSgQVOszm6Digr3AFn-a26j6GxU5_0M" alt="">
+        </a>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+<!-- List -->
+<div class="container mx-auto mt-12">
+  <div class="section-1_loading"></div>
+  <div class="section-1_middle-bar flex justify-between">
+    <span class="middle-title">갤러리 모음</span>
+    <select class="form-select">
+      <option value="1" selected>최신순</option>
+      <option value="2">인기순</option>
+      <option value="3">팔로우</option>
+    </select>
+  </div>
+  <section class="section-1">
+    <div class="masonry-grid">
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/200/400" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/600/400" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="insignia absolute">
+          <i class="fa-solid fa-ribbon"></i>
+        </div>
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/400/300" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/300/600" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/1200/800" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/600/300" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/400/600" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/1920/1080" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/400/300" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/600/800" alt="">
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="/js/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/index.js"></script>
+</body>
+</html>

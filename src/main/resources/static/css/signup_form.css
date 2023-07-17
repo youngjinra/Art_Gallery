@@ -1,0 +1,48 @@
+/* 폰트적용 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Plus+Jakarta+Sans:wght@200;400;500;700&display=swap");
+html > body {
+  font-family: "Plus Jakarta Sans", "Noto Sans KR", sans-serif;
+}
+
+/* lib */
+body .bg-green-500 {
+  background-color: #05a081;
+}
+
+/* 커스텀 */
+.wrapper {
+  height: 100vh;
+}
+input {
+  border-width: 1px;
+}
+body label {
+  font-weight: 500;
+}
+/* 회원가입 상단 */
+.WrapperScreen > form {
+  width: 430px;
+}
+
+/* 회원가입 중단 */
+.btn-1,
+.btn-2 {
+  border-color: #05a081;
+  color: #05a081;
+}
+.btn-1:hover,
+.btn-2:hover {
+  color: white;
+  background-color: #05a081;
+}
+.btn-3 {
+  background-color: #05a081;
+}
+.btn-3:hover {
+  background-color: rgb(52, 211, 153);
+}
+.btn-3 > span {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+}

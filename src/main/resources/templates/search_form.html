@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/search_form">
+    <meta charset="UTF-8">
+    <title>검색 페이지</title>
+</head>
+<body>
+<!-- Top View -->
+<div class="main_top">
+  <div class="top-bar-bg"></div>
+  <div class="menu container gap-3">
+    <div class="logo_box flex gap-4">
+      <a href="/" class="logo">ArtGallery</a>
+    </div>
+    <form class="search small-search-bar flex gap-3">
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <input type="text" name="search" placeholder="검색어를 입력하세요">
+    </form>
+    <div class="flex gap-3 side_menu">
+      <a href="/user/login" class="sign-in">
+        로그인
+      </a>
+      <a href="/user/signup" class="sign-up">
+        가입
+      </a>
+      <a href="/user/detail_form" class="member_thumbnail">
+        <img src="https://picsum.photos/300/300" alt="">
+      </a>
+      <a href="/upload" class="upload gap-2 bg-green-500">
+        <div>
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        </div>
+        <span>
+          업로드
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- List -->
+<div class="container mx-auto mt-12">
+  <div class="section-1_loading"></div>
+  <div class="section-1_middle-bar flex justify-between">
+    <div class="middle-title flex gap-2">
+      <span>24</span>
+      <span>고양이</span>
+      <span>검색 결과</span>
+    </div>
+    <select class="form-select">
+      <option value="1" selected>최신순</option>
+      <option value="2">인기순</option>
+      <option value="3">팔로우</option>
+      <option value="4">포인트</option>
+    </select>
+  </div>
+  <section class="section-1">
+    <div class="masonry-grid">
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/200/400" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/600/400" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="insignia absolute">
+          <i class="fa-solid fa-ribbon"></i>
+        </div>
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/400/300" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/300/600" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/1200/800" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/600/300" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/400/600" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/1920/1080" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/400/300" alt="">
+        </a>
+      </div>
+      <div class="grid-item">
+        <div class="img_top_function flex gap-2">
+          <a href="#" class="font-awsome bookmark">
+            <i class="fa-solid fa-bookmark"></i>
+          </a>
+          <a href="#" class="font-awsome heart">
+            <i class="fa-solid fa-heart"></i>
+          </a>
+        </div>
+        <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+          <div class="img_badge">
+            <img src="https://picsum.photos/300/300" alt="">
+          </div>
+          <div class="nName flex items-center">
+            cottonbro studio
+          </div>
+        </a>
+        <a href="/article/details" class="img_box">
+          <img src="https://picsum.photos/600/800" alt="">
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="/js/jquery-3.7.0.min.js"></script>
+<script src="/js/search_form.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

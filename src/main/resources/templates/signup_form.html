@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="/css/signup_form.css">
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+</head>
+<body>
+<div class="wrapper">
+  <div class="flex justify-center items-center h-full">
+    <div class="rounded-lg WrapperScreen">
+      <h2 class="text-2xl font-bold">
+        회원가입
+      </h2>
+      <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+        <div class="mt-8">
+          <div class="id mt-5">
+            <label class="inline-block mb-2">아이디</label>
+            <label class="inline-block mb-2" id="userIdChkTxt"></label>
+            <input th:field="*{username}" name="userIdChk" id="userIdChk" type="text" class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400" placeholder="사용하실 아이디를 입력해주세요.">
+          </div>
+          <div class="id mt-5">
+            <label class="inline-block mb-2">닉네임</label>
+            <label class="inline-block mb-2" id="userNickChkTxt"></label>
+            <input th:field="*{nickname}" name="userNickChk" id="userNickChk" type="text" class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400" placeholder="사용하실 닉네임을 입력해주세요.">
+          </div>
+          <div class="password-box mt-5">
+            <label class="inline-block mb-2">비밀번호</label>
+            <label class="inline-block mb-2" id="mainPwdTxt"></label>
+            <input th:field="*{password1}" name="mainPwd" id="mainPwd" type="password" class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400" placeholder="비밀번호를 입력해주세요">
+            <ul class="mt-2 text-gray-500 text-sm space-y-0.5">
+              <li class="flex space-x-2 items-center">
+                <span class="inline-block ml-1 bg-gray-500 rounded-full" style="width: 6px; height: 6px;"></span>
+                <p class="text-xs">10자 이상 입력</p>
+              </li>
+              <li class="flex space-x-2 items-center">
+                <span class="inline-block ml-1 bg-gray-500 rounded-full" style="width: 6px; height: 6px;"></span>
+                <p class="text-xs">영문/숫자/특수문자 중 2개 이상 포함</p>
+              </li>
+              <li class="flex space-x-2 items-center">
+                <span class="inline-block ml-1 bg-gray-500 rounded-full" style="width: 6px; height: 6px;"></span>
+                <p class="text-xs">동일한 숫자 3개 이상 연속 사용 불가</p>
+              </li>
+            </ul>
+            <label class="inline-block mb-2 mt-5">비밀번호 확인</label>
+            <label class="inline-block mb-2 mt-5" id="pwdChkTxt"></label>
+            <input th:field="*{password2}" name="pwdChk" id="pwdChk" type="password" class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400" placeholder="비밀번호를 다시 한 번 입력해주세요">
+          </div>
+          <div class="email mt-5">
+            <label class="inline-block mb-2">e-mail</label>
+            <label class="inline-block mb-2" for="memail" id="mailTxt"></label>
+            <div class="flex space-x-2">
+              <div class="w-full">
+                <input th:field="*{email}" name="memail" id="memail" type="email" class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400" placeholder="e-mail 주소를 입력해주세요.">
+              </div>
+              <button type="button" class="btn-1 flex-shrink-0 py-3 px-4
+                                           border rounded-lg
+                                           flex items-center
+                                           justify-center mb-3" id="checkEmail">
+                <span class="text-sm font-semibold">인증코드 보내기</span>
+              </button>
+            </div>
+            <div class="flex space-x-2 mt-2">
+              <div class="relative">
+                <input type="text" placeholder="인증코드를 입력해주세요." id="memailconfirm" disabled class="border-gray-400 placeholder-gray-400 block rounded-lg py-3 px-4 text-sm">
+              </div>
+              <button type="button" class="btn-2 flex-shrink-0 py-3 px-4
+                                           border rounded-lg
+                                           flex items-center
+                                           justify-center mb-3" id="memailcodeChk">
+                <span class="text-sm font-semibold">인증 코드 확인</span>
+              </button>
+            </div>
+            <label style="display: block;" for="memailconfirm" id="memailconfirmTxt"></label>
+          </div>
+          <div class="mt-8">
+            <button class="btn-3 flex justify-center py-3 items-center w-full rounded-lg" id="signupFin" disabled>
+              <span class="text-white">
+                확인
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/js/jquery-3.7.0.min.js"></script>
+<script src="/js/sendEmail.js"></script>
+</body>
+</html>

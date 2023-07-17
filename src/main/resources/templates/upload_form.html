@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/upload_form.css">
+    <meta charset="UTF-8">
+    <title>업로드 페이지</title>
+</head>
+<body>
+<!-- Top View -->
+<div class="main_top">
+  <div class="top-bar-bg"></div>
+  <div class="menu container gap-3">
+    <div class="logo_box flex gap-4">
+      <a href="/" class="logo">ArtGallery</a>
+    </div>
+    <form class="search small-search-bar flex gap-3">
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <input type="text" name="search" placeholder="검색어를 입력하세요">
+    </form>
+    <div class="flex gap-3 side_menu">
+      <a href="/user/login" class="sign-in">
+        로그인
+      </a>
+      <a href="/user/signup" class="sign-up">
+        가입
+      </a>
+      <a href="/user/detail_form" class="member_thumbnail">
+        <img src="https://picsum.photos/300/300" alt="">
+      </a>
+      <a href="/upload" class="upload gap-2 bg-green-500">
+        <div>
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+          <span>
+          업로드
+        </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Uploading1 -->
+<div class="container upload-wrapper mt-12 mx-auto">
+  <div class="upload_box">
+    <div class="pictures flex">
+      <i class="fa-regular fa-image one"></i>
+      <i class="fa-regular fa-image two"></i>
+      <i class="fa-regular fa-image three"></i>
+    </div>
+    <div class="text">
+      <span><b>끌어다</b> 놓아 <b>업로드</b> 하기</span>
+    </div>
+    <div class="search_btn bg-green-500 text-white">
+      <span>찾아보기</span>
+    </div>
+    <div class="remain">
+      <span>(오늘의 잔여 <b class="text-green-500">업로드 항목 수는 10개</b> 입니다.)</span>
+    </div>
+  </div>
+  <div class="flex terms">
+    <div class="ptc flex-1 flex gap-2 items-center justify-center">
+      <i class="fa-solid fa-circle-check"></i>
+      <span><b>원본</b> 컨텐츠</span>
+    </div>
+    <div class="ptc flex-1 flex gap-2 items-center justify-center">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>다른 사용자의 <b>권리</b> 명심하기</span>
+    </div>
+    <div class="ptc flex-1 flex gap-2 items-center justify-center">
+      <i class="fa-solid fa-circle-check"></i>
+      <span><b>고품질</b> 사진 및 그림</span>
+    </div>
+    <div class="ptc flex-1 flex gap-2 items-center justify-center">
+      <i class="fa-solid fa-circle-check"></i>
+      <span> 선정적, 폭력적, 혐오를 포함한 그래픽 <b>제외</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- Uploading2 -->
+<div class="upload-wrapper-2 mt-12 hidden">
+  <div class="container specific-wrapper flex gap-14 flex-grow">
+    <div class="specific_upload_box flex-grow flex">
+      <div class="img_box flex flex-1">
+        <img src="https://picsum.photos/1920/1080" alt="">
+      </div>
+      <div class="input_box flex flex-1 flex-col gap-4">
+        <div class="particle p0 flex flex-col">
+          <label for="">제목 <span class="text-sm">(선택사항)</span></label>
+          <input type="text" placeholder="제목을 입력하세요" class="w-11/12 p-2">
+        </div>
+        <div class="particle p0-1 flex flex-col gap-1">
+          <label for="">내용 <span class="text-sm">(선택사항)</span></label>
+          <textarea name="" id="" placeholder="내용을 입력하세요" class="w-11/12 p-2"></textarea>
+        </div>
+        <div class="particle p1 flex flex-col">
+          <label for="">카테고리</label>
+          <select name="" id="" class="w-11/12 p-2">
+            <option value="1" selected>Ai Art</option>
+            <option value="2">Digital Art</option>
+            <option value="3">Fan Art</option>
+            <option value="4">Photography</option>
+            <option value="5">Fantasy</option>
+            <option value="6">Resources</option>
+            <option value="7">Cosplay</option>
+            <option value="8">3D</option>
+            <option value="9">Fractal</option>
+            <option value="10">Emoji</option>
+          </select>
+        </div>
+        <div class="particle p2 flex flex-col">
+          <label for="">해쉬태그 <span class="text-sm">(최소 3개, 최대 8개)</span></label>
+          <input type="text" placeholder="해쉬태그를 입력하세요" class="w-11/12 p-2">
+        </div>
+        <div class="particle p3 flex gap-2 flex-wrap">
+          <div class="tag tag1 flex gap-1">#바다 <span><i class="fa-solid fa-xmark"></i></span></div>
+          <div class="tag tag2 flex gap-1">#하늘 <span><i class="fa-solid fa-xmark"></i></span></div>
+          <div class="tag tag3 flex gap-1">#밤 <span><i class="fa-solid fa-xmark"></i></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="trash flex items-center">
+      <i class="fa-solid fa-trash"></i>
+    </div>
+  </div>
+  <div class="submit_content_bar_wrapper">
+    <div class="submit_content_bar flex container">
+      <div class="content_left flex justfy-center items-center gap-2">
+        <div class="circle"></div>
+        <div class="text_box">
+          <span class="text-green-500">콘텐츠 업로드 성공</span>
+        </div>
+      </div>
+      <button>콘텐츠 제출하기</button>
+    </div>
+  </div>
+</div>
+<script src="/js/jquery-3.7.0.min.js"></script>
+<script src="/js/upload_form.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/article_details_form.css">
+    <meta charset="UTF-8">
+    <title>게시물 상세페이지</title>
+</head>
+<body>
+<!-- Top View -->
+<div class="main_top">
+    <div class="top-bar-bg"></div>
+    <div class="menu container gap-3">
+        <div class="logo_box flex gap-4">
+            <a href="/" class="logo">ArtGallery</a>
+        </div>
+        <form class="search small-search-bar flex gap-3">
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="text" name="search" placeholder="검색어를 입력하세요">
+        </form>
+        <div class="flex gap-3 side_menu">
+            <a href="/user/login" class="sign-in">
+                로그인
+            </a>
+            <a href="/user/signup" class="sign-up">
+                가입
+            </a>
+            <a href="/user/detail_form" class="member_thumbnail">
+                <img src="https://picsum.photos/300/300" alt="">
+            </a>
+            <a href="/upload" class="upload gap-2 bg-green-500">
+                <div>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </div>
+                <span>
+          업로드
+        </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- main -->
+<div class="main_wrapper flex container">
+    <div class="content flex flex-col">
+        <div class="top_bar flex">
+            <div class="member flex">
+                <a href="/user/detail_form" class="img_box">
+                    <img src="https://picsum.photos/300/300" alt="">
+                </a>
+                <div class="member flex flex-col">
+                    <a href="/user/detail_form" class="nName font-bold">guvo59</a>
+                    <span class="text-xs">1263 followers</span>
+                </div>
+                <a href="#" class="flex items-center gap-2 justify-center add_follow">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span class="body">팔로우</span>
+                </a>
+            </div>
+            <div class="flex-grow"></div>
+            <div class="side_function flex gap-4">
+                <a href="#comment_box_wrapper" class="font-awsome cmt flex items-center gap-2">
+                    <i class="fa-regular fa-message gr-300"></i>
+                    <span>댓글보기</span>
+                </a>
+                <a href="#" class="click font-awsome bookmark flex items-center gap-2">
+                    <i class="fa-regular fa-bookmark gr-300"></i>
+                    <span>저장하기</span>
+                </a>
+                <a href="#" class="click font-awsome heart flex items-center gap-2">
+                    <i class="fa-regular fa-heart gr-300"></i>
+                    <span>좋아요</span>
+                    <span class="heart_count gr-300">44</span>
+                </a>
+                <button class="donwload">무료 다운로드</button>
+            </div>
+        </div>
+        <div class="main_img_box flex items-center justify-center">
+            <img src="https://cdn.pixabay.com/photo/2023/07/05/04/45/european-shorthair-8107433_1280.jpg" alt="">
+        </div>
+    </div>
+    <div class="side_info flex flex-col gap-14">
+        <div class="specific_box flex flex-col">
+            <div class="title">갤러리 세부정보</div>
+            <div class="section_1 flex flex-col gap-3 mt-3">
+                <div class="row row_1 flex">
+                    <div class="view flex-1 flex flex-col gap-1 flex-1">
+                        <i class="fa-solid fa-eye"></i>
+                        <span class="view_count text-xs font-bold">6,824</span>
+                        <span class="gr-300 text-xs">뷰</span>
+                    </div>
+                    <div class="view flex-1 flex flex-col gap-1 flex-1">
+                        <i class="fa-solid fa-heart"></i>
+                        <span class="view_count text-xs font-bold">6,824</span>
+                        <span class="gr-300 text-xs">좋아요</span>
+                    </div>
+                </div>
+                <div class="row row_2 flex">
+                    <div class="view flex-1 flex flex-col gap-1">
+                        <i class="fa-solid fa-download"></i>
+                        <span class="view_count text-xs font-bold">4,166</span>
+                        <span class="gr-300 text-xs">다운로드</span>
+                    </div>
+                    <div class="view flex-1 flex flex-col gap-1">
+                        <i class="fa-solid fa-bookmark"></i>
+                        <span class="view_count text-xs font-bold">16</span>
+                        <span class="gr-300 text-xs">저장</span>
+                    </div>
+                </div>
+            </div>
+            <div class="create_date text-xs gr-300 mt-4">
+                게시일: 2023년 7월 7일
+            </div>
+        </div>
+        <div class="tag_box">
+            <div class="title">태그</div>
+            <div class="tag_box_body flex gap-2 mt-2">
+                <span>유러피언 숏헤어</span>
+                <span>고양이</span>
+                <span>주방</span>
+                <span>젊은</span>
+                <span>동물</span>
+                <span>고양이 같은</span>
+                <span>애완동물</span>
+                <span>털</span>
+            </div>
+        </div>
+        <div class="bottom_content flex flex-col gap-3">
+            <div class="subject flex flex-col gap-1">
+                <span class="title">제목</span>
+                <span class="gr-300">아기 고양이</span>
+            </div>
+            <div class="content_sm flex flex-col gap-1">
+                <span class="title">내용</span>
+                <span class="gr-300">4개월 아기 고양이 </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- side_info_2 -->
+<div class="side_info_2 flex flex-col px-52 hidden">
+    <div class="flex gap-28">
+        <div class="bottom_content flex flex-col gap-3">
+            <div class="subject flex flex-col gap-1">
+                <span class="title">제목</span>
+                <span class="gr-300">아기 고양이</span>
+            </div>
+            <div class="content_sm flex flex-col gap-1">
+                <span class="title">내용</span>
+                <span class="gr-300">4개월 아기 고양이 </span>
+            </div>
+        </div>
+        <div class="specific_box flex flex-col">
+            <div class="title">갤러리 세부정보</div>
+            <div class="section_1 flex flex-col gap-3 mt-3">
+                <div class="row row_1 flex">
+                    <div class="view flex-1 flex flex-col gap-1 flex-1">
+                        <i class="fa-solid fa-eye"></i>
+                        <span class="view_count text-xs font-bold">6,824</span>
+                        <span class="gr-300 text-xs">뷰</span>
+                    </div>
+                    <div class="view flex-1 flex flex-col gap-1 flex-1">
+                        <i class="fa-solid fa-heart"></i>
+                        <span class="view_count text-xs font-bold">6,824</span>
+                        <span class="gr-300 text-xs">좋아요</span>
+                    </div>
+                </div>
+                <div class="row row_2 flex">
+                    <div class="view flex-1 flex flex-col gap-1">
+                        <i class="fa-solid fa-download"></i>
+                        <span class="view_count text-xs font-bold">4,166</span>
+                        <span class="gr-300 text-xs">다운로드</span>
+                    </div>
+                    <div class="view flex-1 flex flex-col gap-1">
+                        <i class="fa-solid fa-bookmark"></i>
+                        <span class="view_count text-xs font-bold">16</span>
+                        <span class="gr-300 text-xs">저장</span>
+                    </div>
+                </div>
+            </div>
+            <div class="create_date text-xs gr-300 mt-4">
+                게시일: 2023년 7월 7일
+            </div>
+        </div>
+    </div>
+    <div class="tag_box mt-12">
+        <div class="title">태그</div>
+        <div class="tag_box_body flex gap-2 mt-2">
+            <span>유러피언 숏헤어</span>
+            <span>고양이</span>
+            <span>주방</span>
+            <span>젊은</span>
+            <span>동물</span>
+            <span>고양이 같은</span>
+            <span>애완동물</span>
+            <span>털</span>
+        </div>
+    </div>
+</div>
+
+<!-- img_view -->
+<div class="img_box_wrapper container">
+    <hr class="my-8">
+    <div class="img_box_title flex gap-1">
+        <span>관련 이미지</span>
+        <a href="/search" class="gr-300 plus_btn">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+    </div>
+    <div class="img_view flex mx-auto gap-4 mt-3">
+        <div class="img_box flex-1">
+            <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg" alt="">
+        </div>
+        <div class="img_box flex-1">
+            <img src="https://cdn.pixabay.com/photo/2015/03/27/13/16/maine-coon-694730_640.jpg" alt="">
+        </div>
+        <div class="img_box flex-1">
+            <img src="https://cdn.pixabay.com/photo/2015/11/16/14/43/cat-1045782_640.jpg" alt="">
+        </div>
+        <div class="img_box flex-1">
+            <img src="https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_640.jpg" alt="">
+        </div>
+    </div>
+</div>
+
+<!-- comments -->
+<div class="comment_box_wrapper container mt-16" id="comment_box_wrapper">
+    <div class="comment_top_bar flex justify-between items-center">
+        <div class="comment_top_bar_text flex gap-3">
+            <span>댓글 모음</span>
+            <span class="gr-300 comment_count">2</span>
+        </div>
+        <select class="form-select">
+            <option value="1" selected>최신순</option>
+            <option value="2">오래된순</option>
+            <option value="3">좋아요순</option>
+        </select>
+    </div>
+    <div class="comment_body flex flex-col gap-4">
+        <div class="comment_body_form_wrapper flex gap-4 mt-4 mb-4">
+            <a href="/user/detail_form" class="img_box">
+                <img src="https://picsum.photos/300/300" alt="">
+            </a>
+            <form class="flex flex-col w-full">
+                <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
+                <div class="comment_body_registration flex">
+                    <input type="submit" value="댓글 등록">
+                </div>
+            </form>
+        </div>
+        <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
+            <div class="particle flex gap-4">
+                <a href="/user/detail_form" class="img_box">
+                    <img src="https://picsum.photos/300/300" alt="">
+                </a>
+                <div class="regi_wrapper_body flex flex-col gap-3">
+                    <div class="member-info flex gap-3 justify-between items-center">
+                        <span class="font-bold">lilac</span>
+                        <div class="date_representation gr-300 text-xs flex gap-3">
+                            <span>수정된 날짜</span>
+                            <span class="whitespace-pre">2023-07-14 18:40</span>
+                        </div>
+                    </div>
+                    <div class="writing">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum, perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis alias reprehenderit inventore molestiae.
+                        Nesciunt beatae velit rerum quisquam, nemo possimus reiciendis dolore excepturi libero laborum veritatis tempore molestiae, quos incidunt. Possimus magnam voluptatibus soluta asperiores similique nostrum assumenda quisquam. Laboriosam veritatis suscipit repellat.
+                    </div>
+                    <div class="additional flex gap-3">
+                        <div class="reply flex gr-300">
+                            <i class="fa-regular fa-message"></i>
+                            <span>Reply</span>
+                        </div>
+                        <div class="heart gr-300">
+                            <i class="fa-regular fa-heart self-center heart_1"></i>
+                            <i class="fa-solid fa-heart heart_2 hidden"></i>
+                        </div>
+                    </div>
+                    <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
+                        <a href="/user/detail_form" class="img_box">
+                            <img src="https://picsum.photos/300/300" alt="">
+                        </a>
+                        <form class="flex flex-col w-full">
+                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
+                            <div class="comment_body_registration flex">
+                                <input type="submit" value="답글 등록">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
+            <div class="particle flex gap-4">
+                <a href="/user/detail_form" class="img_box">
+                    <img src="https://picsum.photos/300/300" alt="">
+                </a>
+                <div class="regi_wrapper_body flex flex-col gap-3">
+                    <div class="member-info flex gap-3 justify-between items-center">
+                        <span class="font-bold">lilac</span>
+                        <div class="date_representation gr-300 text-xs flex gap-3">
+                            <span>등록 날짜</span>
+                            <span class="whitespace-pre">2023-07-12 12:15</span>
+                        </div>
+                    </div>
+                    <div class="writing">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum, perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis alias reprehenderit inventore molestiae.
+                    </div>
+                    <div class="additional flex gap-3">
+                        <div class="reply flex gr-300">
+                            <i class="fa-regular fa-message"></i>
+                            <span>Reply</span>
+                        </div>
+                        <div class="heart gr-300">
+                            <i class="fa-regular fa-heart self-center heart_1"></i>
+                            <i class="fa-solid fa-heart heart_2 hidden"></i>
+                        </div>
+                    </div>
+                    <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
+                        <a href="/user/detail_form" class="img_box">
+                            <img src="https://picsum.photos/300/300" alt="">
+                        </a>
+                        <form class="flex flex-col w-full">
+                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
+                            <div class="comment_body_registration flex">
+                                <input type="submit" value="답글 등록">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/jquery-3.7.0.min.js"></script>
+<script src="/js/article_details_form.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
