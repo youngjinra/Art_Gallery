@@ -1,4 +1,3 @@
-// 이메일 인증번호
 
 var idCheck = false;
 var nickCheck = false;

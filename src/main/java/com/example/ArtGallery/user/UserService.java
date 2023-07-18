@@ -76,4 +76,10 @@ public class UserService {
         return userEntity.get();
     }
 
+    // 유저 닉네임 변경
+    public void nickModify(UserEntity userEntity, String nickname){
+        userEntity.setNickname(nickname);
+        this.userRepository.save(userEntity);
+    }
+
 }

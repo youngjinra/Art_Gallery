@@ -30,7 +30,7 @@ public class MailController {
         return isIdExist ? "exist" : "available"; // ajax에 처리된 데이터를 "exist" 또는 "available" 문자열로 반환
     }
 
-    @PostMapping("/user/signup/checknickname")
+    @PostMapping("/user/signup/checknickname")  // 닉네임 중복검사
     @ResponseBody
     public String checkNick(@RequestParam("id") String id){
         boolean isNickExist = userService.checkNicknameExists(id);
