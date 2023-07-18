@@ -7,19 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @GetMapping("/")
-    public String root(){
-        return "index";
-    }
-
     @GetMapping("/user/logout")
     public String logout(){
         return "/";
-    }
-
-    @GetMapping("/user/detail_form")
-    public String userdetail(){
-        return "user_detail_form";
     }
 
     @GetMapping("/article/details")
@@ -36,11 +26,5 @@ public class MainController {
     public String pagesByTopic(){
         return "pages_by_topic";
     }
-
-    @GetMapping("/upload")
-    public String fileupload(){
-        return "upload_form";
-    }
-
 
 }

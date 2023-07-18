@@ -31,7 +31,7 @@
             <a th:href="@{/user/signup}" class="sign-up">
                 가입
             </a>
-            <a href="/user/detail_form" class="member_thumbnail">
+            <a th:href="@{|/user/detail_form/${userEntity.nickname}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
             <a href="/upload" class="upload gap-2 bg-green-500">
@@ -51,7 +51,8 @@
             <img src="https://cdn.pixabay.com/user/2021/03/13/05-49-15-380_96x96.jpeg" alt="">
         </div>
         <div class="nname flex mt-3">
-            <span class="flex-1 flex justify-center">Alvares</span>
+            <span class="flex-1 flex justify-center" th:text="${userEntity.nickname}"></span>
+<!--            <span class="flex-1 flex justify-center">로그인도 안한 유저 테스트</span>-->
         </div>
         <div class="follow flex gap-2 mt-4">
             <div class="flex flex-1 justify-center gap-2">
@@ -76,7 +77,8 @@
                 <span class="head">뷰</span>
                 <span class="body">30K</span>
             </div>
-            <div class="flex flex-col flex-1 items-center point">
+            <!-- th:if 조건을 걸어주어 해당 조건을 통해 출력여부 설정 -->
+            <div sec:authorize="isAuthenticated()" th:if="${isCurrentUser}" class="flex flex-col flex-1 items-center point">
                 <span class="head">포인트</span>
                 <span class="body">2000p</span>
             </div>

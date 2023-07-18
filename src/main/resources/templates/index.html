@@ -32,7 +32,7 @@
       <a th:href="@{/user/signup}" class="sign-up">
         가입
       </a>
-      <a href="/user/detail_form" class="member_thumbnail">
+      <a th:href="@{|/user/detail_form/${userEntity.nickname}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
         <img src="https://picsum.photos/300/300" alt="">
       </a>
       <a href="/upload" class="upload gap-2 bg-green-500">

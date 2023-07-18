@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 	// 닉네임 부분
 	$("#userNickChk").on("keyup", function () {  // 닉네임 입력칸에 입력할 순간순간 이벤트
-    		var regExp = /^[a-z]+[a-z0-9]{1,20}$/g;
+            var regExp = /^[a-zA-Z가-힣][a-zA-Z0-9가-힣]{1,19}$/;
     		var userId = $("#userNickChk").val();
 
     		if (!regExp.test($("#userNickChk").val())) {  // 닉네임 공백인 경우 체크

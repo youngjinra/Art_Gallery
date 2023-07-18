@@ -44,4 +44,36 @@ public class UserService {
         Optional<UserEntity> existingUser = userRepository.findByEmail(email);
         return existingUser.isPresent();
     }
+
+    public UserEntity getUser(int id){
+        Optional<UserEntity> user = this.userRepository.findById(id);
+        return user.get();
+    }
+
+    // 컨트롤러에서 Nickname을 사용하기 위한 메소드
+    // local 로그인한 유저 전용
+    public String getLocalUserNickname(String username){
+        Optional<UserEntity> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            return user.getNickname();
+        }
+        return null;
+    }
+    // 소셜 로그인한 유저 전용
+    public String getSocialUserNickname(String email) {
+        Optional<UserEntity> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            return user.getNickname();
+        }
+        return null;
+    }
+
+    // 닉네임으로 체크해 해당유저객체 반환
+    public UserEntity getUserNick(String nickname) {
+        Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
+        return userEntity.get();
+    }
+
 }
