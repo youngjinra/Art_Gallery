@@ -1,6 +1,8 @@
 # gallary_sample
 
 07_17 : 완성한 템플릿에 로그인 회원가입 > DB에 유저들 데이터 추가 완료
-properties-secure 에 API 주요 보안부분 따로 분리해둠
+application-secure 에 API 주요 보안부분 따로 분리해둠
+회원가입시 비밀번호 적혀있는 조건에 맞게 입력해야 confirm되도록 수정완료
+닉네임 입력 부분 한글도 입력될 수 있게 수정완료
 
 07_18 : 진행중
