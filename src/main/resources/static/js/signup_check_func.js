@@ -116,7 +116,7 @@ $(document).ready(function () {
 
     // 비밀번호 부분
 	$("#mainPwd").on("keyup", function () {
-		var regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+        var regExp = /^(?=.*[A-Za-z])(?=.*\d|.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/;
 
 		if (!regExp.test($("#mainPwd").val())) {  // 패스워드 형식 확인
 			pwdCheck = false;
