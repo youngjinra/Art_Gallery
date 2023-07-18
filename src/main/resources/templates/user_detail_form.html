@@ -53,6 +53,7 @@
         <div class="nname flex mt-3">
             <span class="flex-1 flex justify-center" th:text="${userEntity.nickname}"></span>
 <!--            <span class="flex-1 flex justify-center">로그인도 안한 유저 테스트</span>-->
+            <a href="/user/nickname_change_form" sec:authorize="isAuthenticated()" th:if="${isCurrentUser}">닉네임 변경</a>
         </div>
         <div class="follow flex gap-2 mt-4">
             <div class="flex flex-1 justify-center gap-2">

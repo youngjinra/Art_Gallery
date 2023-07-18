@@ -41,7 +41,6 @@ public class UserController {
         return "login_form";
     }
 
-//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user/detail_form/{nickname}")
     public String userdetail(Model model, @PathVariable("nickname") String nickname, Authentication authentication){
 
@@ -128,5 +127,10 @@ public class UserController {
         UserEntity userEntity = userService.getUserNick(nickname);
         model.addAttribute("userEntity", userEntity);
         return "index";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
+    }
+
+    @GetMapping("/user/nickname_change_form")
+    public String nickchange(){
+        return "nick_change_form";
     }
 }
