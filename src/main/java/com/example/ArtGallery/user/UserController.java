@@ -66,6 +66,7 @@ public class UserController {
 
     @GetMapping("/")
     public String usernav(Model model, Authentication authentication) {
+
         // 인증된 사용자의 nickname 가져오기
         String nicknameConfirm = null;
         String userEmail = null;
@@ -73,14 +74,17 @@ public class UserController {
             // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
 
+            // 해당 nickname을 사용하여 유저 정보 가져오기
+            UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+            model.addAttribute("userEntity", userEntity);
+            return "index";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
+
         } else {
+
             return "index";
+
         }
 
-        // 해당 nickname을 사용하여 유저 정보 가져오기
-        UserEntity userEntity = userService.getUserNick(nicknameConfirm);
-        model.addAttribute("userEntity", userEntity);
-        return "index";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
     }
 
     @GetMapping("/user/nickname_change_form")
