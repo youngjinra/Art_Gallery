@@ -12,11 +12,6 @@ public class MainController {
         return "/";
     }
 
-    @GetMapping("/article/details")
-    public String articleDetails(){
-        return "article_details_form";
-    }
-
     @GetMapping("/search")
     public String articleSearch(){
         return "search_form";

@@ -81,6 +81,9 @@ public class UserController {
             // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
             model.addAttribute("isCurrentUser", nicknameConfirm.equals(nickname));
 
+            // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
+            model.addAttribute("nicknameConfirm", nicknameConfirm);
+
             UserEntity userEntity = this.userService.getUserNick(nickname);
             model.addAttribute("userEntity", userEntity);
         }
