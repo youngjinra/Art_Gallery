@@ -235,6 +235,40 @@ body .form-select option {
 /* gallery_list */
 .section-1 .grid-item {
   padding: 10px;
+  position: relative;
+}
+.section-1 .grid-item .update_delete_wrap {
+  position: absolute;
+  bottom: 18px;
+  right: 20px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  display: none;
+}
+.section-1 .grid-item:hover .update_delete_wrap {
+  display: block;
+}
+.section-1 .grid-item .update_delete_wrap > i {
+  padding: 0 10px;
+}
+.section-1 .grid-item:hover .update_delete_wrap > i:hover {
+  color: rgb(52, 211, 153);
+}
+.section-1 .grid-item .update_delete_wrap .update_delete {
+  position: absolute;
+  left: -43%;
+  display: flex;
+  top: -260%;
+  background-color: rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(2px);
+  padding: 14px 10px;
+  border-radius: 6px;
+  font-weight: 300;
+  display: none;
+}
+.section-1 .grid-item:hover .update_delete_wrap .update_delete > *:hover {
+  color: rgb(52, 211, 153);
 }
 .section-1 .grid-item .insignia {
   z-index: 1;

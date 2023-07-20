@@ -28,7 +28,7 @@
             <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}" class="sign-in">
                 로그아웃
             </a>
-            <a th:href="@{/user/signup}" class="sign-up">
+            <a sec:authorize="isAnonymous()" th:href="@{/user/signup}" class="sign-up">
                 가입
             </a>
             <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">

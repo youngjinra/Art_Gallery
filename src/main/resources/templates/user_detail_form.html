@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -28,7 +28,7 @@
             <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}" class="sign-in">
                 로그아웃
             </a>
-            <a th:href="@{/user/signup}" class="sign-up">
+            <a sec:authorize="isAnonymous()" th:href="@{/user/signup}" class="sign-up">
                 가입
             </a>
             <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
@@ -52,7 +52,7 @@
         </div>
         <div class="nname flex mt-3">
             <span class="flex-1 flex justify-center" th:text="${userEntity.nickname}"></span>
-<!--            <span class="flex-1 flex justify-center">로그인도 안한 유저 테스트</span>-->
+            <!--            <span class="flex-1 flex justify-center">로그인도 안한 유저 테스트</span>-->
 
         </div>
         <div class="follow flex gap-2 mt-4">
@@ -64,7 +64,7 @@
                 <span class="font-bold" th:text="${userEntity.following}"></span>
                 <span class="body">팔로잉</span>
             </div>
-<!--        본인의 계정이면 '팔로우' 대신 '닉네임 변경' 출력, 다른 유저의 계정이면 '닉네임 변경' 대신 '팔로우' 출력 -->
+            <!--        본인의 계정이면 '팔로우' 대신 '닉네임 변경' 출력, 다른 유저의 계정이면 '닉네임 변경' 대신 '팔로우' 출력 -->
             <a href="/user/nickname_change_form" sec:authorize="isAuthenticated()" th:if="${isCurrentUser}" class="flex flex-1 items-center gap-2 justify-center add_follow">
                 <span class="body">닉네임 변경</span>
             </a>
@@ -120,7 +120,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -128,9 +128,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/200/400" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -141,7 +154,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -149,13 +162,26 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/600/400" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-4 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
-                <div class="insignia absolute">
-                    <i class="fa-solid fa-ribbon"></i>
+                <div class="insignia absolute px-1">
+                    <i class="fa-brands fa-envira"></i>
                 </div>
                 <div class="img_top_function flex gap-2">
                     <a href="#" class="font-awsome bookmark">
@@ -165,7 +191,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -173,9 +199,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/400/300" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -186,7 +225,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -194,9 +233,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/300/600" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -207,7 +259,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -215,9 +267,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/1200/800" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -228,7 +293,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -236,9 +301,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/600/300" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -249,7 +327,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -257,9 +335,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/400/600" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -270,7 +361,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -278,9 +369,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/1920/1080" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -291,7 +395,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -299,9 +403,22 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/400/300" alt="">
                 </a>
+                <div class="update_delete_wrap">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>삭제</span>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -312,7 +429,7 @@
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
@@ -320,7 +437,7 @@
                         cottonbro studio
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
+                <a href="https://cdpn.io/pen/debug/MWzQrme" class="img_box">
                     <img src="https://picsum.photos/600/800" alt="">
                 </a>
             </div>
