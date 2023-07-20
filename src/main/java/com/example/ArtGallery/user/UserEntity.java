@@ -34,6 +34,18 @@ public class UserEntity {
 
     private String provider; // Local(로컬유져) kakao(카카오로그인) google(구글로그인) naver(네이버로그인) 4가지로 구분(중요한 구분 요소는 아님)
 
+    private int userpoint; // 각 유저들의 보유 포인트 > 사용처나 적립기능 추후 구현
+
+    private int following; // 해당 유저의 팔로잉 수 > 추후 구현
+
+    private int follower; // 해당 유저의 팔로우 수 > 추후 구현
+
+    private int articlelikes; // 해당 유저가 올린 게시물들의 총 좋아요 받은 수 > 추후 구현
+
+    private int articleviews; // 해당 유저가 올린 게시물들의 총 조회 수 > 추후 구현
+
+    private int usercollection; // 해당 유저가 즐겨찾기 해놓은 게시물 총 개수 > 추후 구현
+
     public String getRoleValue(){
         return this.role.getValue();    // UserRole 클래스에서 Value속성을 활용하기 위함
     }

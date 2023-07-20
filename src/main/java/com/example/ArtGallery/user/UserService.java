@@ -2,9 +2,13 @@ package com.example.ArtGallery.user;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -82,4 +86,33 @@ public class UserService {
         this.userRepository.save(userEntity);
     }
 
+    public String getAuthNickname(String userEmail, String nicknameConfirm, Authentication authentication){
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            // OAuth2 인증 사용자
+            OAuth2AuthenticationToken oAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
+            // nickname 가져오는 로직 추가
+
+            // naver, google은 else 부분 구문들로 email이 추출되었는데, kakao의 email추출 방법이 달라서 if-else로 조건문 하나 더 달아줌 (kakao else naver,google)
+            if (oAuth2AuthenticationToken.getAuthorizedClientRegistrationId().equals("kakao")) {
+                Map<String, Object> attributes = oAuth2AuthenticationToken.getPrincipal().getAttributes();
+                Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+
+                // OAuth2 인증을 통한 사용자는 email값으로 DB 데이터와 비교 후, nickname에 해당 email과 동일한 유저의 nickname을 저장
+                userEmail = (String) kakaoAccount.get("email");
+                nicknameConfirm = getSocialUserNickname(userEmail);
+            } else {
+                // OAuth2 인증을 통한 사용자는 email값으로 DB 데이터와 비교 후, nickname에 해당 email과 동일한 유저의 nickname을 저장
+                userEmail = oAuth2AuthenticationToken.getPrincipal().getAttributes().get("email").toString();
+                nicknameConfirm = getSocialUserNickname(userEmail);
+            }
+        } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
+            // 로컬 인증 사용자
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) authentication;
+            // nickname 가져오는 로직 추가
+            userEmail = usernamePasswordAuthenticationToken.getName();
+            nicknameConfirm = getLocalUserNickname(userEmail);
+        }
+
+        return nicknameConfirm;
+    }
 }
