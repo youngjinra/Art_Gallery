@@ -53,18 +53,22 @@
         <div class="nname flex mt-3">
             <span class="flex-1 flex justify-center" th:text="${userEntity.nickname}"></span>
 <!--            <span class="flex-1 flex justify-center">로그인도 안한 유저 테스트</span>-->
-            <a href="/user/nickname_change_form" sec:authorize="isAuthenticated()" th:if="${isCurrentUser}">닉네임 변경</a>
+
         </div>
         <div class="follow flex gap-2 mt-4">
             <div class="flex flex-1 justify-center gap-2">
-                <span class="font-bold">685</span>
+                <span class="font-bold" th:text="${userEntity.follower}">685</span>
                 <span class="body">팔로워</span>
             </div>
             <div class="flex flex-1 justify-center gap-2">
-                <span class="font-bold">20</span>
+                <span class="font-bold" th:text="${userEntity.following}"></span>
                 <span class="body">팔로잉</span>
             </div>
-            <a href="#" class="flex flex-1 items-center gap-2 justify-center add_follow">
+<!--        본인의 계정이면 '팔로우' 대신 '닉네임 변경' 출력, 다른 유저의 계정이면 '닉네임 변경' 대신 '팔로우' 출력 -->
+            <a href="/user/nickname_change_form" sec:authorize="isAuthenticated()" th:if="${isCurrentUser}" class="flex flex-1 items-center gap-2 justify-center add_follow">
+                <span class="body">닉네임 변경</span>
+            </a>
+            <a href="#" sec:authorize="isAuthenticated()" th:if="${!isCurrentUser}" class="flex flex-1 items-center gap-2 justify-center add_follow">
                 <i class="fa-solid fa-user-plus"></i>
                 <span class="body">팔로우</span>
             </a>
@@ -72,23 +76,23 @@
         <div class="specific_count flex gap-2 mt-4">
             <div class="flex flex-col flex-1 items-center">
                 <span class="head">좋아요</span>
-                <span class="body">8K</span>
+                <span class="body" th:text="${userEntity.articlelikes}"></span>
             </div>
             <div class="flex flex-col flex-1 items-center">
                 <span class="head">뷰</span>
-                <span class="body">30K</span>
+                <span class="body" th:text="${userEntity.articleviews}"></span>
             </div>
             <!-- th:if 조건을 걸어주어 해당 조건을 통해 출력여부 설정 -->
             <div sec:authorize="isAuthenticated()" th:if="${isCurrentUser}" class="flex flex-col flex-1 items-center point">
                 <span class="head">포인트</span>
-                <span class="body">2000p</span>
+                <span class="body" th:text="${userEntity.userpoint}"></span>
             </div>
             <div class="flex flex-col flex-1 items-center collection">
                 <a href="#" class="head flex gap-2 items-center">
                     <i class="fa-solid fa-bookmark"></i>
                     <span>컬렉션</span>
                 </a>
-                <span class="body">102</span>
+                <span class="body" th:text="${userEntity.usercollection}"></span>
             </div>
         </div>
     </div>

@@ -56,4 +56,38 @@ public class ArticleController {
 
         return "article_details_form";
     }
+
+    @GetMapping("/by_topic")
+    public String bytopic(Model model, Authentication authentication){
+
+        String nicknameConfirm = null;
+        String userEmail = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
+            nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
+
+        }
+
+        // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
+        model.addAttribute("nicknameConfirm", nicknameConfirm);
+
+        return "pages_by_topic";
+    }
+
+    @GetMapping("/search")
+    public String searchform(Model model, Authentication authentication){
+
+        String nicknameConfirm = null;
+        String userEmail = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
+            nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
+
+        }
+
+        // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
+        model.addAttribute("nicknameConfirm", nicknameConfirm);
+
+        return "search_form";
+    }
 }
