@@ -32,10 +32,23 @@ function side_info_2_click() {
   });
 }
 
+function delete_function() {
+  $(".delete_btn").click(function () {
+    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+
+    if (confirmDelete) {
+      alert("삭제되었습니다.");
+      // 현재 페이지로 이동 (리다이렉션)
+      window.location.href = "https://cdpn.io/pen/debug/bGQogqX";
+    }
+  });
+}
+
 $(function () {
   SideClick__ft();
   textarea_resize();
   additional_heart_ivent();
   replies_box_ivent();
   side_info_2_click();
+  delete_function();
 });
