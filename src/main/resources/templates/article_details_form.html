@@ -15,26 +15,23 @@
     <div class="top-bar-bg"></div>
     <div class="menu container gap-3">
         <div class="logo_box flex gap-4">
-            <a href="/" class="logo">ArtGallery</a>
+            <a href="https://cdpn.io/pen/debug/NWEvxQB" class="logo">ArtGallery</a>
         </div>
         <form class="search small-search-bar flex gap-3">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             <input type="text" name="search" placeholder="검색어를 입력하세요">
         </form>
         <div class="flex gap-3 side_menu">
-            <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
+            <a href="https://cdpn.io/pen/debug/bGQLNGy" class="sign-in">
                 로그인
             </a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}" class="sign-in">
-                로그아웃
-            </a>
-            <a sec:authorize="isAnonymous()" th:href="@{/user/signup}" class="sign-up">
+            <a href="https://cdpn.io/pen/debug/qBQxBZb" class="sign-up">
                 가입
             </a>
-            <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
+            <a href="https://cdpn.io/pen/debug/bGQogqX" class="member_thumbnail">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
-            <a href="/upload" class="upload gap-2 bg-green-500">
+            <a href="https://cdpn.io/pen/debug/oNQoKxM" class="upload gap-2 bg-green-500">
                 <div>
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 </div>
@@ -51,11 +48,11 @@
     <div class="content flex flex-col">
         <div class="top_bar flex">
             <div class="member flex">
-                <a href="/user/detail_form" class="img_box">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
                 <div class="member flex flex-col">
-                    <a href="/user/detail_form" class="nName font-bold">guvo59</a>
+                    <a href="https://cdpn.io/pen/debug/bGQogqX" class="nName font-bold">guvo59</a>
                     <span class="text-xs">1263 followers</span>
                 </div>
                 <a href="#" class="flex items-center gap-2 justify-center add_follow">
@@ -82,6 +79,12 @@
             </div>
         </div>
         <div class="main_img_box flex items-center justify-center">
+            <form action="" class="update_delete flex gap-2 gr-300 text-xl">
+                <a href="https://cdpn.io/pen/debug/oNQoKxM">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <i class="fa-solid fa-trash delete_btn"></i>
+            </form>
             <img src="https://cdn.pixabay.com/photo/2023/07/05/04/45/european-shorthair-8107433_1280.jpg" alt="">
         </div>
     </div>
@@ -119,7 +122,10 @@
             </div>
         </div>
         <div class="tag_box">
-            <div class="title">태그</div>
+            <div class="title flex justify-between">
+                <span>태그</span>
+                <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
+            </div>
             <div class="tag_box_body flex gap-2 mt-2">
                 <span>유러피언 숏헤어</span>
                 <span>고양이</span>
@@ -191,7 +197,10 @@
         </div>
     </div>
     <div class="tag_box mt-12">
-        <div class="title">태그</div>
+        <div class="title flex justify-between">
+            <span>태그</span>
+            <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
+        </div>
         <div class="tag_box_body flex gap-2 mt-2">
             <span>유러피언 숏헤어</span>
             <span>고양이</span>
@@ -210,7 +219,7 @@
     <hr class="my-8">
     <div class="img_box_title flex gap-1">
         <span>관련 이미지</span>
-        <a href="/search" class="gr-300 plus_btn">
+        <a href="https://cdpn.io/pen/debug/PoxRpWy" class="gr-300 plus_btn">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
@@ -245,7 +254,7 @@
     </div>
     <div class="comment_body flex flex-col gap-4">
         <div class="comment_body_form_wrapper flex gap-4 mt-4 mb-4">
-            <a href="/user/detail_form" class="img_box">
+            <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
             <form class="flex flex-col w-full">
@@ -257,7 +266,7 @@
         </div>
         <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
             <div class="particle flex gap-4">
-                <a href="/user/detail_form" class="img_box">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
                 <div class="regi_wrapper_body flex flex-col gap-3">
@@ -283,7 +292,7 @@
                         </div>
                     </div>
                     <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                        <a href="/user/detail_form" class="img_box">
+                        <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                             <img src="https://picsum.photos/300/300" alt="">
                         </a>
                         <form class="flex flex-col w-full">
@@ -298,7 +307,7 @@
         </div>
         <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
             <div class="particle flex gap-4">
-                <a href="/user/detail_form" class="img_box">
+                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
                 <div class="regi_wrapper_body flex flex-col gap-3">
@@ -323,7 +332,7 @@
                         </div>
                     </div>
                     <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                        <a href="/user/detail_form" class="img_box">
+                        <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                             <img src="https://picsum.photos/300/300" alt="">
                         </a>
                         <form class="flex flex-col w-full">
