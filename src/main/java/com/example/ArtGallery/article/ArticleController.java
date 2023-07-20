@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Map;
-
 @Controller
 @RequiredArgsConstructor
 public class ArticleController {
@@ -20,7 +18,7 @@ public class ArticleController {
 
     @GetMapping("/upload")
     @PreAuthorize("isAuthenticated()")
-    public String fileupload(Model model, Authentication authentication){
+    public String uploadnavbar(Model model, Authentication authentication){
 
         // 인증된 사용자의 nickname 가져오기
         String nicknameConfirm = null;
