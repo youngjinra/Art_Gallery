@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class ArticleController {
 
     @GetMapping("/upload")
     @PreAuthorize("isAuthenticated()")
-    public String uploadnavbar(Model model, Authentication authentication){
+    public String uploadnavbar(Model model, Authentication authentication, RedirectAttributes redirectAttributes){
 
         // 인증된 사용자의 nickname 가져오기
         String nicknameConfirm = null;
@@ -34,6 +35,10 @@ public class ArticleController {
         // 해당 nickname을 사용하여 유저 정보 가져오기
         UserEntity userEntity = userService.getUserNick(nicknameConfirm);
         model.addAttribute("userEntity", userEntity);
+
+        // upload 페이지 post요청에 nickname을 사용하기 위해 model추가
+        model.addAttribute("nickname", nicknameConfirm);
+
         return "upload_form";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
 
     }

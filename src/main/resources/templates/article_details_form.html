@@ -22,23 +22,27 @@
             <input type="text" name="search" placeholder="검색어를 입력하세요">
         </form>
         <div class="flex gap-3 side_menu">
-            <a href="https://cdpn.io/pen/debug/bGQLNGy" class="sign-in">
+            <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
                 로그인
             </a>
-            <a href="https://cdpn.io/pen/debug/qBQxBZb" class="sign-up">
+            <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}" class="sign-in">
+                로그아웃
+            </a>
+            <a sec:authorize="isAnonymous()" th:href="@{/user/signup}" class="sign-up">
                 가입
             </a>
-            <a href="https://cdpn.io/pen/debug/bGQogqX" class="member_thumbnail">
+            <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
-            <a href="https://cdpn.io/pen/debug/oNQoKxM" class="upload gap-2 bg-green-500">
+            <a th:href="@{/upload}" class="upload gap-2 bg-green-500">
                 <div>
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                </div>
-                <span>
+                    <span>
           업로드
         </span>
+                </div>
             </a>
+        </div>
         </div>
     </div>
 </div>

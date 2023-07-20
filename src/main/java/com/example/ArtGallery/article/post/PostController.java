@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,23 +37,23 @@ public class PostController {
         return "/test/post_detail";
     }
 
-//    @PostMapping("/post/upload")
-    @PostMapping("/post/create")
-    public String create(@RequestParam("uploadfile")MultipartFile uploadFile, @RequestParam String subject, @RequestParam String content, RedirectAttributes redirectAttributes){
-        if(uploadFile != null && !uploadFile.isEmpty()){
+
+    // upload 템플릿에서 form태그의 action: 으로 인해 해당 주소 postmapping
+    @PostMapping("/post/create/{nickname}")
+    public String create(@PathVariable String nickname, @RequestParam("uploadfile")MultipartFile uploadFile, @RequestParam String subject, @RequestParam String content,
+                         RedirectAttributes redirectAttributes){
+
+        if(uploadFile != null && !uploadFile.isEmpty()) {
             FileEntity fileEntity = fileService.uploadFile(uploadFile);
             PostEntity post = postService.create(subject, content, fileEntity);
 
-            if(fileEntity != null){
+            if (fileEntity != null) {
                 redirectAttributes.addFlashAttribute("file", fileEntity);
             }
         }
-        return "redirect:/post/list";
-    }
 
-//    @GetMapping("/post/upload")
-    @GetMapping("/post/create")
-    public String create(PostForm postForm){
-       return "/test/upload_page2";
+        // 닉네임이 한글로 입력되면 리다이렉트가 안되는 현상을 방지
+        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+        return "redirect:/user/detail_form/" + encodedNickname;
     }
 }

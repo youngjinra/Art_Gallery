@@ -34,13 +34,13 @@
       <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
         <img src="https://picsum.photos/300/300" alt="">
       </a>
-      <a href="/upload" class="upload gap-2 bg-green-500">
+      <a th:href="@{/upload}" class="upload gap-2 bg-green-500">
         <div>
           <i class="fa-solid fa-arrow-up-from-bracket"></i>
-        </div>
-        <span>
+          <span>
           업로드
         </span>
+        </div>
       </a>
     </div>
   </div>

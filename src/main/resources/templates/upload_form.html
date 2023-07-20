@@ -47,7 +47,9 @@
   </div>
 </div>
 
-<form th:action="@{/post/create}" method="post">
+<!-- 추가 : 해당 form의 method="post"로 인해 PostMapping은 /post/create 로 매핑됨 -->
+<form th:action="@{|/post/create/${nickname}|}" method="post" enctype="multipart/form-data">
+
 <!-- Uploading1 -->
 <div class="container upload-wrapper mt-12 mx-auto">
   <div class="upload_box">
@@ -60,7 +62,10 @@
       <span><b>끌어다</b> 놓아 <b>업로드</b> 하기</span>
     </div>
     <div class="search_btn bg-green-500 text-white">
-      <span>찾아보기</span>
+<!--  수정    -->
+      <input class="form-control form-control-user" type="file"
+             name="uploadfile" id="product_image" value="찾아보기" onchange="setThumbnail(event);">
+<!--      <span>찾아보기</span>-->
     </div>
     <div class="remain">
       <span>(오늘의 잔여 <b class="text-green-500">업로드 항목 수는 10개</b> 입니다.)</span>
@@ -91,16 +96,26 @@
   <div class="container specific-wrapper flex gap-14 flex-grow">
     <div class="specific_upload_box flex-grow flex">
       <div class="img_box flex flex-1">
-        <img src="https://picsum.photos/1920/1080" alt="">
+
+<!--    수정    -->
+<!--        <img src="https://picsum.photos/1920/1080" alt="">-->
+        <div id="image_container"></div>
+
       </div>
       <div class="input_box flex flex-1 flex-col gap-4">
         <div class="particle p0 flex flex-col">
           <label for="">제목 <span class="text-sm">(선택사항)</span></label>
-          <input type="text" placeholder="제목을 입력하세요" class="w-11/12 p-2">
+
+<!--     수정     -->
+          <input type="text" name="subject" placeholder="제목을 입력하세요" class="w-11/12 p-2">
+
         </div>
         <div class="particle p0-1 flex flex-col gap-1">
           <label for="">내용 <span class="text-sm">(선택사항)</span></label>
-          <textarea name="" id="" placeholder="내용을 입력하세요" class="w-11/12 p-2"></textarea>
+
+<!--     수정     -->
+          <textarea name="content" placeholder="내용을 입력하세요" class="w-11/12 p-2"></textarea>
+
         </div>
         <div class="particle p1 flex flex-col">
           <label for="">카테고리</label>
@@ -140,12 +155,16 @@
           <span class="text-green-500">콘텐츠 업로드 성공</span>
         </div>
       </div>
-      <button>콘텐츠 제출하기</button>
+      <button type="submit">콘텐츠 제출하기</button>
     </div>
   </div>
 </div>
 </form>
 <script src="/js/jquery-3.7.0.min.js"></script>
+
+<!-- 추가 -->
+<script src="/test/upload_form_new.js"></script>
+
 <script src="/js/upload_form.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
