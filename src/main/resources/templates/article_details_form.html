@@ -15,7 +15,7 @@
     <div class="top-bar-bg"></div>
     <div class="menu container gap-3">
         <div class="logo_box flex gap-4">
-            <a href="https://cdpn.io/pen/debug/NWEvxQB" class="logo">ArtGallery</a>
+            <a href="/" class="logo">ArtGallery</a>
         </div>
         <form class="search small-search-bar flex gap-3">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -52,11 +52,11 @@
     <div class="content flex flex-col">
         <div class="top_bar flex">
             <div class="member flex">
-                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+                <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
                 <div class="member flex flex-col">
-                    <a href="https://cdpn.io/pen/debug/bGQogqX" class="nName font-bold">guvo59</a>
+                    <a th:href="@{|/user/detail_form/${nickname}|}" class="nName font-bold" th:text="${nickname}"></a>
                     <span class="text-xs">1263 followers</span>
                 </div>
                 <a href="#" class="flex items-center gap-2 justify-center add_follow">
@@ -121,8 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="create_date text-xs gr-300 mt-4">
-                게시일: 2023년 7월 7일
+            <div class="create_date text-xs gr-300 mt-4" th:text="|게시일 : ${post.createDate}|">
             </div>
         </div>
         <div class="tag_box">
@@ -144,11 +143,11 @@
         <div class="bottom_content flex flex-col gap-3">
             <div class="subject flex flex-col gap-1">
                 <span class="title">제목</span>
-                <span class="gr-300">아기 고양이</span>
+                <span class="gr-300" th:text="${post.subject}"></span>
             </div>
             <div class="content_sm flex flex-col gap-1">
                 <span class="title">내용</span>
-                <span class="gr-300">4개월 아기 고양이 </span>
+                <span class="gr-300" th:text="${post.content}"></span>
             </div>
         </div>
     </div>
@@ -160,11 +159,11 @@
         <div class="bottom_content flex flex-col gap-3">
             <div class="subject flex flex-col gap-1">
                 <span class="title">제목</span>
-                <span class="gr-300">아기 고양이</span>
+                <span class="gr-300" th:text="${post.subject}"></span>
             </div>
             <div class="content_sm flex flex-col gap-1">
                 <span class="title">내용</span>
-                <span class="gr-300">4개월 아기 고양이 </span>
+                <span class="gr-300" th:text="${post.content}"></span>
             </div>
         </div>
         <div class="specific_box flex flex-col">
@@ -195,8 +194,7 @@
                     </div>
                 </div>
             </div>
-            <div class="create_date text-xs gr-300 mt-4">
-                게시일: 2023년 7월 7일
+            <div class="create_date text-xs gr-300 mt-4" th:text="|게시일 : ${post.createDate}|">
             </div>
         </div>
     </div>
@@ -351,6 +349,7 @@
         </div>
     </div>
 </div>
+
 <script src="/js/jquery-3.7.0.min.js"></script>
 <script src="/js/article_details_form.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>

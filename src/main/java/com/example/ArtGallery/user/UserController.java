@@ -1,6 +1,8 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.article.post.PostEntity;
+import com.example.ArtGallery.article.post.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -11,11 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
 
     @GetMapping("/user/signup")
     public String signup(UserCreateForm userCreateForm){
@@ -61,6 +66,14 @@ public class UserController {
             model.addAttribute("userEntity", userEntity);
         }
 
+//       추가
+//        List<PostEntity> postEntityList = this.postService.getList();
+//        model.addAttribute("postList", postEntityList);
+
+        // 닉네임을 기준으로 해당 닉네임을 갖는 사용자의 게시물만 가져옴
+        List<PostEntity> postEntityList = this.postService.getPostsByNickname(nickname);
+        model.addAttribute("postList", postEntityList);
+
         return "user_detail_form";
     }
 
@@ -77,14 +90,16 @@ public class UserController {
             // 해당 nickname을 사용하여 유저 정보 가져오기
             UserEntity userEntity = userService.getUserNick(nicknameConfirm);
             model.addAttribute("userEntity", userEntity);
-            return "index";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
 
-        } else {
-
-            return "index";
+            List<PostEntity> postEntityList = this.postService.getList();
+            model.addAttribute("postList", postEntityList);
 
         }
 
+        List<PostEntity> postEntityList = this.postService.getList();
+        model.addAttribute("postList", postEntityList);
+
+        return "index";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
     }
 
     @GetMapping("/user/nickname_change_form")

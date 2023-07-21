@@ -110,6 +110,21 @@
         </select>
     </div>
     <section class="section-1">
+        <!--   추가   ======================================================  -->
+        <table>
+            <tr>
+                <th>제목</th>
+                <th>작성일시</th>
+            </tr>
+            <tr th:each="post : ${postList}">
+                <td>
+                    <a th:href="@{|/article/details/${nickname}/${post.id}|}" th:text="${post.subject}"></a>
+                </td>
+                <td th:text="${post.createDate}"></td>
+            </tr>
+        </table>
+
+<!--      ======================================================  -->
         <div class="masonry-grid">
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">

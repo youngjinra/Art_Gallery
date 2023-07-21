@@ -1,10 +1,13 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.article.post.PostEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +34,9 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.GUEST; // 비회원들이 이용할때 기본적으로 GUEST권한을 default로 놓음
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
+    private List<PostEntity> postEntity;
 
     private String provider; // Local(로컬유져) kakao(카카오로그인) google(구글로그인) naver(네이버로그인) 4가지로 구분(중요한 구분 요소는 아님)
 

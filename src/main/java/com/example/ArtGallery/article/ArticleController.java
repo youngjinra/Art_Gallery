@@ -1,6 +1,8 @@
 package com.example.ArtGallery.article;
 
 
+import com.example.ArtGallery.article.post.PostEntity;
+import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ArticleController {
 
     private final UserService userService;
+    private final PostService postService;
 
     @GetMapping("/upload")
     @PreAuthorize("isAuthenticated()")
@@ -43,8 +47,8 @@ public class ArticleController {
 
     }
 
-    @GetMapping("/article/details")
-    public String articleDetail(Model model, Authentication authentication){
+    @GetMapping("/article/details/{nickname}/{postId}")
+    public String articleDetail(Model model, Authentication authentication, @PathVariable String nickname, @PathVariable int postId){
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -56,6 +60,12 @@ public class ArticleController {
 
         // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
         model.addAttribute("nicknameConfirm", nicknameConfirm);
+
+        // 게시물 주인의 닉네임을 템플릿에 반환
+        model.addAttribute("nickname", nickname);
+
+        PostEntity post = this.postService.getPost(postId);
+        model.addAttribute("post", post);
 
         return "article_details_form";
     }

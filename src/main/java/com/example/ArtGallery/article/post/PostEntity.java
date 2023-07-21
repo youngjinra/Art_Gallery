@@ -3,6 +3,7 @@ package com.example.ArtGallery.article.post;
 
 import com.example.ArtGallery.article.comment.CommentEntity;
 import com.example.ArtGallery.article.file.FileEntity;
+import com.example.ArtGallery.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,4 +34,7 @@ public class PostEntity {
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE)
     @Where(clause = "parent_id is null")
     private List<CommentEntity> commentList;
+
+    @ManyToOne
+    private UserEntity userEntity;
 }
