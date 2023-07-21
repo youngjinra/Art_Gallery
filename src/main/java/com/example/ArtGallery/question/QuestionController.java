@@ -5,7 +5,6 @@ import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 
 @RequestMapping("/question")
 @RequiredArgsConstructor
@@ -25,11 +25,9 @@ public class QuestionController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Question> paging = this.questionService.getList(page, kw);
-        model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
+    public String list(Model model) {
+        List<Question> questionList = this.questionService.getList();
+        model.addAttribute("questionList", questionList);
         return "question_list";
     }
 
@@ -53,7 +51,7 @@ public class QuestionController {
             return "question_form";
         }
         UserEntity userEntity = this.userService.getUserNick(principal.getName());
-        this.questionService.create(questionForm.getSubject(), questionForm.getContent(), userEntity);
+        this.questionService.create(questionForm.getContent(), userEntity);
         return "redirect:/question/list";
     }
 
@@ -64,7 +62,6 @@ public class QuestionController {
         if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        questionForm.setSubject(question.getSubject());
         questionForm.setContent(question.getContent());
         return "question_form";
     }
@@ -80,7 +77,7 @@ public class QuestionController {
         if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+        this.questionService.modify(question, questionForm.getContent());
         return String.format("redirect:/question/detail/%s", id);
     }
 
