@@ -36,4 +36,4 @@ public class Question {
     @ManyToMany
     Set<UserEntity> voter;
 }
-//이예진
+//이예진123
