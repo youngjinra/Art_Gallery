@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -44,7 +45,7 @@ public class UserEntity {
 
     private int following; // 해당 유저의 팔로잉 수 > 추후 구현
 
-    private int follower; // 해당 유저의 팔로우 수 > 추후 구현
+    private int follower; // 해당 유저의 팔로워 수 > 추후 구현
 
     private int articlelikes; // 해당 유저가 올린 게시물들의 총 좋아요 받은 수 > 추후 구현
 

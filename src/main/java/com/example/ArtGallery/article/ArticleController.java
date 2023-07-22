@@ -64,6 +64,9 @@ public class ArticleController {
         // 게시물 주인의 닉네임을 템플릿에 반환
         model.addAttribute("nickname", nickname);
 
+        UserEntity user = this.userService.getUserNick(nicknameConfirm);
+        model.addAttribute("user", user);
+
         PostEntity post = this.postService.getPost(postId);
         model.addAttribute("post", post);
 

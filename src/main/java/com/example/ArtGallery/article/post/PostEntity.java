@@ -11,6 +11,7 @@ import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,4 +38,12 @@ public class PostEntity {
 
     @ManyToOne
     private UserEntity userEntity;
+
+    @ManyToMany
+    Set<UserEntity> voter;
+
+    private int postView;
+    private int postLike;
+    private int postDownloads;
+    private int postCollects;
 }
