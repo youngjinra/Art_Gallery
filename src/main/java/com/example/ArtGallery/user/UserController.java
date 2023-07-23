@@ -3,6 +3,7 @@ package com.example.ArtGallery.user;
 
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
+import com.example.ArtGallery.follow.FollowService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ public class UserController {
 
     private final UserService userService;
     private final PostService postService;
+    private final FollowService followService;
 
     @GetMapping("/user/signup")
     public String signup(UserCreateForm userCreateForm){
@@ -42,8 +44,8 @@ public class UserController {
         return "login_form";
     }
 
-    @GetMapping("/user/detail_form/{nickname}")
-    public String userdetail(Model model, @PathVariable("nickname") String nickname, Authentication authentication){
+    @GetMapping("/user/detail_form/{loginUserNick}")
+    public String userdetail(Model model, @PathVariable("loginUserNick") String loginUserNick, Authentication authentication){
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -52,27 +54,44 @@ public class UserController {
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
         }
 
+        // 해당 유저정보 주인의 userEntity를 'user'로 템플릿에서 활용할 수 있게 반환
+        UserEntity userEntity = this.userService.getUserNick(loginUserNick);
+        model.addAttribute("user", userEntity);
+
         if(nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
-            UserEntity userEntity = this.userService.getUserNick(nickname);
-            model.addAttribute("userEntity", userEntity);
+
         } else {
             // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
-            model.addAttribute("isCurrentUser", nicknameConfirm.equals(nickname));
+            model.addAttribute("isCurrentUser", nicknameConfirm.equals(loginUserNick));
 
-            // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
-            model.addAttribute("nicknameConfirm", nicknameConfirm);
+            UserEntity loginUser = this.userService.getUserNick(nicknameConfirm);
+            model.addAttribute("loginUser", loginUser);
 
-            UserEntity userEntity = this.userService.getUserNick(nickname);
-            model.addAttribute("userEntity", userEntity);
+            // 내가 해당 유저를 팔로잉중인지 확인하기 위한 true, false 반환
+            boolean isFollowing = followService.isFollowing(loginUser, userEntity);
+            model.addAttribute("isFollowing", isFollowing);
         }
 
-//       추가
-//        List<PostEntity> postEntityList = this.postService.getList();
-//        model.addAttribute("postList", postEntityList);
-
         // 닉네임을 기준으로 해당 닉네임을 갖는 사용자의 게시물만 가져옴
-        List<PostEntity> postEntityList = this.postService.getPostsByNickname(nickname);
+        List<PostEntity> postEntityList = this.postService.getPostsByNickname(loginUserNick);
+
+        int totalViews = 0;
+        int totalLikes = 0;
+
+        for(PostEntity post : postEntityList){
+            totalViews += post.getPostView();
+            totalLikes += post.getVoter().size();
+        }
+
         model.addAttribute("postList", postEntityList);
+        model.addAttribute("postTotalView", totalViews);
+        model.addAttribute("postTotalLikes", totalLikes);
+
+        // 팔로워, 팔로잉 수 템플릿에서 사용할 수 있게 반환
+        int followerCount = followService.getFollowerCount(userEntity.getId());
+        int followingCount = followService.getFollowingCount(userEntity.getId());
+        model.addAttribute("followerCount", followerCount);
+        model.addAttribute("followingCount", followingCount);
 
         return "user_detail_form";
     }

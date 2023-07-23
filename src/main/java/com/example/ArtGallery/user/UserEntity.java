@@ -47,9 +47,9 @@ public class UserEntity {
 
     private int follower; // 해당 유저의 팔로워 수 > 추후 구현
 
-    private int articlelikes; // 해당 유저가 올린 게시물들의 총 좋아요 받은 수 > 추후 구현
+    private int articlelikes; // 해당 유저가 올린 게시물들의 총 좋아요 받은 수 > 추후 구현 > 구현완료 ( 해당요소 사용 X )
 
-    private int articleviews; // 해당 유저가 올린 게시물들의 총 조회 수 > 추후 구현
+    private int articleviews; // 해당 유저가 올린 게시물들의 총 조회 수 > 추후 구현 > 구현완료 ( 해당요소 사용 X )
 
     private int usercollection; // 해당 유저가 즐겨찾기 해놓은 게시물 총 개수 > 추후 구현
 

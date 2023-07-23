@@ -52,3 +52,15 @@ $(function () {
   side_info_2_click();
   delete_function();
 });
+
+// 좋아요 확인창
+const recommend_elements = document.getElementsByClassName("recommend");
+Array.from(recommend_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        const confirmed = confirm("좋아요를 누르시겠습니까?");
+        if (confirmed) {
+            alert("10 point가 적립되었습니다.");
+            location.href = this.dataset.uri;
+        }
+    });
+});

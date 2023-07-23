@@ -31,7 +31,7 @@
             <a sec:authorize="isAnonymous()" th:href="@{/user/signup}" class="sign-up">
                 가입
             </a>
-            <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" sec:authorize="isAuthenticated()"
+            <a th:href="@{|/user/detail_form/${loginUser.nickname}|}" sec:authorize="isAuthenticated()"
                class="member_thumbnail">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
@@ -53,16 +53,26 @@
     <div class="content flex flex-col">
         <div class="top_bar flex">
             <div class="member flex">
-                <a th:href="@{|/user/detail_form/${nicknameConfirm}|}" class="img_box">
+                <a th:href="@{|/user/detail_form/${user.nickname}|}" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
                 <div class="member flex flex-col">
-                    <a th:href="@{|/user/detail_form/${nickname}|}" class="nName font-bold" th:text="${nickname}"></a>
-                    <span class="text-xs" th:text="${user.follower} + ' followers'"></span>
+                    <a th:href="@{|/user/detail_form/${user.nickname}|}" class="nName font-bold" th:text="${user.nickname}"></a>
+                    <span class="text-xs" th:text="${followerCount} + ' followers'"></span>
                 </div>
-                <a href="#" class="flex items-center gap-2 justify-center add_follow">
+                <a href="javascript: void(0);" sec:authorize="isAuthenticated()"
+                   th:data-uri="@{|/api/follow/${loginUser.id}/${user.id}|}"
+                   th:if="${!isFollowing} and ${!isCurrentUser}"
+                   class="flex items-center gap-2 justify-center add_follow followUser">
                     <i class="fa-solid fa-user-plus"></i>
                     <span class="body">팔로우</span>
+                </a>
+                <a href="javascript: void(0);" sec:authorize="isAuthenticated()"
+                   th:data-uri="@{|/api/unfollow/${loginUser.id}/${user.id}|}"
+                   th:if="${isFollowing} and ${!isCurrentUser}"
+                   class="flex items-center gap-2 justify-center add_follow unfollowUser">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span class="body">팔로우 취소</span>
                 </a>
             </div>
             <div class="flex-grow"></div>
@@ -75,8 +85,8 @@
                     <i class="fa-regular fa-bookmark gr-300"></i>
                     <span>저장하기</span>
                 </a>
-                <a href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2"
-                th:data-uri="@{|/post/vote/${post.id}|}">
+                <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 recommend"
+                th:data-uri="@{|/post/vote/${post.id}/${loginUser.nickname}/${user.nickname}|}">
                     <i class="fa-regular fa-heart gr-300"></i>
                     <span>좋아요</span>
                     <span class="heart_count gr-300"></span>
@@ -106,7 +116,7 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1 flex-1">
                         <i class="fa-solid fa-heart"></i>
-                        <span class="view_count text-xs font-bold" th:text="${post.postLike}"></span>
+                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>
                         <span class="gr-300 text-xs">좋아요</span>
                     </div>
                 </div>
@@ -179,7 +189,7 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1 flex-1">
                         <i class="fa-solid fa-heart"></i>
-                        <span class="view_count text-xs font-bold" th:text="${post.postLike}"></span>
+                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>
                         <span class="gr-300 text-xs">좋아요</span>
                     </div>
                 </div>
@@ -362,6 +372,7 @@
 
 <script src="/js/jquery-3.7.0.min.js"></script>
 <script src="/js/article_details_form.js"></script>
+<script src="/js/increase_view.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>

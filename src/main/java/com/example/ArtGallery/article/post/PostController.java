@@ -3,18 +3,20 @@ package com.example.ArtGallery.article.post;
 
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
+import com.example.ArtGallery.user.UserEntity;
+import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,28 +24,7 @@ import java.util.List;
 public class PostController {
     private final FileService fileService;
     private final PostService postService;
-
-//    @GetMapping("/post/list")
-//    public String list(Model model){
-//        List<PostEntity> postEntityList = this.postService.getList();
-//        model.addAttribute("postList", postEntityList);
-//        return "/test/post_list";
-//    }
-
-//    @GetMapping("/post/detail/{id}")
-//    public String detail(Model model, @PathVariable("id") int id){
-//        PostEntity post = this.postService.getPost(id);
-//        model.addAttribute("post", post);
-//        return "/test/post_detail";
-//    }
-
-    @GetMapping("/post/detail/{id}")
-    public String detail(Model model, @PathVariable("id") int id){
-        PostEntity post = this.postService.getPost(id);
-        model.addAttribute("post", post);
-        return "/article_details_form";
-    }
-
+    private final UserService userService;
 
     // upload 템플릿에서 form태그의 action: 으로 인해 해당 주소 postmapping
     @PostMapping("/post/create/{nickname}")
@@ -69,8 +50,42 @@ public class PostController {
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
         return "redirect:/article/details/" + encodedNickname;
 
-//        // 닉네임이 한글로 입력되면 리다이렉트가 안되는 현상을 방지
-//        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
-//        return "redirect:/article/details/" + encodedNickname + "/" + postId;
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    // id : 게시물 id, loginUserNick : 로그인한 유저의 닉네임, userNick : 게시물을 올린 유저의 닉네임
+    @GetMapping("/post/vote/{id}/{loginUserNick}/{userNick}")
+    public String postVote(Model model, @PathVariable("id") Integer id, @PathVariable("loginUserNick") String loginUserNick, @PathVariable("userNick") String userNick) {
+
+        PostEntity postEntity = this.postService.getPostById(id);
+        UserEntity user = this.userService.getUserNick(userNick);
+        UserEntity loginUser = this.userService.getUserNick(loginUserNick);
+
+        this.postService.vote(postEntity, loginUser);
+
+        String encodedNickname = URLEncoder.encode(userNick, StandardCharsets.UTF_8);
+
+        // 다시 게시물 상세페이지로 리다이렉트 할 때 객체들을 사용할 수 있게 model.addAttribute(); 선언
+        // 이 때 article_details_form 템플릿에 이미 있는 객체들 이름에 맞춰서 그에 해당하는 데이터들을 넘겨 줌.
+        model.addAttribute("post", postEntity);
+        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("user", user);
+
+        return String.format("redirect:/article/details/%s/%s", encodedNickname, id);
+    }
+
+
+    // 조회수 증가 메서드, 아직은 따로 제약을 걸어두진 않아서 같은사람이 계속 조회해도 조회수는 늘어남
+    @PutMapping("/api/increase-views/{postId}")
+    public ResponseEntity<String> postViews(@PathVariable int postId){
+        PostEntity postEntity = postService.getPostById(postId);
+        if(postEntity != null){
+            int currentViews = postEntity.getPostView();
+            postEntity.setPostView(currentViews + 1);
+            postService.viewPost(postEntity);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

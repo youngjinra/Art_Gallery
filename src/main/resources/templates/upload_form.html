@@ -32,7 +32,7 @@
       <a sec:authorize="isAnonymous()" th:href="@{/user/signup}" class="sign-up">
         가입
       </a>
-      <a th:href="@{|/user/detail_form/${userEntity.nickname}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
+      <a th:href="@{|/user/detail_form/${loginUser.nickname}|}" sec:authorize="isAuthenticated()" class="member_thumbnail">
         <img src="https://picsum.photos/300/300" alt="">
       </a>
       <a th:href="@{/upload}" class="upload gap-2 bg-green-500">
@@ -48,7 +48,7 @@
 </div>
 
 <!-- 추가 : 해당 form의 method="post"로 인해 PostMapping은 /post/create 로 매핑됨 -->
-<form th:action="@{|/post/create/${nickname}|}" method="post" enctype="multipart/form-data">
+<form th:action="@{|/post/create/${loginUser.nickname}|}" method="post" enctype="multipart/form-data">
 
 <!-- Uploading1 -->
 <div class="container upload-wrapper mt-12 mx-auto">

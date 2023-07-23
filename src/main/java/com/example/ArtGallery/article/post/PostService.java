@@ -60,4 +60,14 @@ public class PostService {
         return postRepository.findByUserEntity_Nickname(nickname);
     }
 
+    // 게시물 좋아요
+    public void vote(PostEntity postEntity, UserEntity userEntity) {
+        postEntity.getVoter().add(userEntity);
+        this.postRepository.save(postEntity);
+    }
+
+    public void viewPost(PostEntity postEntity){
+        postRepository.save(postEntity);
+    }
+
 }
