@@ -4,7 +4,6 @@ package com.example.ArtGallery.article.comment;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +21,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/article/details/{nickname}/{id}")
-    public String createComment(Model model, @PathVariable("id") int id, @PathVariable("nickname") String nickname, @RequestParam("content") String content, CommentForm commentForm
-    , Authentication authentication){
+    public String createComment(@PathVariable("id") int id, @PathVariable("nickname") String nickname,
+                                @RequestParam("content") String content, CommentForm commentForm){
 
         PostEntity post = this.postService.getPost(id);
         this.commentService.create(post, content);
