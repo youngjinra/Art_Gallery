@@ -33,14 +33,14 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf
-//                        .ignoringRequestMatchers(
-//                                new AntPathRequestMatcher("/h2-console/**"),
-//                                new AntPathRequestMatcher("/user/signup/mailConfirm/**"),
-//                                new AntPathRequestMatcher("/user/signup/checkid/**"),
-//                                new AntPathRequestMatcher("/user/signup/checknickname"),
-//                                new AntPathRequestMatcher("/user/signup/checkemail")
-//                        )
-                                .disable()
+                        .ignoringRequestMatchers(
+                                new AntPathRequestMatcher("/h2-console/**"),
+                                new AntPathRequestMatcher("/user/signup/mailConfirm/**"),
+                                new AntPathRequestMatcher("/user/signup/checkid/**"),
+                                new AntPathRequestMatcher("/user/signup/checknickname"),
+                                new AntPathRequestMatcher("/user/signup/checkemail")
+                        )
+//                                .disable()
                 )
                 .formLogin(login -> login
                         .loginPage("/user/login")

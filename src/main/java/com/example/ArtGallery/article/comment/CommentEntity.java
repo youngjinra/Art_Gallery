@@ -3,6 +3,7 @@ package com.example.ArtGallery.article.comment;
 
 import com.example.ArtGallery.article.post.PostEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 

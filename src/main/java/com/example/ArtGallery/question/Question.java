@@ -1,6 +1,6 @@
 package com.example.ArtGallery.question;
 
-import com.example.ArtGallery.answer.Answer;
+import com.example.ArtGallery.article.answer.Answer;
 import com.example.ArtGallery.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

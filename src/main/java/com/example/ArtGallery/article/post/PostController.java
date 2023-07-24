@@ -1,6 +1,8 @@
 package com.example.ArtGallery.article.post;
 
 
+import com.example.ArtGallery.article.comment.CommentEntity;
+import com.example.ArtGallery.article.comment.CommentForm;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
 import lombok.RequiredArgsConstructor;
@@ -37,10 +39,11 @@ public class PostController {
 //        return "/test/post_detail";
 //    }
 
-    @GetMapping("/post/detail/{id}")
-    public String detail(Model model, @PathVariable("id") int id){
-        PostEntity post = this.postService.getPost(id);
-        model.addAttribute("post", post);
+    @GetMapping("/comment/create/{id}")
+    public String detail(CommentForm commentForm){
+//        commentEntity.setContent("sdfsdfsdf");
+//        PostEntity post = this.postService.getPost(id);
+//        model.addAttribute("post", post);
         return "/article_details_form";
     }
 

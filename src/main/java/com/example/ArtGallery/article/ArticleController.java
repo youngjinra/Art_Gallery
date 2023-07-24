@@ -1,6 +1,7 @@
 package com.example.ArtGallery.article;
 
 
+import com.example.ArtGallery.article.comment.CommentForm;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
@@ -48,7 +49,7 @@ public class ArticleController {
     }
 
     @GetMapping("/article/details/{nickname}/{postId}")
-    public String articleDetail(Model model, Authentication authentication, @PathVariable String nickname, @PathVariable int postId){
+    public String articleDetail(Model model, Authentication authentication, @PathVariable String nickname, @PathVariable int postId , CommentForm commentForm){
 
         String nicknameConfirm = null;
         String userEmail = null;

@@ -1,4 +1,4 @@
-package com.example.ArtGallery.answer;
+package com.example.ArtGallery.article.answer;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

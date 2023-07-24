@@ -1,6 +1,6 @@
 package com.example.ArtGallery.question;
 
-import com.example.ArtGallery.answer.AnswerForm;
+import com.example.ArtGallery.article.answer.AnswerForm;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import jakarta.validation.Valid;

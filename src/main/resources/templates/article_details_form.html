@@ -259,15 +259,16 @@
             <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
-            <form class="flex flex-col w-full">
-                <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
+            <form class="flex flex-col w-full" th:object="${commentForm}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" name="content" th:field="*{content}"></textarea>
                 <div class="comment_body_registration flex">
                     <input type="submit" value="댓글 등록">
                 </div>
             </form>
         </div>
         <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
-            <div class="particle flex gap-4">
+            <div class="particle flex gap-4"  th:each="comment : ${post.commentList}">
                 <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
@@ -279,10 +280,7 @@
                             <span class="whitespace-pre">2023-07-14 18:40</span>
                         </div>
                     </div>
-                    <div class="writing">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum, perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis alias reprehenderit inventore molestiae.
-                        Nesciunt beatae velit rerum quisquam, nemo possimus reiciendis dolore excepturi libero laborum veritatis tempore molestiae, quos incidunt. Possimus magnam voluptatibus soluta asperiores similique nostrum assumenda quisquam. Laboriosam veritatis suscipit repellat.
-                    </div>
+                    <div class="writing" th:text="${comment.content}"></div>
                     <div class="additional flex gap-3">
                         <div class="reply flex gr-300">
                             <i class="fa-regular fa-message"></i>
@@ -297,48 +295,8 @@
                         <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                             <img src="https://picsum.photos/300/300" alt="">
                         </a>
-                        <form class="flex flex-col w-full">
-                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
-                            <div class="comment_body_registration flex">
-                                <input type="submit" value="답글 등록">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
-            <div class="particle flex gap-4">
-                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                    <img src="https://picsum.photos/300/300" alt="">
-                </a>
-                <div class="regi_wrapper_body flex flex-col gap-3">
-                    <div class="member-info flex gap-3 justify-between items-center">
-                        <span class="font-bold">lilac</span>
-                        <div class="date_representation gr-300 text-xs flex gap-3">
-                            <span>등록 날짜</span>
-                            <span class="whitespace-pre">2023-07-12 12:15</span>
-                        </div>
-                    </div>
-                    <div class="writing">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum, perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis alias reprehenderit inventore molestiae.
-                    </div>
-                    <div class="additional flex gap-3">
-                        <div class="reply flex gr-300">
-                            <i class="fa-regular fa-message"></i>
-                            <span>Reply</span>
-                        </div>
-                        <div class="heart gr-300">
-                            <i class="fa-regular fa-heart self-center heart_1"></i>
-                            <i class="fa-solid fa-heart heart_2 hidden"></i>
-                        </div>
-                    </div>
-                    <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                        <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                            <img src="https://picsum.photos/300/300" alt="">
-                        </a>
-                        <form class="flex flex-col w-full">
-                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
+                        <form class="flex flex-col w-full" th:action="@{|/article/details/${nickname}/${post.id}/${comment.id}|}" method="post">
+                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" id="target-textarea" name="replyContent"></textarea>
                             <div class="comment_body_registration flex">
                                 <input type="submit" value="답글 등록">
                             </div>

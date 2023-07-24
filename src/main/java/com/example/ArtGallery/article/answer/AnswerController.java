@@ -1,4 +1,4 @@
-package com.example.ArtGallery.answer;
+package com.example.ArtGallery.article.answer;
 
 import com.example.ArtGallery.question.Question;
 import com.example.ArtGallery.question.QuestionService;
