@@ -29,7 +29,9 @@ Array.from(follow).forEach(function(element) {
               .then((response) => {
                 if (response.ok) {
                   // 요청이 성공적으로 처리되었을 때, 페이지 새로고침
+                  console.log("end1")
                   location.reload();
+
                 } else {
                   // 요청이 실패했을 때, 오류 처리를 합니다.
 //                  alert('팔로우 추가에 실패했습니다.');
