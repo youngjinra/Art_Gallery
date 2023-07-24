@@ -52,3 +52,20 @@ $(function () {
   side_info_2_click();
   delete_function();
 });
+
+/********* 수정 *********/
+
+function downloadImage() {
+    const imageSrc = document.getElementById('myImage').src;
+    const fileName = getFileNameFromURL(imageSrc);
+
+    const anchor = document.createElement('a');
+    anchor.href = imageSrc;
+    anchor.download = fileName;
+    anchor.click();
+  }
+
+  function getFileNameFromURL(url) {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1];
+  }
