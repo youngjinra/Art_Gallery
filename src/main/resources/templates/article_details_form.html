@@ -79,7 +79,11 @@
                     <span>좋아요</span>
                     <span class="heart_count gr-300">44</span>
                 </a>
-                <button class="donwload">무료 다운로드</button>
+
+                <!-- btn 수정   ======================================================  -->
+                <!--<button class="donwload">무료 다운로드</button>-->
+                <button class="donwload" onclick="downloadImage()">무료 다운로드</button>
+
             </div>
         </div>
         <div class="main_img_box flex items-center justify-center">
@@ -89,7 +93,11 @@
                 </a>
                 <i class="fa-solid fa-trash delete_btn"></i>
             </form>
-            <img src="https://cdn.pixabay.com/photo/2023/07/05/04/45/european-shorthair-8107433_1280.jpg" alt="">
+
+            <!-- img 수정   ======================================================  -->
+            <!--<img src="https://cdn.pixabay.com/photo/2023/07/05/04/45/european-shorthair-8107433_1280.jpg" alt="">-->
+            <img id="myImage" th:if="${post.fileEntity != null}" th:src="@{/post/image/{uuid}/{fileName}(uuid=${post.fileEntity.uuid}, fileName=${post.fileEntity.fileName})}" alt="My Image" />
+
         </div>
     </div>
     <div class="side_info flex flex-col gap-14">
