@@ -110,21 +110,20 @@
         </select>
     </div>
     <section class="section-1">
-        <!--   추가   ======================================================  -->
+        <!--   이미지 클릭하면 상세페이지 넘어갈 수 있게 함   =================  -->
         <table>
-            <tr>
-                <th>제목</th>
-                <th>작성일시</th>
-            </tr>
             <tr th:each="post : ${postList}">
                 <td>
-                    <a th:href="@{|/article/details/${nickname}/${post.id}|}" th:text="${post.subject}"></a>
+                    <a th:href="@{|/article/details/${nickname}/${post.id}|}">
+                        <img id="myImage" th:if="${post.fileEntity != null}"
+                             th:src="@{/post/image/{uuid}/{fileName}(uuid=${post.fileEntity.uuid}, fileName=${post.fileEntity.fileName})}"
+                             alt="My Image"/>
+                    </a>
                 </td>
-                <td th:text="${post.createDate}"></td>
             </tr>
         </table>
+        <!--      ======================================================  -->
 
-<!--      ======================================================  -->
         <div class="masonry-grid">
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
