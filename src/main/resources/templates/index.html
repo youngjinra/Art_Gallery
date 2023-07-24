@@ -152,26 +152,8 @@
         </select>
     </div>
     <section class="section-1">
-
-        <!--  ==========================================================-->
-        <table>
-            <tr>
-                <th>제목</th>
-                <th>작성일시</th>
-            </tr>
-            <tr th:each="post : ${postList}">
-                <td>
-                    <!--          <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}" th:text="${post.subject}"></a>-->
-                    <a th:href="@{|/article/details/${post.userEntity?.nickname}/${post.id}|}"
-                       th:text="${post.subject}" class="post-link" th:data-post-id="${post.id}"></a>
-                </td>
-                <td th:text="${post.createDate}"></td>
-            </tr>
-        </table>
-        <!--  ==========================================================-->
-
         <div class="masonry-grid">
-            <div class="grid-item">
+            <div class="grid-item w-full" th:each="post : ${postList}">
                 <div class="img_top_function flex gap-2">
                     <a href="#" class="font-awsome bookmark">
                         <i class="fa-solid fa-bookmark"></i>
@@ -181,206 +163,18 @@
                     </a>
                 </div>
                 <!--    a태그 주소값은 해당 게시물 올린 유저의 닉네임값을 받아오는 방식으로 -->
-                <a th:href="@{/user/detail_form/박응용}" class="img_bottom_function flex gap-2">
+                <a th:href="@{|/user/detail_form/${post.userEntity.nickname}|}" class="img_bottom_function flex gap-2">
                     <div class="img_badge">
                         <img src="https://picsum.photos/300/300" alt="">
                     </div>
-                    <div class="nName flex items-center" th:text="박응용">
+                    <div class="nName flex items-center" th:text="${post.userEntity.nickname}">
                     </div>
                 </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/200/400" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a th:href="@{/user/detail_form/네이버로그인계정}" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center" th:text="닉네임변경확인">
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/600/400" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="insignia absolute">
-                    <i class="fa-solid fa-ribbon"></i>
-                </div>
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/400/300" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/300/600" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/1200/800" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/600/300" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/400/600" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/1920/1080" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/400/300" alt="">
-                </a>
-            </div>
-            <div class="grid-item">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
-                        <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a href="/user/detail_form" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center">
-                        cottonbro studio
-                    </div>
-                </a>
-                <a href="/article/details" class="img_box">
-                    <img src="https://picsum.photos/600/800" alt="">
+                <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}"
+                   th:data-post-id="${post.id}" class="img_box">
+                    <img id="myImage" th:if="${post.fileEntity != null}"
+                         th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
+                         alt="My Image">
                 </a>
             </div>
         </div>
