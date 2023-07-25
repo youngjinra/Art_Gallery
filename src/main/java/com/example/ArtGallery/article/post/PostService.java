@@ -4,13 +4,19 @@ package com.example.ArtGallery.article.post;
 import com.example.ArtGallery.DataNotFoundException;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
+import com.example.ArtGallery.follow.FollowRepository;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserRepository;
 import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +27,7 @@ public class PostService {
     private final FileService fileService;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final FollowRepository followRepository;
 
     public List<PostEntity> getList(){
         return this.postRepository.findAll();
@@ -69,5 +76,42 @@ public class PostService {
     public void viewPost(PostEntity postEntity){
         postRepository.save(postEntity);
     }
+
+
+
+
+
+
+    public List<PostEntity> getSortedPosts(int sortingOption) {
+        List<PostEntity> sortedPosts;
+
+        switch (sortingOption) {
+            case 1:
+                // 최신순으로 정렬
+                sortedPosts = postRepository.findAllByOrderByCreateDateDesc();
+                break;
+            case 2:
+                // 인기순으로 정렬
+                sortedPosts = postRepository.findAllByOrderByPostLikeDesc();
+                break;
+
+            default:
+                // 기본적으로 최신순으로 정렬
+                sortedPosts = postRepository.findAllByOrderByCreateDateDesc();
+                break;
+        }
+
+        return sortedPosts;
+    }
+
+    public List<PostEntity> getAllSortedPosts() {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Sort sort = Sort.by(sorts);
+
+        return this.postRepository.findAll(sort);
+    }
+
+
 
 }

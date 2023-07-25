@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String usernav(Model model, Authentication authentication) {
+    public String usernav(Model model, Authentication authentication, @RequestParam(name = "sortingOption", defaultValue = "1") int sortingOption) {
 
         // 인증된 사용자의 nickname 가져오기
         String nicknameConfirm = null;
@@ -115,8 +116,16 @@ public class UserController {
 
         }
 
-        List<PostEntity> postEntityList = this.postService.getList();
-        model.addAttribute("postList", postEntityList);
+
+//        List<PostEntity> postEntityList = this.postService.getList();
+//        model.addAttribute("postList", postEntityList);
+
+        // 사용자가 선택한 정렬 기준을 서비스에 전달
+        List<PostEntity> sortedPosts = postService.getSortedPosts(sortingOption);
+
+        // 뷰에 필요한 데이터 전달
+        model.addAttribute("postList", sortedPosts);
+        model.addAttribute("sortingOption", sortingOption);
 
         return "index";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
     }

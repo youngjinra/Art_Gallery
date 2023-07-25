@@ -96,7 +96,7 @@ public class PostController {
             return ResponseEntity.notFound().build();
         }
     }
-    /********* 추가 *********/
+
     // image 반환하기
     @GetMapping(value = "/post/image/{uuid}/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> userSearch(@PathVariable("uuid") String uuid, @PathVariable("fileName") String fileName ) throws IOException {

@@ -140,16 +140,19 @@
     </div>
 </div>
 
+
 <!-- List -->
 <div class="container mx-auto mt-12">
     <div class="section-1_loading"></div>
     <div class="section-1_middle-bar flex justify-between">
         <span class="middle-title">갤러리 모음</span>
-        <select class="form-select">
+
+        <select class="form-select" id="sortingOption" onchange="sortPosts()">
             <option value="1" selected>최신순</option>
             <option value="2">인기순</option>
             <option value="3">팔로우</option>
         </select>
+
     </div>
     <section class="section-1">
         <div class="masonry-grid">
@@ -179,7 +182,20 @@
             </div>
         </div>
     </section>
+
 </div>
+<!-- 서버에서 계산된 sortingOption의 값을 클라이언트 사이드의 JavaScript 변수에 넣습니다.-->
+<script th:inline="javascript">
+    var sortingOptionValue = [[${sortingOption}]];
+    var selectElement = document.getElementById("sortingOption");
+    for (var i = 0; i < selectElement.options.length; i++) {
+        // 문자열과 정수 비교를 위해 sortingOptionValue를 정수로 변환
+        if (selectElement.options[i].value === String(sortingOptionValue)) {
+            selectElement.options[i].selected = true;
+            break;
+        }
+    }
+</script>
 <script src="/js/jquery-3.7.0.min.js"></script>
 <script src="/js/index.js"></script>
 <script src="/js/increase_view.js"></script>
