@@ -60,6 +60,10 @@ public class ArticleController {
         UserEntity userEntity = this.userService.getUserNick(nickname);
         model.addAttribute("user", userEntity);
 
+        // 해당 게시물의 정보(postEntity)를 'post'로 템플릿에 활용할 수 있게 반환
+        PostEntity post = this.postService.getPost(postId);
+        model.addAttribute("post", post);
+
         if(nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
 
         } else {
@@ -76,15 +80,11 @@ public class ArticleController {
             // 현재 접속한 유저가 해당 게시물을 이미 저장했는지 판별
             boolean savedByCurrentUser = userService.checkIfSavedByCurrentUser(loginUserEntity.getNickname(), postId);
             model.addAttribute("savedByCurrentUser", savedByCurrentUser);
+
+            // 해당 게시물에 좋아요를 누른 유저인지 아닌지 판별
+            boolean isLiked = postService.isLikedByCurrentUser(postId, loginUserEntity.getNickname());
+            model.addAttribute("isLiked", isLiked);
         }
-
-        // 해당 게시물의 정보(postEntity)를 'post'로 템플릿에 활용할 수 있게 반환
-        PostEntity post = this.postService.getPost(postId);
-        model.addAttribute("post", post);
-
-        // 해당 게시물에 좋아요를 누른 유저인지 아닌지 판별
-//        boolean isLiked = postService.isLikedByCurrentUser(postId, nicknameConfirm);
-//        model.addAttribute("isLiked", isLiked);
 
         // 게시물을 올린 유저의 팔로워 수 템플릿에 반환
         int followerCount = followService.getFollowerCount(userEntity.getId());

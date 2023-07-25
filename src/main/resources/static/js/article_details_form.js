@@ -74,6 +74,11 @@ function downloadImage() {
     anchor.href = imageSrc;
     anchor.download = fileName;
     anchor.click();
+
+    // AJAX 요청을 보내서 postDownloads 증가시키기
+    const postId = document.querySelector('.donwload').dataset.postId;
+    const encodedPostId = encodeURIComponent(postId); // postId를 인코딩
+    incrementPostDownloads(encodedPostId);
   }
 
   function getFileNameFromURL(url) {
@@ -81,3 +86,22 @@ function downloadImage() {
     return urlParts[urlParts.length - 1];
   }
 
+// 다운로드 클릭시 ajax요청 메서드
+function incrementPostDownloads(postId) {
+    fetch("/post/incrementDownloads/" + postId , {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('다운로드 횟수 증가 성공');
+        } else {
+            console.error('다운로드 횟수 증가 실패');
+        }
+    })
+    .catch(error => {
+        console.error('다운로드 횟수 증가 중 오류 발생:', error);
+    });
+}

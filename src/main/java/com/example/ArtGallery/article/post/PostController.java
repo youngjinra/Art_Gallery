@@ -100,7 +100,7 @@ public class PostController {
     // image 반환하기
     @GetMapping(value = "/post/image/{uuid}/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> userSearch(@PathVariable("uuid") String uuid, @PathVariable("fileName") String fileName ) throws IOException {
-        String imagePath = "C:\\IT\\Gallery_project_DB\\" + uuid + "_" + fileName;
+        String imagePath = "D:\\springBoot\\testDB\\" + uuid + "_" + fileName;
         Path imageFilePath = Paths.get(imagePath);
         byte[] imageBytes = Files.readAllBytes(imageFilePath);
 
@@ -110,6 +110,12 @@ public class PostController {
         headers.setContentLength(imageBytes.length);
 
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+
+    @PostMapping("/post/incrementDownloads/{id}")
+    public ResponseEntity<Void> incrementPostDownloads(@PathVariable("id") int postId) {
+        postService.incrementPostDownloads(postId);
+        return ResponseEntity.ok().build();
     }
 }
 

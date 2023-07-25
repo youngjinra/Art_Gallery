@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -68,16 +70,27 @@ public class PostService {
 
     // 현재 로그인한 사용자가 해당 게시물에 좋아요를 눌렀는지 여부를 판단
     public boolean isLikedByCurrentUser(int postId, String nickname) {
-        Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
-        UserEntity user = userEntity.get();
         Optional<PostEntity> postEntity = this.postRepository.findById(postId);
         PostEntity post = postEntity.get();
 
-        return post.getVoter().contains(user.getId());
+        Set<UserEntity> voters = post.getVoter();
+        List<String> voterNicknames = voters.stream()
+                .map(UserEntity::getNickname)
+                .collect(Collectors.toList());
+
+        return voterNicknames.contains(nickname);
     }
 
     public void viewPost(PostEntity postEntity){
         postRepository.save(postEntity);
+    }
+
+    public void incrementPostDownloads(int postId) {
+        PostEntity post = postRepository.findById(postId).orElse(null);
+        if (post != null) {
+            post.setPostDownloads(post.getPostDownloads() + 1);
+            postRepository.save(post);
+        }
     }
 
 }

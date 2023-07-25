@@ -97,21 +97,21 @@
                 </a>
                 <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 recommend"
                 th:data-uri="@{|/post/vote/${post.id}/${loginUser.nickname}/${user.nickname}|}"
-                >
+                th:if="${!isLiked}">
                     <i class="fa-regular fa-heart gr-300"></i>
                     <span>좋아요</span>
                     <span class="heart_count gr-300"></span>
                 </a>
-<!--                <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 active"-->
-<!--                th:if=${!isLiked} disabled>-->
-<!--                    <i class="fa-regular fa-heart gr-300"></i>-->
-<!--                    <span>좋아요</span>-->
-<!--                    <span class="heart_count gr-300"></span>-->
-<!--                </a>-->
+                <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 active"
+                th:if=${isLiked} disabled>
+                    <i class="fa-regular fa-heart gr-300"></i>
+                    <span>좋아요</span>
+                    <span class="heart_count gr-300"></span>
+                </a>
 
                 <!-- btn 수정   ======================================================  -->
                 <!--<button class="donwload">무료 다운로드</button>-->
-                <button class="donwload" onclick="downloadImage()">무료 다운로드</button>
+                <button class="donwload" onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">무료 다운로드</button>
 
             </div>
         </div>
