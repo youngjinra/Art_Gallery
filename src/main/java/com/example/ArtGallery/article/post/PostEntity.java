@@ -1,6 +1,5 @@
 package com.example.ArtGallery.article.post;
 
-
 import com.example.ArtGallery.article.comment.CommentEntity;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.user.UserEntity;
@@ -33,6 +32,7 @@ public class PostEntity {
 
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE)
     @Where(clause = "parent_id is null")
+    @OrderBy("id DESC")
     private List<CommentEntity> commentList;
 
     @ManyToOne

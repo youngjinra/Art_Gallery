@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/user/signup/checknickname"),
                                 new AntPathRequestMatcher("/user/signup/checkemail")
                         )
-//                                .disable()
+//                        .disable()
                 )
                 .formLogin(login -> login
                         .loginPage("/user/login")

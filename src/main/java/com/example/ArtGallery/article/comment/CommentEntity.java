@@ -29,6 +29,7 @@ public class CommentEntity {
 
     // 댓글(부모) - 답글(자식) 설정
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    @OrderBy("id DESC")
     private List<CommentEntity> commentList = new ArrayList<>();
 
     private LocalDateTime createDate;

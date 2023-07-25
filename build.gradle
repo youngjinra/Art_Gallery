@@ -40,6 +40,7 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-mail:3.1.0'  // 메일 관련 API
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'  // 메일관련 API 스프링 3.x 버전 이후 jakarta로 변경
+
 }
 
 tasks.named('test') {
