@@ -81,16 +81,33 @@
                     <i class="fa-regular fa-message gr-300"></i>
                     <span>댓글보기</span>
                 </a>
-                <a href="#" class="click font-awsome bookmark flex items-center gap-2">
+                <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                   th:data-uri="@{|/collection/${loginUser.nickname}/${post.id}|}"
+                   th:if="${!savedByCurrentUser}"
+                   class="font-awsome bookmark flex items-center gap-2 addToCollection">
+                    <i class="fa-regular fa-bookmark gr-300"></i>
+                    <span>저장하기</span>
+                </a>
+                <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                   th:data-uri="@{|/removeCollection/${loginUser.nickname}/${post.id}|}"
+                   th:if="${savedByCurrentUser}"
+                   class="click font-awsome bookmark flex items-center gap-2 removeToCollection active">
                     <i class="fa-regular fa-bookmark gr-300"></i>
                     <span>저장하기</span>
                 </a>
                 <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 recommend"
-                th:data-uri="@{|/post/vote/${post.id}/${loginUser.nickname}/${user.nickname}|}">
+                th:data-uri="@{|/post/vote/${post.id}/${loginUser.nickname}/${user.nickname}|}"
+                >
                     <i class="fa-regular fa-heart gr-300"></i>
                     <span>좋아요</span>
                     <span class="heart_count gr-300"></span>
                 </a>
+<!--                <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 active"-->
+<!--                th:if=${!isLiked} disabled>-->
+<!--                    <i class="fa-regular fa-heart gr-300"></i>-->
+<!--                    <span>좋아요</span>-->
+<!--                    <span class="heart_count gr-300"></span>-->
+<!--                </a>-->
 
                 <!-- btn 수정   ======================================================  -->
                 <!--<button class="donwload">무료 다운로드</button>-->
@@ -136,7 +153,7 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1">
                         <i class="fa-solid fa-bookmark"></i>
-                        <span class="view_count text-xs font-bold" th:text="${post.postCollects}"></span>
+                        <span class="view_count text-xs font-bold" th:text="${savedUserCount}"></span>
                         <span class="gr-300 text-xs">저장</span>
                     </div>
                 </div>
@@ -379,8 +396,8 @@
 </div>
 
 <script src="/js/jquery-3.7.0.min.js"></script>
-<script src="/js/article_details_form.js"></script>
 <script src="/js/increase_view.js"></script>
+<script src="/js/article_details_form.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>

@@ -105,7 +105,7 @@
                     <i class="fa-solid fa-bookmark"></i>
                     <span>컬렉션</span>
                 </a>
-                <span class="body" th:text="${user.usercollection}"></span>
+                <span class="body" th:text="${totalCollectionCount}"></span>
             </div>
         </div>
     </div>
@@ -139,7 +139,7 @@
                     <div class="nName flex items-center" th:text="${post.userEntity.nickname}"></div>
                 </a>
                 <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}"
-                   th:data-post-id="${post.id}" class="img_box">
+                   th:data-post-id="${post.id}" class="img_box post-link">
                     <img id="myImage" th:if="${post.fileEntity != null}"
                          th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
                          alt="My Image">
@@ -147,7 +147,7 @@
                 <div class="update_delete_wrap">
                     <i class="fa-solid fa-ellipsis text-2xl"></i>
                     <form action="" class="update_delete flex flex-col gap-3 text-xl">
-                        <a href="https://cdpn.io/pen/debug/oNQoKxM" class="flex gap-2 items-center text-sm update_btn">
+                        <a href="#" class="flex gap-2 items-center text-sm update_btn">
                             <i class="fa-solid fa-pen"></i>
                             <span>수정</span>
                         </a>

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,9 @@ public class UserEntity {
     private List<PostEntity> postEntity;
 
     private String provider; // Local(로컬유져) kakao(카카오로그인) google(구글로그인) naver(네이버로그인) 4가지로 구분(중요한 구분 요소는 아님)
+
+    @ElementCollection
+    private List<Integer> collection = new ArrayList<>();
 
     private int userpoint; // 각 유저들의 보유 포인트 > 사용처나 적립기능 추후 구현
 

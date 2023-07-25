@@ -72,15 +72,27 @@ public class ArticleController {
 
             boolean isFollowing = followService.isFollowing(loginUserEntity, userEntity);
             model.addAttribute("isFollowing", isFollowing);
+
+            // 현재 접속한 유저가 해당 게시물을 이미 저장했는지 판별
+            boolean savedByCurrentUser = userService.checkIfSavedByCurrentUser(loginUserEntity.getNickname(), postId);
+            model.addAttribute("savedByCurrentUser", savedByCurrentUser);
         }
 
         // 해당 게시물의 정보(postEntity)를 'post'로 템플릿에 활용할 수 있게 반환
         PostEntity post = this.postService.getPost(postId);
         model.addAttribute("post", post);
 
+        // 해당 게시물에 좋아요를 누른 유저인지 아닌지 판별
+//        boolean isLiked = postService.isLikedByCurrentUser(postId, nicknameConfirm);
+//        model.addAttribute("isLiked", isLiked);
+
         // 게시물을 올린 유저의 팔로워 수 템플릿에 반환
         int followerCount = followService.getFollowerCount(userEntity.getId());
         model.addAttribute("followerCount", followerCount);
+
+        // 해당 게시물을 저장한 유저의 수
+        int savedUserCount = userService.getSavedUserCount(postId);
+        model.addAttribute("savedUserCount", savedUserCount);
 
         return "article_details_form";
     }

@@ -66,6 +66,16 @@ public class PostService {
         this.postRepository.save(postEntity);
     }
 
+    // 현재 로그인한 사용자가 해당 게시물에 좋아요를 눌렀는지 여부를 판단
+    public boolean isLikedByCurrentUser(int postId, String nickname) {
+        Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
+        UserEntity user = userEntity.get();
+        Optional<PostEntity> postEntity = this.postRepository.findById(postId);
+        PostEntity post = postEntity.get();
+
+        return post.getVoter().contains(user.getId());
+    }
+
     public void viewPost(PostEntity postEntity){
         postRepository.save(postEntity);
     }

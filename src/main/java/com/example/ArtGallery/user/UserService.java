@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -114,5 +116,64 @@ public class UserService {
         }
 
         return nicknameConfirm;
+    }
+
+    // 컬렉션 추가 메서드
+    public void addToCollection(String nickname, int postId){
+        Optional<UserEntity> userEntity = userRepository.findByNickname(nickname);
+        UserEntity user = userEntity.get();
+
+        if(user != null){
+            List<Integer> collection = user.getCollection();
+            if(collection.isEmpty()){
+                collection = new ArrayList<>();
+            }
+            collection.add(postId);
+            user.setCollection(collection);
+            this.userRepository.save(user);
+        }
+    }
+
+    // 즐겨찾기 제거 메서드 추가
+    public void removeFromCollection(String nickname, int postId) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByNickname(nickname);
+        if (optionalUserEntity.isPresent()) {
+            UserEntity user = optionalUserEntity.get();
+            List<Integer> collection = user.getCollection();
+            if (!collection.isEmpty()) {
+                collection.removeIf(id -> id.equals(postId));
+                userRepository.save(user);
+            }
+        }
+    }
+
+    // 해당 게시물을 저장한 유저의 수 반환하는 메서드
+    public int getSavedUserCount(int postId) {
+        return userRepository.countByCollectionContains(postId);
+    }
+
+    // 해당 유저가 저장한 게시물 총 개수를 반환하는 메서드 추가
+    public int getSavedPostCount(String nickname) {
+        Optional<UserEntity> userEntity = userRepository.findByNickname(nickname);
+        if (userEntity.isPresent()) {
+            UserEntity user = userEntity.get();
+            List<Integer> collection = user.getCollection();
+            if (!collection.isEmpty()) {
+                return collection.size();
+            }
+        }
+        return 0;
+    }
+
+    // 특정 게시물을 현재 사용자가 저장했는지 여부를 확인하는 메서드 추가
+    public boolean checkIfSavedByCurrentUser(String nickname, int postId) {
+        Optional<UserEntity> userEntity = userRepository.findByNickname(nickname);
+        if (userEntity.isPresent()) {
+            UserEntity user = userEntity.get();
+            List<Integer> collection = user.getCollection();
+            return !(collection.isEmpty()) && collection.contains(postId);
+        }
+
+        return false;
     }
 }

@@ -45,7 +45,7 @@ function delete_function() {
 }
 
 $(function () {
-  SideClick__ft();
+//  SideClick__ft();
   textarea_resize();
   additional_heart_ivent();
   replies_box_ivent();
@@ -59,7 +59,7 @@ Array.from(recommend_elements).forEach(function(element) {
     element.addEventListener('click', function() {
         const confirmed = confirm("좋아요를 누르시겠습니까?");
         if (confirmed) {
-            alert("10 point가 적립되었습니다.");
+//            alert("10 point가 적립되었습니다.");
             location.href = this.dataset.uri;
         }
     });
