@@ -1,7 +1,5 @@
 package com.example.ArtGallery.article;
 
-
-import com.example.ArtGallery.article.comment.CommentEntity;
 import com.example.ArtGallery.article.comment.CommentForm;
 import com.example.ArtGallery.article.comment.CommentService;
 import com.example.ArtGallery.article.post.PostEntity;
@@ -9,19 +7,14 @@ import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,7 +26,7 @@ public class ArticleController {
 
     @GetMapping("/upload")
     @PreAuthorize("isAuthenticated()")
-    public String uploadnavbar(Model model, Authentication authentication, RedirectAttributes redirectAttributes){
+    public String uploadnavbar(Model model, Authentication authentication, RedirectAttributes redirectAttributes) {
 
         // 인증된 사용자의 nickname 가져오기
         String nicknameConfirm = null;
@@ -58,7 +51,7 @@ public class ArticleController {
     }
 
     @GetMapping("/article/details/{nickname}/{postId}")
-    public String articleDetail(Model model, Authentication authentication, @PathVariable String nickname, @PathVariable int postId , CommentForm commentForm){
+    public String articleDetail(Model model, Authentication authentication, @PathVariable String nickname, @PathVariable int postId, CommentForm commentForm) {
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -80,7 +73,7 @@ public class ArticleController {
     }
 
     @GetMapping("/by_topic")
-    public String bytopic(Model model, Authentication authentication){
+    public String bytopic(Model model, Authentication authentication) {
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -97,7 +90,7 @@ public class ArticleController {
     }
 
     @GetMapping("/search")
-    public String searchform(Model model, Authentication authentication){
+    public String searchform(Model model, Authentication authentication) {
 
         String nicknameConfirm = null;
         String userEmail = null;

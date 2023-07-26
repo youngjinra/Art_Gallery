@@ -420,6 +420,11 @@ body .side_info_imoji:hover {
 .regi_wrapper_body .additional div:hover {
   color: rgb(52, 211, 153);
 }
+.particle_2 {
+  border-radius: 20px;
+  border: 1px solid #ceced2;
+  padding: 10px;
+}
 
 /* 반응형 */
 @media (min-width: 1600px) {
