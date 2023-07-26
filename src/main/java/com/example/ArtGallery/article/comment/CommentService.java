@@ -27,12 +27,20 @@ public class CommentService {
         }
     }
 
-    public void create(PostEntity postEntity, String content){
+//    public void create(PostEntity postEntity, String content){
+//        CommentEntity comment = new CommentEntity();
+//        comment.setContent(content);
+//        comment.setCreateDate(LocalDateTime.now());
+//        comment.setPostEntity(postEntity);
+//        this.commentRepository.save(comment);
+//    }
+
+    public CommentEntity create(PostEntity postEntity, String content){
         CommentEntity comment = new CommentEntity();
         comment.setContent(content);
         comment.setCreateDate(LocalDateTime.now());
         comment.setPostEntity(postEntity);
-        this.commentRepository.save(comment);
+        return this.commentRepository.save(comment);
     }
 
     public void createReply(PostEntity postEntity, CommentEntity parentComment, String replyContent){

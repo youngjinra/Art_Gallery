@@ -5,6 +5,7 @@ import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.boot.jaxb.hbm.spi.JaxbHbmRootEntityType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,8 +49,11 @@ public class CommentController {
             return "/article_details_form";
         }
         PostEntity post = this.postService.getPost(postId);
-        this.commentService.create(post, commentForm.getContent());
-        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
+        CommentEntity comment = this.commentService.create(post, commentForm.getContent());
+
+//        this.commentService.create(post, commentForm.getContent());
+//        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
+        return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, comment.getId());
     }
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")

@@ -467,6 +467,9 @@ body .side_info_imoji:hover {
     margin-top: -60px;
   }
 }
+.anchor{
+  scroll-margin-top: 380px;
+}
 
 @media (max-width: 599px) {
   .section-1 .grid-item {

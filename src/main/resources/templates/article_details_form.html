@@ -279,9 +279,9 @@
             </form>
         </div>
 
-
         <!-- 댓글 등록창 -->
-        <div class="particle_2 comment_body_regi_wrapper  flex flex-col gap-16" th:each="comment, loop : ${post.commentList}">
+        <div class="particle_2 comment_body_regi_wrapper flex flex-col" th:each="comment, loop : ${post.commentList}">
+            <a th:id="|comment_${comment.id}|" class="anchor"></a>
             <div class="particle flex gap-4">
                 <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
