@@ -1,6 +1,5 @@
 package com.example.ArtGallery.article.comment;
 
-
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,11 +22,11 @@ public class CommentController {
 
     private final PostService postService;
     private final CommentService commentService;
-    private final UserService  userService;
+    private final UserService userService;
 
     @PostMapping("/comment/create/{nickname}/{postId}")
-    public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
-                                @Valid CommentForm commentForm, BindingResult bindingResult, Authentication authentication) {
+    public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname, @Valid CommentForm commentForm, BindingResult bindingResult, Authentication authentication) {
+
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
         if (bindingResult.hasErrors()) {
@@ -55,8 +53,7 @@ public class CommentController {
     }
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")
-    public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @RequestParam("replyContent") String replyContent,
-                              @PathVariable("nickname") String nickname) {
+    public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @RequestParam("replyContent") String replyContent, @PathVariable("nickname") String nickname) {
         PostEntity post = this.postService.getPost(postId);
 
         CommentEntity parentComment = commentService.getComment(commentId);
