@@ -31,6 +31,8 @@ public class CommentController {
 
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+
+        // 유효성 검사
         if (bindingResult.hasErrors()) {
 
             // 유효성 검사 에러가 있을 경우, 다시 댓글 작성 폼으로 돌아가기
@@ -49,6 +51,7 @@ public class CommentController {
 
             return "/article_details_form";
         }
+
         PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, commentForm.getContent());
 
