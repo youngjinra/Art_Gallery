@@ -35,6 +35,7 @@ public class CommentController {
         if (bindingResult.hasErrors()) {
 
             // 유효성 검사 에러가 있을 경우, 다시 댓글 작성 폼으로 돌아가기
+
             String nicknameConfirm = null;
             String userEmail = null;
             if (authentication != null && authentication.isAuthenticated()) {
@@ -48,12 +49,13 @@ public class CommentController {
             PostEntity post = this.postService.getPost(postId);
             model.addAttribute("post", post);
 
-            CommentEntity comment = this.commentService.create(post, commentForm.getContent());
+            // 에러 메시지를 댓글 작성 폼으로 전달
+            model.addAttribute("error", "댓글 작성에 실패했습니다.");
 
             return "/article_details_form";
         }
 
-        // 댓글 생성
+        // 유효성 검사를 통과한 경우에만 댓글 생성
         PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, commentForm.getContent());
 
@@ -88,7 +90,7 @@ public class CommentController {
             return "/article_details_form";
         }
 
-        // 답글 생성
+        // 유효성 검사를 통과한 경우에만 답글 생성
         PostEntity post = this.postService.getPost(postId);
         CommentEntity parentComment = this.commentService.getComment(commentId);
         CommentEntity reply = this.commentService.createReply(post, parentComment, commentReplyForm.getReplyContent());

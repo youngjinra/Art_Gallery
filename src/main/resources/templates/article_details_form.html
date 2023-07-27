@@ -267,12 +267,10 @@
             <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                 <img src="https://picsum.photos/300/300" alt="">
             </a>
-            <form class="flex flex-col w-full" th:object="${commentForm}" method="post" th:action="@{|/comment/create/${nickname}/${post.id}|}">
+            <form class="flex flex-col w-full" th:object="${commentForm}" method="post" th:action="@{|/comment/create/${nickname}/${post.id}|}"
+                  onsubmit="return validateCommentForm()">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-                    <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-                </div>
-                <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" th:field="*{content}"></textarea>
+                <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" th:field="*{content}" id="commentContent"></textarea>
                 <div class="comment_body_registration flex">
                     <input type="submit" value="댓글 등록">
                 </div>
@@ -289,7 +287,7 @@
                 <div class="regi_wrapper_body flex flex-col gap-3">
 
                     <div class="member-info flex gap-3 justify-between items-center">
-                        <span class="font-bold" th:text="${nickname}"></span>
+                        <span class="font-bold" th:text="${nicknameConfirm}"></span>
                         <div class="date_representation gr-300 text-xs flex gap-3">
                             <span>등록일</span>
                             <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
@@ -315,11 +313,8 @@
                             <img src="https://picsum.photos/300/300" alt="">
                         </a>
                         <form class="flex flex-col w-full" th:action="@{|/comment/create/${nickname}/${post.id}/${comment.id}|}" method="post"
-                              th:object="${commentReplyForm}">
+                              th:object="${commentReplyForm}" >
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                            <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-                                <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-                            </div>
                             <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" name="replyContent"
                                       th:field="*{replyContent}"></textarea>
                             <div class="comment_body_registration flex">
