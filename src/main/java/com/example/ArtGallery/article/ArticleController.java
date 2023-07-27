@@ -63,6 +63,10 @@ public class ArticleController {
         UserEntity userEntity = this.userService.getUserNick(nickname);
         model.addAttribute("user", userEntity);
 
+        // 해당 게시물의 정보(postEntity)를 'post'로 템플릿에 활용할 수 있게 반환
+        PostEntity post = this.postService.getPost(postId);
+        model.addAttribute("post", post);
+
         if(nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
 
         } else {
@@ -75,21 +79,34 @@ public class ArticleController {
 
             boolean isFollowing = followService.isFollowing(loginUserEntity, userEntity);
             model.addAttribute("isFollowing", isFollowing);
-        }
 
-        // 해당 게시물의 정보(postEntity)를 'post'로 템플릿에 활용할 수 있게 반환
-        PostEntity post = this.postService.getPost(postId);
-        model.addAttribute("post", post);
+            // 현재 접속한 유저가 해당 게시물을 이미 저장했는지 판별
+            boolean savedByCurrentUser = userService.checkIfSavedByCurrentUser(loginUserEntity.getNickname(), postId);
+            model.addAttribute("savedByCurrentUser", savedByCurrentUser);
+
+            // 해당 게시물에 좋아요를 누른 유저인지 아닌지 판별
+            boolean isLiked = postService.isLikedByCurrentUser(postId, loginUserEntity.getNickname());
+            model.addAttribute("isLiked", isLiked);
+        }
 
         // 게시물을 올린 유저의 팔로워 수 템플릿에 반환
         int followerCount = followService.getFollowerCount(userEntity.getId());
         model.addAttribute("followerCount", followerCount);
 
+        // 해당 게시물을 저장한 유저의 수
+        int savedUserCount = userService.getSavedUserCount(postId);
+        model.addAttribute("savedUserCount", savedUserCount);
+
+        // 해당 게시물에 저장된 태그들 반환
+        List<String> hashtags = postService.getTagsByPostId(postId);
+        model.addAttribute("hashtags", hashtags);
+
         return "article_details_form";
     }
 
-    @GetMapping("/by_topic")
-    public String bytopic(Model model, Authentication authentication){
+    @GetMapping("/by_topic/{category}")
+    public String bytopic(Model model, Authentication authentication, @RequestParam(name = "sortingOption", defaultValue = "1") int sortingOption,
+                          @PathVariable int category){
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -97,11 +114,25 @@ public class ArticleController {
             // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
 
+            // 해당 nickname을 사용하여 유저 정보 가져오기
+            UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+            model.addAttribute("userEntity", userEntity);
+
+            List<PostEntity> postEntityList = this.postService.getList();
+            model.addAttribute("postList", postEntityList);
         }
 
         // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
         model.addAttribute("nicknameConfirm", nicknameConfirm);
 
+        // 사용자가 선택한 정렬 기준을 서비스에 전달하여 해당 카테고리의 게시물 목록을 가져옴
+        List<PostEntity> sortedPosts = postService.getSortedPosts_category(sortingOption, nicknameConfirm, category);
+
+        // 뷰에 필요한 데이터 전달
+        model.addAttribute("postList", sortedPosts);
+        model.addAttribute("sortingOption", sortingOption);
+
+        model.addAttribute("category", category);
         return "pages_by_topic";
     }
 

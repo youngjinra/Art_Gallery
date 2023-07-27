@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -37,11 +38,11 @@ public class PostController {
     // upload 템플릿에서 form태그의 action: 으로 인해 해당 주소 postmapping
     @PostMapping("/post/create/{nickname}")
     public String create(@PathVariable String nickname, @RequestParam("uploadfile")MultipartFile uploadFile, @RequestParam String subject, @RequestParam String content,
-                         RedirectAttributes redirectAttributes){
+                         RedirectAttributes redirectAttributes, @RequestParam Integer category, @RequestParam List<String> hashtags){
 
         if(uploadFile != null && !uploadFile.isEmpty()) {
             FileEntity fileEntity = fileService.uploadFile(uploadFile);
-            PostEntity post = postService.create(subject, content, fileEntity, nickname);
+            PostEntity post = postService.create(subject, content, fileEntity, nickname, category, hashtags);
 
             if (fileEntity != null) {
                 redirectAttributes.addFlashAttribute("file", fileEntity);
@@ -110,6 +111,12 @@ public class PostController {
         headers.setContentLength(imageBytes.length);
 
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+
+    @PostMapping("/post/incrementDownloads/{id}")
+    public ResponseEntity<Void> incrementPostDownloads(@PathVariable("id") int postId) {
+        postService.incrementPostDownloads(postId);
+        return ResponseEntity.ok().build();
     }
 }
 

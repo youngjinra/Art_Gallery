@@ -81,7 +81,7 @@ function delete_function() {
     if (confirmDelete) {
       alert("삭제되었습니다.");
       // 현재 페이지로 이동 (리다이렉션)
-      window.location.href = "https://cdpn.io/pen/debug/bGQogqX";
+      location.reload();
     }
   });
 }

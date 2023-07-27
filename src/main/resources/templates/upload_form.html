@@ -118,8 +118,8 @@
 
         </div>
         <div class="particle p1 flex flex-col">
-          <label for="">카테고리</label>
-          <select name="" id="" class="w-11/12 p-2">
+          <label for="category">카테고리</label>
+          <select name="category" id="category" class="w-11/12 p-2">
             <option value="1" selected>Ai Art</option>
             <option value="2">Digital Art</option>
             <option value="3">Fan Art</option>
@@ -132,14 +132,23 @@
             <option value="10">Emoji</option>
           </select>
         </div>
+<!--        <div class="particle p2 flex flex-col">-->
+<!--          <label for="">해쉬태그 <span class="text-sm">(최소 3개, 최대 8개)</span></label>-->
+<!--          <input type="text" placeholder="해쉬태그를 입력하세요" class="w-11/12 p-2">-->
+<!--        </div>-->
+<!--        <div class="particle p3 flex gap-2 flex-wrap">-->
+<!--          <div class="tag tag1 flex gap-1">#바다 <span><i class="fa-solid fa-xmark"></i></span></div>-->
+<!--          <div class="tag tag2 flex gap-1">#하늘 <span><i class="fa-solid fa-xmark"></i></span></div>-->
+<!--          <div class="tag tag3 flex gap-1">#밤 <span><i class="fa-solid fa-xmark"></i></span></div>-->
+<!--        </div>-->
         <div class="particle p2 flex flex-col">
-          <label for="">해쉬태그 <span class="text-sm">(최소 3개, 최대 8개)</span></label>
-          <input type="text" placeholder="해쉬태그를 입력하세요" class="w-11/12 p-2">
+          <label for="">해시태그 <span class="text-sm">(최소 3개, 최대 8개)</span></label>
+          <input type="text" id="hashtags-input" placeholder="해시태그를 입력하세요" class="w-11/12 p-2">
         </div>
-        <div class="particle p3 flex gap-2 flex-wrap">
-          <div class="tag tag1 flex gap-1">#바다 <span><i class="fa-solid fa-xmark"></i></span></div>
-          <div class="tag tag2 flex gap-1">#하늘 <span><i class="fa-solid fa-xmark"></i></span></div>
-          <div class="tag tag3 flex gap-1">#밤 <span><i class="fa-solid fa-xmark"></i></span></div>
+        <div class="particle p3 flex gap-2 flex-wrap" id="hashtags-display">
+          <!-- 입력한 해시태그가 추가될 영역 -->
+<!--      해당 input을 숨겨놓고 데이터 저장해서 컨트롤러로 넘김    -->
+          <input type="hidden" name="hashtags" id="hashtags-hidden" />
         </div>
       </div>
     </div>
@@ -161,10 +170,6 @@
 </div>
 </form>
 <script src="/js/jquery-3.7.0.min.js"></script>
-
-<!-- 추가 -->
-<script src="/test/upload_form_new.js"></script>
-
 <script src="/js/upload_form.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>

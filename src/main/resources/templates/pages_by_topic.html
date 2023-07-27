@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="container top_topic absolute flex flex-col">
-        <span class="lg">Ai Art</span>
+        <span class="lg" id="categoryName"></span>
         <span class="sm">Images made using DreamUp or other artificial-intelligence-powered image generators.</span>
     </div>
 </div>
@@ -62,7 +62,36 @@
             <option value="4">포인트</option>
         </select>
     </div>
+
     <section class="section-1">
+        <div class="masonry-grid">
+            <div class="grid-item w-full" th:each="post : ${postList}">
+                <div class="img_top_function flex gap-2">
+                    <a href="#" class="font-awsome bookmark">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </a>
+                    <a href="#" class="font-awsome heart">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                </div>
+                <!--    a태그 주소값은 해당 게시물 올린 유저의 닉네임값을 받아오는 방식으로 -->
+                <a th:href="@{|/user/detail_form/${post.userEntity.nickname}|}" class="img_bottom_function flex gap-2">
+                    <div class="img_badge">
+                        <img src="https://picsum.photos/300/300" alt="">
+                    </div>
+                    <div class="nName flex items-center" th:text="${post.userEntity.nickname}">
+                    </div>
+                </a>
+                <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}"
+                   th:data-post-id="${post.id}" class="img_box post-link">
+                    <img id="myImage" th:if="${post.fileEntity != null}"
+                         th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
+                         alt="My Image">
+                </a>
+            </div>
+        </div>
+    </section>
+<!--    <section class="section-1">
         <div class="masonry-grid">
             <div class="grid-item">
                 <div class="img_top_function flex gap-2">
@@ -278,8 +307,60 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section>-->
 </div>
+<!-- 서버에서 계산된 sortingOption의 값을 클라이언트 사이드의 JavaScript 변수에 넣습니다.-->
+<script th:inline="javascript">
+    var sortingOptionValue = [[${sortingOption}]];
+    var selectElement = document.getElementById("sortingOption");
+    for (var i = 0; i < selectElement.options.length; i++) {
+        // 문자열과 정수 비교를 위해 sortingOptionValue를 정수로 변환
+        if (selectElement.options[i].value === String(sortingOptionValue)) {
+            selectElement.options[i].selected = true;
+            break;
+        }
+    }
+</script>
+<!-- JavaScript 코드를 포함할 <script> 태그 추가 -->
+<script>
+    document.getElementById("category").onchange = function () {
+        var selectedCategory = document.getElementById("category").value;
+        switch (selectedCategory) {
+            case "1":
+                document.getElementById("categoryName").innerText = "Ai Art";
+                break;
+            case "2":
+                document.getElementById("categoryName").innerText = "Digital Art";
+                break;
+            case "3":
+                document.getElementById("categoryName").innerText = "Fan Art";
+                break;
+            case "4":
+                document.getElementById("categoryName").innerText = "Photography";
+                break;
+            case "5":
+                document.getElementById("categoryName").innerText = "Fantasy";
+                break;
+            case "6":
+                document.getElementById("categoryName").innerText = "Resources";
+                break;
+            case "7":
+                document.getElementById("categoryName").innerText = "Cosplay";
+                break;
+            case "8":
+                document.getElementById("categoryName").innerText = "3D";
+                break;
+            case "9":
+                document.getElementById("categoryName").innerText = "Fractal";
+                break;
+            case "10":
+                document.getElementById("categoryName").innerText = "Emoji";
+                break;
+            default:
+                document.getElementById("categoryName").innerText = "Ai Art";
+        }
+    };
+</script>
 <script src="/js/jquery-3.7.0.min.js"></script>
 <script src="/js/pages_by_topic.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>

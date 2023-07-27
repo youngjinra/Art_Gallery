@@ -4,22 +4,22 @@ package com.example.ArtGallery.article.post;
 import com.example.ArtGallery.DataNotFoundException;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
+
+import com.example.ArtGallery.article.hashtag.HashtagEntity;
+import com.example.ArtGallery.article.hashtag.HashtagRepository;
+
 import com.example.ArtGallery.follow.FollowRepository;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserRepository;
 import com.example.ArtGallery.user.UserService;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -29,6 +29,8 @@ public class PostService {
     private final FileService fileService;
     private final UserRepository userRepository;
     private final UserService userService;
+
+    private final HashtagRepository hashtagRepository;
     private final FollowRepository followRepository;
 
     public List<PostEntity> getList(){
@@ -44,7 +46,7 @@ public class PostService {
         }
     }
 
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname){
+    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags){
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();
@@ -53,6 +55,25 @@ public class PostService {
         post.setCreateDate(LocalDateTime.now());
         post.setFileEntity(fileEntity);
         post.setUserEntity(userEntity.get());
+
+        post.setCategory(category);
+
+        // 해시태그 추가 로직
+        Set<HashtagEntity> hashtagEntities = new HashSet<>();
+        for (String hashtagName : hashtags) {
+            HashtagEntity existingHashtag = hashtagRepository.findByName(hashtagName);
+            if (existingHashtag == null) {
+                // 데이터베이스에 존재하지 않는 해시태그라면 추가
+                HashtagEntity hashtag = new HashtagEntity();
+                hashtag.setName(hashtagName);
+                hashtagRepository.save(hashtag);
+                hashtagEntities.add(hashtag);
+            } else {
+                // 이미 데이터베이스에 존재하는 해시태그라면 추가하지 않음
+                hashtagEntities.add(existingHashtag);
+            }
+        }
+        post.setHashtags(hashtagEntities);
 
         System.out.println("fileRepository 저장됨");
         this.postRepository.save(post);
@@ -80,10 +101,48 @@ public class PostService {
         this.postRepository.save(postEntity);
     }
 
+    // 현재 로그인한 사용자가 해당 게시물에 좋아요를 눌렀는지 여부를 판단
+    public boolean isLikedByCurrentUser(int postId, String nickname) {
+        Optional<PostEntity> postEntity = this.postRepository.findById(postId);
+        PostEntity post = postEntity.get();
+
+        Set<UserEntity> voters = post.getVoter();
+        List<String> voterNicknames = voters.stream()
+                .map(UserEntity::getNickname)
+                .collect(Collectors.toList());
+
+        return voterNicknames.contains(nickname);
+    }
+
     public void viewPost(PostEntity postEntity){
         postRepository.save(postEntity);
     }
 
+    public void incrementPostDownloads(int postId) {
+        PostEntity post = postRepository.findById(postId).orElse(null);
+        if (post != null) {
+            post.setPostDownloads(post.getPostDownloads() + 1);
+            postRepository.save(post);
+        }
+    }
+
+
+    public List<String> getTagsByPostId(int postId) {
+        // postId를 사용하여 해당 게시물의 태그들을 가져옴
+        PostEntity post = postRepository.findById(postId).orElse(null);
+
+        if (post == null) {
+            // 게시물이 존재하지 않으면 빈 리스트 반환
+            return Collections.emptyList();
+        }
+        
+        // tags에 해당 게시물의 태그들 추가
+        List<String> tags = new ArrayList<>();
+        for (HashtagEntity hashtag : post.getHashtags()){
+            tags.add(hashtag.getName());
+        }
+        return tags;
+    }
 
 
     // 현재 로그인된 사용자가 작성한 게시물만 가져오는 메서드를 추가.
@@ -172,7 +231,52 @@ public class PostService {
         return sortedPosts;
     }
 
+    // 카테고리별 페이지 정렬
+    public List<PostEntity> getSortedPosts_category(int sortingOption, String usernickname, Integer category) {
+        List<PostEntity> sortedPosts;
 
+        switch (sortingOption) {
+            case 1:
+                // 최신순으로 정렬
+                sortedPosts = postRepository.findAllByOrderByCreateDateDesc();
+                break;
+            case 2:
+                // 인기순으로 정렬
+                sortedPosts = postRepository.findAllByOrderByPostLikeDesc();
+                break;
+
+            case 3:
+                // 팔로잉만 정렬
+                Optional<UserEntity> optionalFollower = userRepository.findByNickname(usernickname);
+                if (optionalFollower.isPresent()) {
+                    UserEntity follower = optionalFollower.get();
+                    List<UserEntity> followingUsers = follower.getFollowing();
+                    sortedPosts = new ArrayList<>();
+                    List<String> followingNicknames = new ArrayList<>();
+                    for (UserEntity followingUser : followingUsers) {
+                        followingNicknames.add(followingUser.getNickname());
+                    }
+                    sortedPosts = postRepository.findByUserEntity_NicknameInOrderByCreateDateDesc(followingNicknames);
+                } else {
+                    sortedPosts = new ArrayList<>();
+                }
+                break;
+
+            default:
+                // 기본적으로 최신순으로 정렬
+                sortedPosts = postRepository.findAllByOrderByCreateDateDesc();
+                break;
+        }
+
+        // 해당 카테고리에 속하는 게시물만 필터링
+        if (category != null) {
+            sortedPosts = sortedPosts.stream()
+                    .filter(post -> post.getCategory().equals(category))
+                    .collect(Collectors.toList());
+        }
+
+        return sortedPosts;
+    }
 
 
     public List<PostEntity> getAllSortedPosts() {
@@ -182,7 +286,6 @@ public class PostService {
 
         return this.postRepository.findAll(sort);
     }
-
 
 
 }

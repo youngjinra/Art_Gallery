@@ -117,6 +117,10 @@ public class UserController {
         model.addAttribute("followerCount", followerCount);
         model.addAttribute("followingCount", followingCount);
 
+        // 해당 유저가 저장한 게시물의 총 개수가 몇개인지 반환
+        int totalCollectionCount = userService.getSavedPostCount(userEntity.getNickname());
+        model.addAttribute("totalCollectionCount", totalCollectionCount);
+
 
         return "user_detail_form";
     }
@@ -186,4 +190,19 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    // 저장하기 버튼 클릭시 컬렉션 추가
+    @PostMapping("/collection/{nickname}/{postId}")
+    public String addToCollection(@PathVariable String nickname, @PathVariable int postId) {
+        userService.addToCollection(nickname, postId);
+        return "redirect:/";
+    }
+
+    // 저장하기 취소시 컬렉션에서 제거
+    @PostMapping("/removeCollection/{nickname}/{postId}")
+    public String removeFromCollection(@PathVariable String nickname, @PathVariable int postId) {
+        userService.removeFromCollection(nickname, postId);
+        return "redirect:/"; // 즐겨찾기 제거 후 홈 페이지로 리다이렉트
+    }
+
 }
