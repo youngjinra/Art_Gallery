@@ -69,7 +69,9 @@ $(function () {
 
 
 
-/*function sortPosts() {
+/*
+// 비동기적으로 서버와 통신해야 하거나 서버 응답에 따른 추가적인 처리가 필요하다면
+function sortPosts() {
    // 1. 선택된 옵션 값 가져오기
    var selectedOption = document.getElementById("sortingOption").value;
 
@@ -91,7 +93,7 @@ $(function () {
    xhr.send();
 }*/
 
-
+// 서버 응답이 필요 없고 즉시 페이지를 새로고침하고 싶다면
 function sortPosts() {
    // 1. 선택된 옵션 값 가져오기
    var selectedOption = document.getElementById("sortingOption").value;

@@ -113,9 +113,11 @@ public class PostService {
                     UserEntity follower = optionalFollower.get();
                     List<UserEntity> followingUsers = follower.getFollowing();
                     sortedPosts = new ArrayList<>();
+                    List<String> followingNicknames = new ArrayList<>();
                     for (UserEntity followingUser : followingUsers) {
-                        sortedPosts.addAll(postRepository.findByUserEntity_Nickname(followingUser.getNickname()));
+                        followingNicknames.add(followingUser.getNickname());
                     }
+                    sortedPosts = postRepository.findByUserEntity_NicknameInOrderByCreateDateDesc(followingNicknames);
                 } else {
                     sortedPosts = new ArrayList<>();
                 }
