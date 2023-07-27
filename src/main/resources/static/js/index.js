@@ -67,3 +67,41 @@ $(function () {
   slide_1();
 });
 
+
+
+/*
+// 비동기적으로 서버와 통신해야 하거나 서버 응답에 따른 추가적인 처리가 필요하다면
+function sortPosts() {
+   // 1. 선택된 옵션 값 가져오기
+   var selectedOption = document.getElementById("sortingOption").value;
+
+   // 2. AJAX 요청 보내기
+   var xhr = new XMLHttpRequest();
+   xhr.open("GET", "/?sortingOption=" + selectedOption, true);
+   xhr.onreadystatechange = function () {
+       if (xhr.readyState === XMLHttpRequest.DONE) {
+           if (xhr.status === 200) {
+              // 3. 요청이 성공하면 새로고침
+              location.href = "/?sortingOption=" + selectedOption
+//                location.reload();
+           } else {
+              // 4. 요청 실패 처리
+              console.error("요청 실패");
+           }
+       }
+   };
+   xhr.send();
+}*/
+
+// 서버 응답이 필요 없고 즉시 페이지를 새로고침하고 싶다면
+function sortPosts() {
+   // 1. 선택된 옵션 값 가져오기
+   var selectedOption = document.getElementById("sortingOption").value;
+
+   // 2. 새로운 URL 생성
+   var newUrl = "/?sortingOption=" + selectedOption;
+
+   // 3. URL로 이동
+   location.href = newUrl;
+}
+
