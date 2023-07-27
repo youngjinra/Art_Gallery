@@ -96,18 +96,19 @@ $(function () {
 });
 
 
-function sortPosts() {
+/*function sortPosts2() {
    // 1. 선택된 옵션 값 가져오기
    var selectedOption = document.getElementById("sortingOption").value;
-
+   // 2. 게시물 작성자의 닉네임 값 가져오기
+   var nickname = document.getElementById("postNickname").value;
    // 2. AJAX 요청 보내기
    var xhr = new XMLHttpRequest();
-   xhr.open("GET", "/?sortingOption=" + selectedOption, true);
+   xhr.open("GET", "/user/detail_form/" + nickname +"?sortingOption=" + selectedOption, true);
    xhr.onreadystatechange = function () {
        if (xhr.readyState === XMLHttpRequest.DONE) {
            if (xhr.status === 200) {
               // 3. 요청이 성공하면 새로고침
-              location.href = "/?sortingOption=" + selectedOption
+              location.href = "/user/detail_form/" + nickname +"?sortingOption=" + selectedOption
            } else {
               // 4. 요청 실패 처리
               console.error("요청 실패");
@@ -115,5 +116,16 @@ function sortPosts() {
        }
    };
    xhr.send();
-}
+}*/
 
+
+function sortPosts2() {
+   // 1. 선택된 옵션 값 가져오기
+   var selectedOption = document.getElementById("sortingOption").value;
+
+   // 2. 새로운 URL 생성
+   var newUrl = "/user/detail_form/" + postNickname + "?sortingOption=" + selectedOption;
+
+   // 3. URL로 이동
+   location.href = newUrl;
+}

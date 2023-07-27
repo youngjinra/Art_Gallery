@@ -69,7 +69,7 @@ $(function () {
 
 
 
-function sortPosts() {
+/*function sortPosts() {
    // 1. 선택된 옵션 값 가져오기
    var selectedOption = document.getElementById("sortingOption").value;
 
@@ -89,6 +89,17 @@ function sortPosts() {
        }
    };
    xhr.send();
-}
+}*/
 
+
+function sortPosts() {
+   // 1. 선택된 옵션 값 가져오기
+   var selectedOption = document.getElementById("sortingOption").value;
+
+   // 2. 새로운 URL 생성
+   var newUrl = "/?sortingOption=" + selectedOption;
+
+   // 3. URL로 이동
+   location.href = newUrl;
+}
 

@@ -2,6 +2,7 @@ package com.example.ArtGallery.user;
 
 
 import com.example.ArtGallery.article.post.PostEntity;
+import com.example.ArtGallery.follow.FollowEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -43,7 +45,13 @@ public class UserEntity {
 
     private int userpoint; // 각 유저들의 보유 포인트 > 사용처나 적립기능 추후 구현
 
-    private int following; // 해당 유저의 팔로잉 수 > 추후 구현
+    /*private int following; // 해당 유저의 팔로잉 수 > 추후 구현*/
+    @OneToMany(mappedBy = "follower")
+    private List<FollowEntity> following;
+
+    public List<UserEntity> getFollowing() {
+        return following.stream().map(FollowEntity::getFollowing).collect(Collectors.toList());
+    }
 
     private int follower; // 해당 유저의 팔로워 수 > 추후 구현
 

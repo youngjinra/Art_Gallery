@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -62,14 +64,19 @@ public class PostService {
         return postRepository.findById(postId).orElse(null);
     }
 
-    // 현재 로그인된 사용자가 작성한 게시물만 가져오는 메서드를 추가.
+    /*// 현재 로그인된 사용자가 작성한 게시물만 가져오는 메서드를 추가.
     public List<PostEntity> getPostsByNickname(String nickname) {
         return postRepository.findByUserEntity_Nickname(nickname);
-    }
+    }*/
+
+
+
 
     // 게시물 좋아요
     public void vote(PostEntity postEntity, UserEntity userEntity) {
         postEntity.getVoter().add(userEntity);
+        postEntity.setPostLike(postEntity.getVoter().size());
+
         this.postRepository.save(postEntity);
     }
 
@@ -79,10 +86,14 @@ public class PostService {
 
 
 
+    // 현재 로그인된 사용자가 작성한 게시물만 가져오는 메서드를 추가.
+    public List<PostEntity> getPostsByNickname(String nickname) {
+        return postRepository.findByUserEntity_Nickname(nickname);
+    }
 
 
-
-    public List<PostEntity> getSortedPosts(int sortingOption) {
+    // root 게시물 정렬
+    public List<PostEntity> getSortedPosts(int sortingOption, String usernickname) {
         List<PostEntity> sortedPosts;
 
         switch (sortingOption) {
@@ -95,6 +106,21 @@ public class PostService {
                 sortedPosts = postRepository.findAllByOrderByPostLikeDesc();
                 break;
 
+            case 3:
+                // 팔로잉만 정렬
+                Optional<UserEntity> optionalFollower = userRepository.findByNickname(usernickname);
+                if (optionalFollower.isPresent()) {
+                    UserEntity follower = optionalFollower.get();
+                    List<UserEntity> followingUsers = follower.getFollowing();
+                    sortedPosts = new ArrayList<>();
+                    for (UserEntity followingUser : followingUsers) {
+                        sortedPosts.addAll(postRepository.findByUserEntity_Nickname(followingUser.getNickname()));
+                    }
+                } else {
+                    sortedPosts = new ArrayList<>();
+                }
+                break;
+
             default:
                 // 기본적으로 최신순으로 정렬
                 sortedPosts = postRepository.findAllByOrderByCreateDateDesc();
@@ -103,6 +129,49 @@ public class PostService {
 
         return sortedPosts;
     }
+
+    // /user/detail_form 게시물 정렬
+    public List<PostEntity> getSortedPosts_userdetail(int sortingOption, String nickname) {
+        List<PostEntity> sortedPosts;
+
+        switch (sortingOption) {
+            case 1:
+                // 최신순으로 정렬
+                sortedPosts = postRepository.findAllByUserEntity_NicknameOrderByCreateDateDesc(nickname);
+                break;
+            case 2:
+                // 인기순으로 정렬
+                sortedPosts = postRepository.findAllByUserEntity_NicknameOrderByPostLikeDesc(nickname);
+                break;
+/*
+            // 사용안함
+            case 3:
+                // 팔로잉만 정렬
+                Optional<UserEntity> optionalFollower = userRepository.findByNickname(nickname);
+                if (optionalFollower.isPresent()) {
+                    UserEntity follower = optionalFollower.get();
+                    List<UserEntity> followingUsers = follower.getFollowing();
+                    sortedPosts = new ArrayList<>();
+                    for (UserEntity followingUser : followingUsers) {
+                        sortedPosts.addAll(postRepository.findByUserEntity_Nickname(followingUser.getNickname()));
+                    }
+                } else {
+                    sortedPosts = new ArrayList<>();
+                }
+                break;
+*/
+
+            default:
+                // 기본적으로 최신순으로 정렬
+                sortedPosts = postRepository.findAllByUserEntity_NicknameOrderByCreateDateDesc(nickname);
+                break;
+        }
+
+        return sortedPosts;
+    }
+
+
+
 
     public List<PostEntity> getAllSortedPosts() {
         List<Sort.Order> sorts = new ArrayList<>();

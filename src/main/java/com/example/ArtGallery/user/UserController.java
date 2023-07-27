@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping("/user/detail_form/{loginUserNick}")
-    public String userdetail(Model model, @PathVariable("loginUserNick") String loginUserNick, Authentication authentication){
+    public String userdetail(Model model, @PathVariable("loginUserNick") String loginUserNick, Authentication authentication, @RequestParam(name = "sortingOption", defaultValue = "1") int sortingOption){
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -63,6 +63,7 @@ public class UserController {
 
         } else {
             // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
+
             model.addAttribute("isCurrentUser", nicknameConfirm.equals(loginUserNick));
 
             UserEntity loginUser = this.userService.getUserNick(nicknameConfirm);
@@ -74,17 +75,39 @@ public class UserController {
         }
 
         // 닉네임을 기준으로 해당 닉네임을 갖는 사용자의 게시물만 가져옴
-        List<PostEntity> postEntityList = this.postService.getPostsByNickname(loginUserNick);
+//        List<PostEntity> postEntityList = this.postService.getPostsByNickname(loginUserNick);
+
+
+        // loginUserNick: 게시물 주인
+        // nicknameConfirm: 현재 로그인한 유저의 닉네임        
+        // 사용자가 선택한 정렬 기준을 서비스에 전달
+        List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
+
+        // 뷰에 필요한 데이터 전달
+//        model.addAttribute("postList", sortedPosts);
+        model.addAttribute("sortingOption", sortingOption);
+
+
 
         int totalViews = 0;
         int totalLikes = 0;
 
-        for(PostEntity post : postEntityList){
+/*        for(PostEntity post : postEntityList){
             totalViews += post.getPostView();
             totalLikes += post.getVoter().size();
         }
 
         model.addAttribute("postList", postEntityList);
+        model.addAttribute("postTotalView", totalViews);
+        model.addAttribute("postTotalLikes", totalLikes);*/
+
+        // list 수정중
+        for(PostEntity post : sortedPosts){
+            totalViews += post.getPostView();
+            totalLikes += post.getVoter().size();
+        }
+
+        model.addAttribute("postList", sortedPosts);
         model.addAttribute("postTotalView", totalViews);
         model.addAttribute("postTotalLikes", totalLikes);
 
@@ -93,6 +116,7 @@ public class UserController {
         int followingCount = followService.getFollowingCount(userEntity.getId());
         model.addAttribute("followerCount", followerCount);
         model.addAttribute("followingCount", followingCount);
+
 
         return "user_detail_form";
     }
@@ -121,7 +145,7 @@ public class UserController {
 //        model.addAttribute("postList", postEntityList);
 
         // 사용자가 선택한 정렬 기준을 서비스에 전달
-        List<PostEntity> sortedPosts = postService.getSortedPosts(sortingOption);
+        List<PostEntity> sortedPosts = postService.getSortedPosts(sortingOption, nicknameConfirm);
 
         // 뷰에 필요한 데이터 전달
         model.addAttribute("postList", sortedPosts);

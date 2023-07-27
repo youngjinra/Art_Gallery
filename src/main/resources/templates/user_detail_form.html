@@ -116,10 +116,10 @@
     <div class="section-1_loading"></div>
     <div class="section-1_middle-bar flex justify-between">
         <span class="middle-title">갤러리 모음</span>
-        <select class="form-select" id="sortingOption" onchange="sortPosts()">
+        <select class="form-select" id="sortingOption" onchange="sortPosts2()">
             <option value="1" selected>최신순</option>
             <option value="2">인기순</option>
-            <option value="3">팔로우</option>
+            <!--<option value="3">팔로우</option>-->
         </select>
     </div>
     <section class="section-1">
@@ -172,6 +172,11 @@
             break;
         }
     }
+</script>
+
+<script th:inline="javascript">
+    // 서버에서 Thymeleaf를 통해 값을 주입
+    var postNickname = /*[[${user.nickname}]]*/ '';
 </script>
 <script src="/js/jquery-3.7.0.min.js"></script>
 <script src="/js/user_detail_form.js"></script>
