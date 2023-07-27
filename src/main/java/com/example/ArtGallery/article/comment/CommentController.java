@@ -26,7 +26,8 @@ public class CommentController {
     private final UserService userService;
 
     @PostMapping("/comment/create/{nickname}/{postId}")
-    public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname, @Valid CommentForm commentForm, BindingResult bindingResult, Authentication authentication) {
+    public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
+                                @Valid CommentForm commentForm, BindingResult bindingResult, Authentication authentication) {
 
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
@@ -51,13 +52,12 @@ public class CommentController {
         PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, commentForm.getContent());
 
-//        this.commentService.create(post, commentForm.getContent());
-//        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
         return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, comment.getId());
     }
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")
-    public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @RequestParam("replyContent") String replyContent, @PathVariable("nickname") String nickname) {
+    public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId,
+                              @RequestParam("replyContent") String replyContent, @PathVariable("nickname") String nickname) {
         PostEntity post = this.postService.getPost(postId);
 
         CommentEntity parentComment = commentService.getComment(commentId);

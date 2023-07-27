@@ -425,6 +425,15 @@ body .side_info_imoji:hover {
   border: 1px solid #ceced2;
   padding: 10px;
 }
+.anchor{
+  scroll-margin-top: 380px;
+}
+
+
+
+
+
+
 
 /* 반응형 */
 @media (min-width: 1600px) {
@@ -466,9 +475,6 @@ body .side_info_imoji:hover {
     font-size: 0.85rem;
     margin-top: -60px;
   }
-}
-.anchor{
-  scroll-margin-top: 380px;
 }
 
 @media (max-width: 599px) {
