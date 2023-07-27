@@ -331,6 +331,7 @@
 
                     <!-- 답글 등록 창 -->
                     <div class="particle flex gap-4 particle_2" th:each="reply : ${comment.commentList}">
+                        <a th:id="|reply_${reply.id}|" class="anchor"></a>
                         <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                             <img src="https://picsum.photos/300/300" alt="">
                         </a>

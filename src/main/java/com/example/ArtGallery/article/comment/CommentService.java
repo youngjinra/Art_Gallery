@@ -43,12 +43,12 @@ public class CommentService {
         return this.commentRepository.save(comment);
     }
 
-    public void createReply(PostEntity postEntity, CommentEntity parentComment, String replyContent){
+    public CommentEntity createReply(PostEntity postEntity, CommentEntity parentComment, String replyContent){
         CommentEntity reply = new CommentEntity();
         reply.setContent(replyContent);
         reply.setCreateDate(LocalDateTime.now());
         reply.setPostEntity(postEntity);
         reply.setParent(parentComment);
-        this.commentRepository.save(reply);
+        return this.commentRepository.save(reply);
     }
 }

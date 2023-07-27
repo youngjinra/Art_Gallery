@@ -44,6 +44,7 @@ function delete_function() {
   });
 }
 
+
 $(function () {
   SideClick__ft();
   textarea_resize();

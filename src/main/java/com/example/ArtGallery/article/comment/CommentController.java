@@ -50,9 +50,12 @@ public class CommentController {
             PostEntity post = this.postService.getPost(postId);
             model.addAttribute("post", post);
 
+            CommentEntity comment = this.commentService.create(post, commentForm.getContent());
+
             return "/article_details_form";
         }
 
+        // 댓글 생성
         PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, commentForm.getContent());
 
@@ -61,9 +64,8 @@ public class CommentController {
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")
     public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId,
-                              @PathVariable("nickname") String nickname,
-                              @Valid CommentReplyForm commentReplyForm, BindingResult bindingResult, Authentication authentication,
-                              CommentForm commentForm) {
+                              @PathVariable("nickname") String nickname, @Valid CommentReplyForm commentReplyForm,
+                              BindingResult bindingResult, Authentication authentication, CommentForm commentForm) {
 
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
@@ -88,12 +90,13 @@ public class CommentController {
             return "/article_details_form";
         }
 
+        // 답글 생성
         PostEntity post = this.postService.getPost(postId);
+        CommentEntity parentComment = this.commentService.getComment(commentId);
+        CommentEntity reply = this.commentService.createReply(post, parentComment, commentReplyForm.getReplyContent());
 
-        CommentEntity parentComment = commentService.getComment(commentId);
-        commentService.createReply(post, parentComment, commentReplyForm.getReplyContent());
-
-        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
+        // 생성한 댓글로 리다이렉트
+        return String.format("redirect:/article/details/%s/%d#reply_%d", encodedNickname, postId, reply.getId());
     }
 
 }
