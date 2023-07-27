@@ -122,7 +122,7 @@ public class ArticleController {
     }
 
     @GetMapping("/search")
-    public String searchform(Model model, Authentication authentication){
+    public String searchform(Model model, Authentication authentication, @RequestParam("keyword") String keyword){
 
         String nicknameConfirm = null;
         String userEmail = null;
@@ -132,8 +132,13 @@ public class ArticleController {
 
         }
 
+        // 검색 결과에 부합하는 게시물들 반환
+        List<PostEntity> searchResults = postService.getPostsByHashtag(keyword);
+        model.addAttribute("keyword", keyword);
+
         // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
         model.addAttribute("nicknameConfirm", nicknameConfirm);
+        model.addAttribute("posts", searchResults);
 
         return "search_form";
     }

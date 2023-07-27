@@ -101,7 +101,7 @@ public class PostController {
     // image 반환하기
     @GetMapping(value = "/post/image/{uuid}/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> userSearch(@PathVariable("uuid") String uuid, @PathVariable("fileName") String fileName ) throws IOException {
-        String imagePath = "C:\\IT\\Gallery_project_DB\\" + uuid + "_" + fileName;
+        String imagePath = "C:\\IT\\DB\\" + uuid + "_" + fileName;
         Path imageFilePath = Paths.get(imagePath);
         byte[] imageBytes = Files.readAllBytes(imageFilePath);
 
@@ -117,6 +117,17 @@ public class PostController {
     public ResponseEntity<Void> incrementPostDownloads(@PathVariable("id") int postId) {
         postService.incrementPostDownloads(postId);
         return ResponseEntity.ok().build();
+    }
+
+    // 검색
+    @PostMapping("/search/post")
+    public List<PostEntity> getPostsByHashtag(@RequestParam("hashtagName") String hashtagName){
+        return postService.getPostsByHashtag(hashtagName);
+    }
+
+    @GetMapping("/search/post")
+    public String showSearchForm(){
+        return "search_form";
     }
 }
 

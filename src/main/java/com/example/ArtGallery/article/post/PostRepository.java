@@ -2,11 +2,12 @@ package com.example.ArtGallery.article.post;
 
 import com.example.ArtGallery.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<PostEntity, Integer> {
+public interface PostRepository extends JpaRepository<PostEntity, Integer>, JpaSpecificationExecutor<PostEntity> {
     List<PostEntity> findByUserEntity_Nickname(String nickname);
 
     // 최신순 정렬 DESC
@@ -22,6 +23,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     List<PostEntity> findByUserEntity_NicknameInOrderByCreateDateDesc(List<String> nicknames);
     List<PostEntity> findByUserEntity(UserEntity userEntity);
 
-
     List<PostEntity> findByUserEntity_NicknameInOrderByCreateDateDesc(Collection<String> nicknames);
+
 }

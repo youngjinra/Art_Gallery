@@ -2,6 +2,7 @@ package com.example.ArtGallery.article.post;
 
 
 import com.example.ArtGallery.DataNotFoundException;
+import com.example.ArtGallery.PostSpecifications;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
 import com.example.ArtGallery.article.hashtag.HashtagEntity;
@@ -13,6 +14,7 @@ import com.example.ArtGallery.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -83,9 +85,6 @@ public class PostService {
     public List<PostEntity> getPostsByNickname(String nickname) {
         return postRepository.findByUserEntity_Nickname(nickname);
     }*/
-
-
-
 
     // 게시물 좋아요
     public void vote(PostEntity postEntity, UserEntity userEntity) {
@@ -224,9 +223,6 @@ public class PostService {
         return sortedPosts;
     }
 
-
-
-
     public List<PostEntity> getAllSortedPosts() {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
@@ -235,4 +231,13 @@ public class PostService {
         return this.postRepository.findAll(sort);
     }
 
+    // 검색
+    public List<PostEntity> getPostsByHashtag(String keyword){
+        Specification<PostEntity> hashtagSpec = PostSpecifications.hasHashtag(keyword);
+        Specification<PostEntity> searchSpec = PostSpecifications.searchAll(keyword);
+
+        return postRepository.findAll(hashtagSpec.or(searchSpec));
+
+//        return postRepository.findAll(PostSpecifications.hasHashtag(hashtagName));
+    }
 }

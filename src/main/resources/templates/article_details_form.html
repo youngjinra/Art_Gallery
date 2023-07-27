@@ -17,9 +17,9 @@
         <div class="logo_box flex gap-4">
             <a href="/" class="logo">ArtGallery</a>
         </div>
-        <form class="search small-search-bar flex gap-3">
+        <form class="search small-search-bar flex gap-3" action="/search" method="get">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" name="search" placeholder="검색어를 입력하세요">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
         </form>
         <div class="flex gap-3 side_menu">
             <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
@@ -237,14 +237,9 @@
             <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
         </div>
         <div class="tag_box_body flex gap-2 mt-2">
-            <span>유러피언 숏헤어</span>
-            <span>고양이</span>
-            <span>주방</span>
-            <span>젊은</span>
-            <span>동물</span>
-            <span>고양이 같은</span>
-            <span>애완동물</span>
-            <span>털</span>
+            <div  th:each="hashtag : ${hashtags}">
+                <span th:text=${hashtag}></span>
+            </div>
         </div>
     </div>
 </div>

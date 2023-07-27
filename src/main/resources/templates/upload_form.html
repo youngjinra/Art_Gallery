@@ -18,9 +18,9 @@
     <div class="logo_box flex gap-4">
       <a href="/" class="logo">ArtGallery</a>
     </div>
-    <form class="search small-search-bar flex gap-3">
+    <form class="search small-search-bar flex gap-3" action="/search" method="get">
       <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <input type="text" name="search" placeholder="검색어를 입력하세요">
+      <input type="text" name="keyword" placeholder="검색어를 입력하세요">
     </form>
     <div class="flex gap-3 side_menu">
       <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
