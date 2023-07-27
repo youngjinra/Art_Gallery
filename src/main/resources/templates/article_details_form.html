@@ -141,7 +141,8 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1 flex-1">
                         <i class="fa-solid fa-heart"></i>
-                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>
+<!--                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>-->
+                        <span class="view_count text-xs font-bold" th:text="${post.postLike}"></span>
                         <span class="gr-300 text-xs">좋아요</span>
                     </div>
                 </div>
@@ -167,14 +168,9 @@
                 <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
             </div>
             <div class="tag_box_body flex gap-2 mt-2">
-                <span>유러피언 숏헤어</span>
-                <span>고양이</span>
-                <span>주방</span>
-                <span>젊은</span>
-                <span>동물</span>
-                <span>고양이 같은</span>
-                <span>애완동물</span>
-                <span>털</span>
+                <div  th:each="hashtag : ${hashtags}">
+                    <span th:text=${hashtag}></span>
+                </div>
             </div>
         </div>
         <div class="bottom_content flex flex-col gap-3">

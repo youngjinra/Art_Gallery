@@ -4,6 +4,8 @@ package com.example.ArtGallery.article.post;
 import com.example.ArtGallery.DataNotFoundException;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
+import com.example.ArtGallery.article.hashtag.HashtagEntity;
+import com.example.ArtGallery.article.hashtag.HashtagRepository;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserRepository;
 import com.example.ArtGallery.user.UserService;
@@ -11,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -23,6 +23,7 @@ public class PostService {
     private final FileService fileService;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final HashtagRepository hashtagRepository;
 
     public List<PostEntity> getList(){
         return this.postRepository.findAll();
@@ -37,7 +38,7 @@ public class PostService {
         }
     }
 
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname){
+    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, List<String> hashtags){
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();
@@ -46,6 +47,23 @@ public class PostService {
         post.setCreateDate(LocalDateTime.now());
         post.setFileEntity(fileEntity);
         post.setUserEntity(userEntity.get());
+
+        // 해시태그 추가 로직
+        Set<HashtagEntity> hashtagEntities = new HashSet<>();
+        for (String hashtagName : hashtags) {
+            HashtagEntity existingHashtag = hashtagRepository.findByName(hashtagName);
+            if (existingHashtag == null) {
+                // 데이터베이스에 존재하지 않는 해시태그라면 추가
+                HashtagEntity hashtag = new HashtagEntity();
+                hashtag.setName(hashtagName);
+                hashtagRepository.save(hashtag);
+                hashtagEntities.add(hashtag);
+            } else {
+                // 이미 데이터베이스에 존재하는 해시태그라면 추가하지 않음
+                hashtagEntities.add(existingHashtag);
+            }
+        }
+        post.setHashtags(hashtagEntities);
 
         System.out.println("fileRepository 저장됨");
         this.postRepository.save(post);
@@ -65,6 +83,7 @@ public class PostService {
     // 게시물 좋아요
     public void vote(PostEntity postEntity, UserEntity userEntity) {
         postEntity.getVoter().add(userEntity);
+        postEntity.setPostLike(postEntity.getVoter().size());
         this.postRepository.save(postEntity);
     }
 
@@ -91,6 +110,24 @@ public class PostService {
             post.setPostDownloads(post.getPostDownloads() + 1);
             postRepository.save(post);
         }
+    }
+
+
+    public List<String> getTagsByPostId(int postId) {
+        // postId를 사용하여 해당 게시물의 태그들을 가져옴
+        PostEntity post = postRepository.findById(postId).orElse(null);
+
+        if (post == null) {
+            // 게시물이 존재하지 않으면 빈 리스트 반환
+            return Collections.emptyList();
+        }
+        
+        // tags에 해당 게시물의 태그들 추가
+        List<String> tags = new ArrayList<>();
+        for (HashtagEntity hashtag : post.getHashtags()){
+            tags.add(hashtag.getName());
+        }
+        return tags;
     }
 
 }

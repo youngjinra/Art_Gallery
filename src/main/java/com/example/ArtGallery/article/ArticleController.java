@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class ArticleController {
@@ -93,6 +95,10 @@ public class ArticleController {
         // 해당 게시물을 저장한 유저의 수
         int savedUserCount = userService.getSavedUserCount(postId);
         model.addAttribute("savedUserCount", savedUserCount);
+
+        // 해당 게시물에 저장된 태그들 반환
+        List<String> hashtags = postService.getTagsByPostId(postId);
+        model.addAttribute("hashtags", hashtags);
 
         return "article_details_form";
     }

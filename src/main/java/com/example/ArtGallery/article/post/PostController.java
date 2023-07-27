@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -37,11 +38,11 @@ public class PostController {
     // upload 템플릿에서 form태그의 action: 으로 인해 해당 주소 postmapping
     @PostMapping("/post/create/{nickname}")
     public String create(@PathVariable String nickname, @RequestParam("uploadfile")MultipartFile uploadFile, @RequestParam String subject, @RequestParam String content,
-                         RedirectAttributes redirectAttributes){
+                         RedirectAttributes redirectAttributes, @RequestParam List<String> hashtags){
 
         if(uploadFile != null && !uploadFile.isEmpty()) {
             FileEntity fileEntity = fileService.uploadFile(uploadFile);
-            PostEntity post = postService.create(subject, content, fileEntity, nickname);
+            PostEntity post = postService.create(subject, content, fileEntity, nickname, hashtags);
 
             if (fileEntity != null) {
                 redirectAttributes.addFlashAttribute("file", fileEntity);
@@ -100,7 +101,7 @@ public class PostController {
     // image 반환하기
     @GetMapping(value = "/post/image/{uuid}/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> userSearch(@PathVariable("uuid") String uuid, @PathVariable("fileName") String fileName ) throws IOException {
-        String imagePath = "D:\\springBoot\\testDB\\" + uuid + "_" + fileName;
+        String imagePath = "C:\\IT\\Gallery_project_DB\\" + uuid + "_" + fileName;
         Path imageFilePath = Paths.get(imagePath);
         byte[] imageBytes = Files.readAllBytes(imageFilePath);
 
