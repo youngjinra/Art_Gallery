@@ -313,10 +313,10 @@
                             <img src="https://picsum.photos/300/300" alt="">
                         </a>
                         <form class="flex flex-col w-full" th:action="@{|/comment/create/${nickname}/${post.id}/${comment.id}|}" method="post"
-                              th:object="${commentReplyForm}" >
+                              th:object="${commentReplyForm}" onsubmit="return validateReplyForm()">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                             <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" name="replyContent"
-                                      th:field="*{replyContent}"></textarea>
+                                      th:id="replyContent" th:field="*{replyContent}"></textarea>
                             <div class="comment_body_registration flex">
                                 <input type="submit" value="답글 등록">
                             </div>
