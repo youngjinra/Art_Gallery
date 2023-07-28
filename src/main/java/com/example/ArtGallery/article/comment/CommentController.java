@@ -5,7 +5,6 @@ import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
