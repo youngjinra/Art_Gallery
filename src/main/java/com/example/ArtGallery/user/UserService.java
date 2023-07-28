@@ -54,6 +54,11 @@ public class UserService {
         return user.get();
     }
 
+    public UserEntity getUser(String nickname) {
+        Optional<UserEntity> user = this.userRepository.findByNickname(nickname);
+        return user.get();
+    }
+
     // 컨트롤러에서 Nickname을 사용하기 위한 메소드
     // local 로그인한 유저 전용
     public String getLocalUserNickname(String username){

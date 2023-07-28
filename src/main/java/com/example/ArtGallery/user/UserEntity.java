@@ -1,6 +1,7 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.article.comment.CommentEntity;
 import com.example.ArtGallery.article.post.PostEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -37,6 +38,9 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     private List<PostEntity> postEntity;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
+    private List<CommentEntity> comentEntityList;
 
     private String provider; // Local(로컬유져) kakao(카카오로그인) google(구글로그인) naver(네이버로그인) 4가지로 구분(중요한 구분 요소는 아님)
 

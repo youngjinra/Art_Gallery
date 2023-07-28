@@ -47,8 +47,7 @@ public class ArticleController {
         // upload 페이지 post요청에 nickname을 사용하기 위해 model추가
         model.addAttribute("nickname", nicknameConfirm);
 
-        return "upload_form";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
-
+        return "upload_form";
     }
 
     @GetMapping("/article/details/{nickname}/{postId}")
@@ -60,13 +59,9 @@ public class ArticleController {
         if (authentication != null && authentication.isAuthenticated()) {
             // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
+            UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+            model.addAttribute("userEntity", userEntity);
         }
-
-        // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
-        model.addAttribute("nicknameConfirm", nicknameConfirm);
-
-        // 게시물 주인의 닉네임을 템플릿에 반환
-        model.addAttribute("nickname", nickname);
 
         PostEntity post = this.postService.getPost(postId);
         model.addAttribute("post", post);
@@ -82,7 +77,6 @@ public class ArticleController {
         if (authentication != null && authentication.isAuthenticated()) {
             // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
-
         }
 
         // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
