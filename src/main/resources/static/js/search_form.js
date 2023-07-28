@@ -31,3 +31,11 @@ $(function () {
   PageLayout__init();
   Click__init();
 });
+
+function sortPosts() {
+    var selectedOption = document.getElementById("sortingOption").value;
+    var keyword = document.getElementById("keywordSpan").innerText;
+    var newUrl = "/search?keyword=" + keyword + "&sortingOption=" + selectedOption;
+
+    location.href = newUrl;
+}

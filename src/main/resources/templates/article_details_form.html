@@ -17,9 +17,9 @@
         <div class="logo_box flex gap-4">
             <a href="/" class="logo">ArtGallery</a>
         </div>
-        <form class="search small-search-bar flex gap-3">
+        <form class="search small-search-bar flex gap-3" action="/search" method="get">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" name="search" placeholder="검색어를 입력하세요">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
         </form>
         <div class="flex gap-3 side_menu">
             <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
@@ -129,6 +129,7 @@
 
         </div>
     </div>
+    <!-- 안쓰이는 거 같아요
     <div class="side_info flex flex-col gap-14">
         <div class="specific_box flex flex-col">
             <div class="title">갤러리 세부정보</div>
@@ -141,7 +142,7 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1 flex-1">
                         <i class="fa-solid fa-heart"></i>
-<!--                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>-->
+&lt;!&ndash;                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>&ndash;&gt;
                         <span class="view_count text-xs font-bold" th:text="${post.postLike}"></span>
                         <span class="gr-300 text-xs">좋아요</span>
                     </div>
@@ -154,7 +155,8 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1">
                         <i class="fa-solid fa-bookmark"></i>
-                        <span class="view_count text-xs font-bold" th:text="${savedUserCount}"></span>
+                        <span class="text-xs" th:text="${savedUserCount}"></span>
+                        <span class="text-xs" th:text="${followerCount} + ' followers'"></span>
                         <span class="gr-300 text-xs">저장</span>
                     </div>
                 </div>
@@ -183,7 +185,7 @@
                 <span class="gr-300" th:text="${post.content}"></span>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <!-- side_info_2 -->
@@ -222,7 +224,7 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1">
                         <i class="fa-solid fa-bookmark"></i>
-                        <span class="view_count text-xs font-bold" th:text="${post.postCollects}"></span>
+                        <span class="view_count text-xs font-bold" th:text="${savedUserCount}"></span>
                         <span class="gr-300 text-xs">저장</span>
                     </div>
                 </div>
@@ -237,14 +239,9 @@
             <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
         </div>
         <div class="tag_box_body flex gap-2 mt-2">
-            <span>유러피언 숏헤어</span>
-            <span>고양이</span>
-            <span>주방</span>
-            <span>젊은</span>
-            <span>동물</span>
-            <span>고양이 같은</span>
-            <span>애완동물</span>
-            <span>털</span>
+            <div  th:each="hashtag : ${hashtags}">
+                <span th:text=${hashtag}></span>
+            </div>
         </div>
     </div>
 </div>

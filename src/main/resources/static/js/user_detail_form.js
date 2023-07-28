@@ -120,12 +120,37 @@ $(function () {
 
 
 function sortPosts2() {
-   // 1. 선택된 옵션 값 가져오기
    var selectedOption = document.getElementById("sortingOption").value;
-
-   // 2. 새로운 URL 생성
    var newUrl = "/user/detail_form/" + postNickname + "?sortingOption=" + selectedOption;
 
-   // 3. URL로 이동
    location.href = newUrl;
+}
+
+
+function toggleLists() {
+    var imageList = document.getElementById("imageList");
+    var collectionList = document.getElementById("collectionList");
+    var currentUrl = window.location.href;
+    var isCollectionVisible = currentUrl.includes("/collection");
+
+    if (!isCollectionVisible) {
+        var newUrl = currentUrl + "/collection";
+        window.location.href = newUrl;
+        document.getElementById('sortingOption').style.display = 'none';
+    } else {
+        var newUrl = currentUrl.replace("/collection", "");
+        window.location.href = newUrl;
+    }
+}
+
+window.onload = function() {
+    var currentUrl = window.location.href;
+    var isCollectionVisible = currentUrl.includes("/collection");
+    var sortingOption = document.getElementById("sortingOption");
+
+    if (isCollectionVisible) {
+        sortingOption.style.display = "none";
+    } else {
+        sortingOption.style.display = "block";
+    }
 }

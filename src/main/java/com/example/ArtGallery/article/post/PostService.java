@@ -2,6 +2,7 @@ package com.example.ArtGallery.article.post;
 
 
 import com.example.ArtGallery.DataNotFoundException;
+import com.example.ArtGallery.PostSpecifications;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.file.FileService;
 
@@ -16,6 +17,7 @@ import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -89,9 +91,6 @@ public class PostService {
     public List<PostEntity> getPostsByNickname(String nickname) {
         return postRepository.findByUserEntity_Nickname(nickname);
     }*/
-
-
-
 
     // 게시물 좋아요
     public void vote(PostEntity postEntity, UserEntity userEntity) {
@@ -231,6 +230,7 @@ public class PostService {
         return sortedPosts;
     }
 
+
     // 카테고리별 페이지 정렬
     public List<PostEntity> getSortedPosts_category(int sortingOption, String usernickname, Integer category) {
         List<PostEntity> sortedPosts;
@@ -278,7 +278,6 @@ public class PostService {
         return sortedPosts;
     }
 
-
     public List<PostEntity> getAllSortedPosts() {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
@@ -288,4 +287,41 @@ public class PostService {
     }
 
 
+    // 검색 (+정렬)
+    public List<PostEntity> getPostsByHashtag(String keyword, int sortingOption){
+        Specification<PostEntity> hashtagSpec = PostSpecifications.hasHashtag(keyword);
+        Specification<PostEntity> searchSpec = PostSpecifications.searchAll(keyword);
+        List<PostEntity> sortedPosts;
+
+        switch (sortingOption) {
+            case 1:
+                // 최신순으로 정렬
+                sortedPosts = postRepository.findAll(hashtagSpec.or(searchSpec), Sort.by(Sort.Direction.DESC, "createDate"));
+                break;
+            case 2:
+                // 인기순으로 정렬
+                sortedPosts = postRepository.findAll(hashtagSpec.or(searchSpec), Sort.by(Sort.Direction.DESC, "postLike"));
+                break;
+
+            default:
+                // 기본적으로 최신순으로 정렬
+                sortedPosts = postRepository.findAll(hashtagSpec.or(searchSpec), Sort.by(Sort.Direction.DESC, "createDate"));
+                break;
+        }
+
+        return sortedPosts;
+//        return postRepository.findAll(hashtagSpec.or(searchSpec));
+
+//        return postRepository.findAll(PostSpecifications.hasHashtag(hashtagName));
+    }
+
+
+
+    public List<PostEntity> getPostsByCollectionIds(List<Integer> collectionIds) {
+        if (collectionIds.isEmpty()) {
+            return new ArrayList<>(); // 컬렉션 ID 목록이 비어있는 경우 빈 리스트 반환
+        }
+
+        return postRepository.findByIdIn(collectionIds);
+    }
 }

@@ -16,9 +16,9 @@
     <div class="menu container">
         <div class="logo_box flex gap-4">
             <a href="/" class="logo">ArtGallery</a>
-            <form class="search small-search-bar flex gap-3">
+            <form class="search small-search-bar flex gap-3" action="/search" method="get">
                 <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <input type="text" name="search" placeholder="검색어를 입력하세요">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요">
             </form>
         </div>
         <div class="flex flex-grow"></div>
@@ -49,9 +49,9 @@
     <div class="search-wrapper">
         <span class="big">놀라운 아트갤러리</span>
         <span class="small">재능 있는 크리에이터들이 공유하는 최고의 사진과 작품들입니다.</span>
-        <form class="search search-bar flex gap-3 mt-6">
+        <form class="search search-bar flex gap-3 mt-6" action="/search" method="get">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" name="search" placeholder="검색어를 입력하세요">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
         </form>
     </div>
 </div>

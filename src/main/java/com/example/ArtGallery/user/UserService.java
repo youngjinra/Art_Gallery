@@ -1,6 +1,8 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.article.post.PostEntity;
+import com.example.ArtGallery.article.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -8,10 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PostRepository postRepository;
 
     public UserEntity create(String username, String nickname, String email, String password) {
         UserEntity user = new UserEntity();
@@ -175,5 +175,22 @@ public class UserService {
         }
 
         return false;
+    }
+
+
+    public List<Integer> getUserCollections(String userNickname) {
+        Optional<UserEntity> userEntity = userRepository.findByNickname(userNickname);
+        UserEntity user = userEntity.get();
+        List<Integer> collection = user.getCollection();
+        return collection;
+    }
+
+
+    public List<PostEntity> getPostsByCollectionIds(List<Integer> collectionIds) {
+        if (collectionIds.isEmpty()) {
+            return new ArrayList<>(); // 컬렉션 ID 목록이 비어있는 경우 빈 리스트 반환
+        }
+
+        return postRepository.findByIdIn(collectionIds);
     }
 }

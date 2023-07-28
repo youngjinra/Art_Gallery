@@ -17,9 +17,9 @@
         <div class="logo_box flex gap-4">
             <a href="/" class="logo">ArtGallery</a>
         </div>
-        <form class="search small-search-bar flex gap-3">
+        <form class="search small-search-bar flex gap-3" action="/search" method="get">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <input type="text" name="search" placeholder="검색어를 입력하세요">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
         </form>
         <div class="flex gap-3 side_menu">
             <a sec:authorize="isAnonymous()" th:href="@{/user/login}" class="sign-in">
@@ -100,7 +100,7 @@
                 <span class="head">포인트</span>
                 <span class="body" th:text="${user.userpoint}"></span>
             </div>
-            <div class="flex flex-col flex-1 items-center collection">
+            <div class="flex flex-col flex-1 items-center collection" onclick="toggleLists()">
                 <a href="#" class="head flex gap-2 items-center">
                     <i class="fa-solid fa-bookmark"></i>
                     <span>컬렉션</span>
@@ -122,45 +122,48 @@
             <!--<option value="3">팔로우</option>-->
         </select>
     </div>
-    <section class="section-1">
-        <div class="masonry-grid">
-            <div class="grid-item" th:each="post : ${postList}">
-                <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark"> <i class="fa-solid fa-bookmark"></i>
-                    </a>
-                    <a href="#" class="font-awsome heart">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-                </div>
-                <a th:href="@{|/user/detail_form/${post.userEntity.nickname}|}" class="img_bottom_function flex gap-2">
-                    <div class="img_badge">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </div>
-                    <div class="nName flex items-center" th:text="${post.userEntity.nickname}"></div>
-                </a>
-                <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}"
-                   th:data-post-id="${post.id}" class="img_box post-link">
-                    <img id="myImage" th:if="${post.fileEntity != null}"
-                         th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
-                         alt="My Image">
-                </a>
-                <div class="update_delete_wrap">
-                    <i class="fa-solid fa-ellipsis text-2xl"></i>
-                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
-                        <a href="#" class="flex gap-2 items-center text-sm update_btn">
-                            <i class="fa-solid fa-pen"></i>
-                            <span>수정</span>
+    <div id="imageList">
+        <section class="section-1">
+            <div class="masonry-grid">
+                <div class="grid-item" th:each="post : ${postList}">
+                    <div class="img_top_function flex gap-2">
+                        <a href="#" class="font-awsome bookmark"> <i class="fa-solid fa-bookmark"></i>
                         </a>
-                        <div class="flex gap-2 items-center text-sm delete_btn">
-                            <i class="fa-solid fa-trash"></i>
-                            <span>삭제</span>
+                        <a href="#" class="font-awsome heart">
+                            <i class="fa-solid fa-heart"></i>
+                        </a>
+                    </div>
+                    <a th:href="@{|/user/detail_form/${post.userEntity.nickname}|}" class="img_bottom_function flex gap-2">
+                        <div class="img_badge">
+                            <img src="https://picsum.photos/300/300" alt="">
                         </div>
-                    </form>
+                        <div class="nName flex items-center" th:text="${post.userEntity.nickname}"></div>
+                    </a>
+                    <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}"
+                       th:data-post-id="${post.id}" class="img_box post-link">
+                        <img id="myImage" th:if="${post.fileEntity != null}"
+                             th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
+                             alt="My Image">
+                    </a>
+                    <div class="update_delete_wrap">
+                        <i class="fa-solid fa-ellipsis text-2xl"></i>
+                        <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                            <a href="#" class="flex gap-2 items-center text-sm update_btn">
+                                <i class="fa-solid fa-pen"></i>
+                                <span>수정</span>
+                            </a>
+                            <div class="flex gap-2 items-center text-sm delete_btn">
+                                <i class="fa-solid fa-trash"></i>
+                                <span>삭제</span>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </div>
+
 <!-- 서버에서 계산된 sortingOption의 값을 클라이언트 사이드의 JavaScript 변수에 넣습니다.-->
 <script th:inline="javascript">
     var sortingOptionValue = [[${sortingOption}]];
@@ -172,11 +175,15 @@
             break;
         }
     }
-</script>
 
-<script th:inline="javascript">
     // 서버에서 Thymeleaf를 통해 값을 주입
     var postNickname = /*[[${user.nickname}]]*/ '';
+
+    var isCollectionVisible = currentUrl.includes("/collection");
+    if (!isCollectionVisible) {
+        document.getElementById('sortingOption').style.display = 'none';
+    }
+
 </script>
 <script src="/js/jquery-3.7.0.min.js"></script>
 <script src="/js/user_detail_form.js"></script>

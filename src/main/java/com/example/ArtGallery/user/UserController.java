@@ -125,6 +125,87 @@ public class UserController {
         return "user_detail_form";
     }
 
+
+    // user페이지 컬렉션 리스트 출력
+    @GetMapping("/user/detail_form/{loginUserNick}/collection")
+    public String userdetail_collection(Model model, @PathVariable("loginUserNick") String loginUserNick, Authentication authentication, @RequestParam(name = "sortingOption", defaultValue = "1") int sortingOption){
+
+        String nicknameConfirm = null;
+        String userEmail = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
+            nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
+        }
+
+        // 해당 유저정보 주인의 userEntity를 'user'로 템플릿에서 활용할 수 있게 반환
+        UserEntity userEntity = this.userService.getUserNick(loginUserNick);
+        model.addAttribute("user", userEntity);
+
+        if(nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
+
+        } else {
+            // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
+
+            model.addAttribute("isCurrentUser", nicknameConfirm.equals(loginUserNick));
+
+            UserEntity loginUser = this.userService.getUserNick(nicknameConfirm);
+            model.addAttribute("loginUser", loginUser);
+
+            // 내가 해당 유저를 팔로잉중인지 확인하기 위한 true, false 반환
+            boolean isFollowing = followService.isFollowing(loginUser, userEntity);
+            model.addAttribute("isFollowing", isFollowing);
+        }
+
+        // loginUserNick: 게시물 주인
+        // nicknameConfirm: 현재 로그인한 유저의 닉네임
+        // 사용자가 선택한 정렬 기준을 서비스에 전달
+        List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
+
+
+        List<Integer> collectionIds = userService.getUserCollections(loginUserNick);
+        List<PostEntity> collectionList = postService.getPostsByCollectionIds(collectionIds);
+        model.addAttribute("collectionList", collectionList);
+
+
+        int totalViews = 0;
+        int totalLikes = 0;
+
+
+/*       for(PostEntity post : postEntityList){
+            totalViews += post.getPostView();
+            totalLikes += post.getVoter().size();
+        }
+
+        model.addAttribute("postList", postEntityList);
+        model.addAttribute("postTotalView", totalViews);
+        model.addAttribute("postTotalLikes", totalLikes);*/
+
+
+        // list 수정중
+        for(PostEntity post : sortedPosts){
+            totalViews += post.getPostView();
+            totalLikes += post.getVoter().size();
+        }
+
+        model.addAttribute("postList", collectionList);
+        model.addAttribute("postTotalView", totalViews);
+        model.addAttribute("postTotalLikes", totalLikes);
+
+        // 팔로워, 팔로잉 수 템플릿에서 사용할 수 있게 반환
+        int followerCount = followService.getFollowerCount(userEntity.getId());
+        int followingCount = followService.getFollowingCount(userEntity.getId());
+        model.addAttribute("followerCount", followerCount);
+        model.addAttribute("followingCount", followingCount);
+
+        // 해당 유저가 저장한 게시물의 총 개수가 몇개인지 반환
+        int totalCollectionCount = userService.getSavedPostCount(userEntity.getNickname());
+        model.addAttribute("totalCollectionCount", totalCollectionCount);
+
+
+
+        return "user_detail_form";
+    }
+
     @GetMapping("/")
     public String usernav(Model model, Authentication authentication, @RequestParam(name = "sortingOption", defaultValue = "1") int sortingOption) {
 
