@@ -11,7 +11,7 @@ function textarea_resize() {
 }
 
 function additional_heart_ivent() {
-  $(".additional > .heart").click(function () {
+  $(".additional .heart").click(function () {
     $(this).children(".heart_1").toggleClass("hidden");
     $(this).children(".heart_2").toggleClass("hidden");
   });
@@ -20,6 +20,24 @@ function additional_heart_ivent() {
 function side_info_2_click() {
   $("body .side_info_imoji").click(function () {
     $(this).addClass("hidden");
+  });
+}
+
+function dot_click() {
+  $(".update_delete_wrap .dot").click(function (event) {
+    event.stopPropagation();
+    var target = $(this).siblings(".update_delete");
+    target.toggleClass("hidden");
+  });
+}
+
+// 문서(document) 클릭 시, .update_delete 요소를 숨기는 함수
+function hideUpdateDeleteOnClickDocument() {
+  $(document).click(function (event) {
+    var target = $(".update_delete");
+    if (!target.is(event.target) && target.has(event.target).length === 0) {
+      target.addClass("hidden");
+    }
   });
 }
 
@@ -37,38 +55,36 @@ function delete_function() {
 
 function replies_box_ivent() {
   $(".reply").click(function () {
-    $(this).parent().siblings(".replies_box").toggleClass("hidden");
+    var repliesBox = $(this).closest(".particle").find(".replies_box");
+    repliesBox.toggleClass("hidden");
     $(".replies_box")
-      .not($(this).parent().siblings(".replies_box"))
+      .not(repliesBox)
       .addClass("hidden");
   });
 }
 
-function validateCommentForm() {
-    // textarea의 값을 가져옵니다.
+function validateAndSubmitCommentForm(event) {
     var commentContent = document.getElementById('commentContent').value.trim();
 
-    // textarea의 값이 공백인지 확인합니다.
     if (commentContent === '') {
         alert('내용을 입력해주세요.');
-        return false; // 폼 제출을 막습니다.
+        event.preventDefault(); // 댓글 내용이 비어있으면 폼 제출을 막습니다.
     }
-
-    return true; // 폼 제출을 허용합니다.
 }
 
-function validateReplyForm() {
-    // textarea의 값을 가져옵니다.
+function validateAndSubmitReplyForm(event) {
     var replyContent = document.getElementById('replyContent').value.trim();
 
-    // textarea의 값이 공백인지 확인합니다.
     if (replyContent === '') {
-        alert('답글을 입력해주세요.'); // 사용자에게 답글 내용을 입력하라는 메시지를 보여줍니다.
-        return false; // 폼 제출을 막습니다.
+        alert('답글을 입력해주세요.');
+        event.preventDefault(); // 답글 내용이 비어있으면 폼 제출을 막습니다.
     }
-
-    return true; // 폼 제출을 허용합니다.
 }
+
+// 폼 제출 이벤트 핸들러를 등록합니다.
+document.getElementById('commentForm').addEventListener('submit', validateAndSubmitCommentForm);
+document.getElementById('replyForm').addEventListener('submit', validateAndSubmitReplyForm);
+
 
 $(function () {
   SideClick__ft();
@@ -77,6 +93,6 @@ $(function () {
   side_info_2_click();
   delete_function();
   replies_box_ivent();
-  validateCommentForm();
-  validateReplyForm();
+  dot_click();
+  hideUpdateDeleteOnClickDocument();
 });
