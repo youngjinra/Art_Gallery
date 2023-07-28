@@ -69,45 +69,57 @@ function sortPosts() {
 }
 
 
-  // select 요소에 대한 onchange 이벤트 리스너 등록
-  document.getElementById("category").onchange = function () {
-    // 선택된 옵션의 값을 가져옴
-    var selectedCategory = document.getElementById("category").value;
-
-    // 선택된 카테고리에 따라 span 태그의 내용 변경
-    switch (selectedCategory) {
-      case "1":
-        document.getElementById("categoryName").innerText = "Ai Art";
-        break;
-      case "2":
-        document.getElementById("categoryName").innerText = "Digital Art";
-        break;
-      case "3":
-        document.getElementById("categoryName").innerText = "Fan Art";
-        break;
-      case "4":
-        document.getElementById("categoryName").innerText = "Photography";
-        break;
-      case "5":
-        document.getElementById("categoryName").innerText = "Fantasy";
-        break;
-      case "6":
-        document.getElementById("categoryName").innerText = "Resources";
-        break;
-      case "7":
-        document.getElementById("categoryName").innerText = "Cosplay";
-        break;
-      case "8":
-        document.getElementById("categoryName").innerText = "3D";
-        break;
-      case "9":
-        document.getElementById("categoryName").innerText = "Fractal";
-        break;
-      case "10":
-        document.getElementById("categoryName").innerText = "Emoji";
-        break;
-      default:
-        // 기본적으로는 "Ai Art"로 설정
-        document.getElementById("categoryName").innerText = "Ai Art";
+// URL에서 /by_topic/ 다음에 오는 숫자를 추출하는 함수
+    function getCategoryFromURL() {
+        const url = window.location.href;
+        const categoryRegex = /\/by_topic\/(\d+)/;
+        const match = url.match(categoryRegex);
+        if (match && match[1]) {
+            return match[1];
+        }
+        return null;
     }
-  };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // category 값을 추출
+        const category = getCategoryFromURL();
+
+        // categoryName 요소를 가져옴
+        const categoryNameSpan = document.getElementById("categoryName");
+
+        // category에 따라 텍스트 변경
+        switch (category) {
+            case "1":
+                categoryNameSpan.innerText = "Ai Art";
+                break;
+            case "2":
+                categoryNameSpan.innerText = "Digital Art";
+                break;
+            case "3":
+                categoryNameSpan.innerText = "Fan Art";
+                break;
+            case "4":
+                categoryNameSpan.innerText = "Photography";
+                break;
+            case "5":
+                categoryNameSpan.innerText = "Fantasy";
+                break;
+            case "6":
+                categoryNameSpan.innerText = "Resources";
+                break;
+            case "7":
+                categoryNameSpan.innerText = "Cosplay";
+                break;
+            case "8":
+                categoryNameSpan.innerText = "3D";
+                break;
+            case "9":
+                categoryNameSpan.innerText = "Fractal";
+                break;
+            case "10":
+                categoryNameSpan.innerText = "Emoji";
+                break;
+            default:
+                categoryNameSpan.innerText = "Unknown Category";
+        }
+    });
