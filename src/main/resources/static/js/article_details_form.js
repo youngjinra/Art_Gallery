@@ -41,17 +41,13 @@ function hideUpdateDeleteOnClickDocument() {
   });
 }
 
-function delete_function() {
-  $(".delete_btn").click(function () {
-    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
-
-    if (confirmDelete) {
-      alert("삭제되었습니다.");
-      // 현재 페이지로 이동 (리다이렉션)
-      window.location.href = "https://cdpn.io/pen/debug/bGQogqX";
-    }
-  });
-}
+//function delete_function() {
+//    $(".delete_btn").click(function () {
+//        if (confirm("정말로 삭제하시겠습니까?")) {
+//            location.href = $(this).data('uri');
+//        }
+//    });
+//}
 
 function replies_box_ivent() {
   $(".reply").click(function () {

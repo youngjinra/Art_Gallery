@@ -37,4 +37,5 @@ public class PostEntity {
 
     @ManyToOne
     private UserEntity userEntity;
+
 }

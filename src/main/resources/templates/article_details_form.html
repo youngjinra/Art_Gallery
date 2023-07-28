@@ -311,14 +311,15 @@
                         </div>
 
                         <!--수정삭제부분-->
-                        <div class="update_delete_wrap">
+                        <div class="update_delete_wrap" sec:authorize="isAuthenticated()">
                             <i class="fa-solid fa-ellipsis text-xl dot"></i>
                             <div class="update_delete flex flex-col gap-3 text-xl hidden">
                                 <a href="" class="flex gap-2 items-center text-sm update_btn">
                                     <i class="fa-solid fa-pen"></i>
                                     <span>수정</span>
                                 </a>
-                                <a href="" class="flex gap-2 items-center text-sm delete_btn">
+                                <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                   th:data-uri="@{|/comment/delete/${comment.id}|}">
                                     <i class="fa-solid fa-trash"></i>
                                     <span>삭제</span>
                                 </a>
@@ -385,14 +386,15 @@
                                 </div>
 
                                 <!--수정삭제부분-->
-                                <div class="update_delete_wrap">
+                                <div class="update_delete_wrap" sec:authorize="isAuthenticated()">
                                     <i class="fa-solid fa-ellipsis text-xl dot"></i>
                                     <div class="update_delete flex flex-col gap-3 text-xl hidden">
                                         <a href="" class="flex gap-2 items-center text-sm update_btn">
                                             <i class="fa-solid fa-pen"></i>
                                             <span>수정</span>
                                         </a>
-                                        <a href="" class="flex gap-2 items-center text-sm delete_btn">
+                                        <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                           th:data-uri="@{|/comment/delete/${comment.id}|}">
                                             <i class="fa-solid fa-trash"></i>
                                             <span>삭제</span>
                                         </a>

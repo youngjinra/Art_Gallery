@@ -39,4 +39,9 @@ public class CommentService {
         reply.setParent(parentComment);
         return this.commentRepository.save(reply);
     }
+
+    public void delete(CommentEntity comment) {
+        commentRepository.delete(comment);
+    }
+
 }
