@@ -434,6 +434,7 @@ body .side_info_imoji:hover {
   position: relative;
   margin-right: 20px;
   cursor: pointer;
+  user-select: none;
 }
 .update_delete_wrap .update_delete {
   background-color: white;

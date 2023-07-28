@@ -41,14 +41,6 @@ function hideUpdateDeleteOnClickDocument() {
   });
 }
 
-//function delete_function() {
-//    $(".delete_btn").click(function () {
-//        if (confirm("정말로 삭제하시겠습니까?")) {
-//            location.href = $(this).data('uri');
-//        }
-//    });
-//}
-
 function replies_box_ivent() {
   $(".reply").click(function () {
     var repliesBox = $(this).closest(".particle").find(".replies_box");
@@ -81,14 +73,23 @@ function validateAndSubmitReplyForm(event) {
 document.getElementById('commentForm').addEventListener('submit', validateAndSubmitCommentForm);
 document.getElementById('replyForm').addEventListener('submit', validateAndSubmitReplyForm);
 
+function deleteElements() {
+    const deleteElements = $(".delete_btn");
+    deleteElements.on('click', function() {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data("uri");
+        }
+    });
+}
+
 
 $(function () {
   SideClick__ft();
   textarea_resize();
   additional_heart_ivent();
   side_info_2_click();
-  delete_function();
   replies_box_ivent();
   dot_click();
   hideUpdateDeleteOnClickDocument();
+  deleteElements();
 });
