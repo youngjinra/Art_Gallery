@@ -1,6 +1,5 @@
 package com.example.ArtGallery.article.comment;
 
-
 import com.example.ArtGallery.article.post.PostEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -39,10 +38,22 @@ public class CommentEntity {
 
     private int depth;
 
-    public int getDepth(){
+    private String nickname; // 댓글 작성자의 닉네임 추가
+
+    public int getDepth() {
         return depth;
     }
-    public void setDepth(int depth){
+
+    public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    // getter 및 setter 메서드 추가
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

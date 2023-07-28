@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URLEncoder;
@@ -30,75 +32,29 @@ public class CommentController {
 
     @PostMapping("/comment/create/{nickname}/{postId}")
     public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
-                                @Valid CommentForm commentForm, BindingResult bindingResult, Authentication authentication,
-                                CommentReplyForm commentReplyForm) {
+                                @RequestParam String content) {
 
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
 
-        // 유효성 검사
-        if (bindingResult.hasErrors()) {
-
-            // 유효성 검사 에러가 있을 경우, 다시 댓글 작성 폼으로 돌아가기
-
-            String nicknameConfirm = null;
-            String userEmail = null;
-            if (authentication != null && authentication.isAuthenticated()) {
-                // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
-                nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
-            }
-            // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
-            model.addAttribute("nicknameConfirm", nicknameConfirm);
-            // 게시물 주인의 닉네임을 템플릿에 반환
-            model.addAttribute("nickname", nickname);
-            PostEntity post = this.postService.getPost(postId);
-            model.addAttribute("post", post);
-
-            // 에러 메시지를 댓글 작성 폼으로 전달
-            model.addAttribute("error", "댓글 작성에 실패했습니다.");
-
-            return "/article_details_form";
-        }
-
-        // 유효성 검사를 통과한 경우에만 댓글 생성
+        // 댓글 생성
         PostEntity post = this.postService.getPost(postId);
-        CommentEntity comment = this.commentService.create(post, commentForm.getContent());
+        CommentEntity comment = this.commentService.create(post, content);
 
         return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, comment.getId());
     }
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")
     public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId,
-                              @PathVariable("nickname") String nickname, @Valid CommentReplyForm commentReplyForm,
-                              BindingResult bindingResult, Authentication authentication, CommentForm commentForm) {
+                              @PathVariable("nickname") String nickname, @RequestParam String replyContent) {
 
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
 
-        // 유효성 검사
-        if (bindingResult.hasErrors()) {
-
-            // 유효성 검사 에러가 있을 경우, 다시 댓글 작성 폼으로 돌아가기
-            String nicknameConfirm = null;
-            String userEmail = null;
-            if (authentication != null && authentication.isAuthenticated()) {
-                // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
-                nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
-            }
-            // 상단 헤더바 부분 내정보 이미지 클릭시 로그인한 해당 유저의 정보 페이지를 이동하기 위해 nicknameConfirm을 그대로 템플릿에 보내줌
-            model.addAttribute("nicknameConfirm", nicknameConfirm);
-            // 게시물 주인의 닉네임을 템플릿에 반환
-            model.addAttribute("nickname", nickname);
-            PostEntity post = this.postService.getPost(postId);
-            model.addAttribute("post", post);
-
-            return "/article_details_form";
-        }
-
         // 유효성 검사를 통과한 경우에만 답글 생성
         PostEntity post = this.postService.getPost(postId);
         CommentEntity parentComment = this.commentService.getComment(commentId);
-        CommentEntity reply = this.commentService.createReply(post, parentComment, commentReplyForm.getReplyContent());
+        CommentEntity reply = this.commentService.createReply(post, parentComment, replyContent);
 
         // 생성한 댓글로 리다이렉트
         return String.format("redirect:/article/details/%s/%d#reply_%d", encodedNickname, postId, reply.getId());
