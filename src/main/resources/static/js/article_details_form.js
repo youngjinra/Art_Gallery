@@ -51,26 +51,6 @@ function replies_box_ivent() {
   });
 }
 
-function deleteElements() {
-    const deleteElements = $(".delete_btn");
-    deleteElements.on('click', function() {
-        if (confirm("정말로 삭제하시겠습니까?")) {
-            location.href = $(this).data("uri");
-        }
-    });
-}
-
-$(function () {
-  SideClick__ft();
-  textarea_resize();
-  additional_heart_ivent();
-  side_info_2_click();
-  replies_box_ivent();
-  dot_click();
-  hideUpdateDeleteOnClickDocument();
-  deleteElements();
-});
-
 // 댓글 및 답글 유효성 검사 시작
 function validateAndSubmitCommentForm(event) {
     var commentContent = document.getElementById('commentContent').value.trim();
@@ -100,3 +80,23 @@ for (var i = 0; i < replyForms.length; i++) {
 }
 
 // 댓글 및 답글 유효성 검사 끝
+
+// 댓글 및 답글 삭제부분
+function delete_reply() {
+  $(".delete_btn").click(function() {
+    if (confirm("정말로 삭제하시겠습니까?")) {
+      location.href = $(this).data("uri");
+    }
+  });
+}
+
+$(function () {
+  SideClick__ft();
+  textarea_resize();
+  additional_heart_ivent();
+  side_info_2_click();
+  replies_box_ivent();
+  dot_click();
+  hideUpdateDeleteOnClickDocument();
+  delete_reply();
+});

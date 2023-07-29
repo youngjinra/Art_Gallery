@@ -3,7 +3,6 @@ package com.example.ArtGallery.article.comment;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.user.UserEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,14 +19,14 @@ public class CommentEntity {
     private int id;
 
     // 댓글 (부모)
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "parent_id")
     private CommentEntity parent;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    // 댓글(부모) - 답글(자식) 설정
+    // CommentEntity
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     @OrderBy("id DESC")
     private List<CommentEntity> commentList = new ArrayList<>();
@@ -37,6 +36,7 @@ public class CommentEntity {
     @ManyToOne
     private PostEntity postEntity;
 
+    @Column(nullable = false)
     private int depth;
 
     @ManyToOne

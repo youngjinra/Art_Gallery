@@ -6,8 +6,11 @@ import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -40,10 +43,16 @@ public class CommentService {
         reply.setPostEntity(postEntity);
         reply.setParent(parentComment);
         reply.setUserEntity(userEntity);
+
+        // 답글을 생성할 때 부모 댓글의 depth에 1을 더해주는 로직 추가
+        reply.setDepth(parentComment.getDepth() + 1);
+
         return this.commentRepository.save(reply);
     }
 
-    public void delete(CommentEntity comment) {
+    // 댓글 삭제
+    public void deleteComment(int commentId) {
+        CommentEntity comment = getComment(commentId);
         commentRepository.delete(comment);
     }
 
