@@ -75,9 +75,9 @@ public class CommentController {
         // 닉네임의 userEntity
         UserEntity userEntity = userService.getUser(encodedNickname);
 
-        commentService.deleteComment(commentId);
+        commentService.deleteCommentOrReply(commentId);
 
-        return String.format("redirect:/article/details/%s/%d", nickname, postId);
+        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
     }
 
 }

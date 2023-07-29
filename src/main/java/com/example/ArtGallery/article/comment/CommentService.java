@@ -51,7 +51,7 @@ public class CommentService {
     }
 
     // 댓글 삭제
-    public void deleteComment(int commentId) {
+    public void deleteCommentOrReply(int commentId) {
         CommentEntity comment = getComment(commentId);
         commentRepository.delete(comment);
     }
