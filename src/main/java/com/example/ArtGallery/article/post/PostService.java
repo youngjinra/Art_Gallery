@@ -32,20 +32,20 @@ public class PostService {
     private final HashtagRepository hashtagRepository;
     private final FollowRepository followRepository;
 
-    public List<PostEntity> getList(){
+    public List<PostEntity> getList() {
         return this.postRepository.findAll();
     }
 
-    public PostEntity getPost(int id){
+    public PostEntity getPost(int id) {
         Optional<PostEntity> post = this.postRepository.findById(id);
-        if(post.isPresent()){
+        if (post.isPresent()) {
             return post.get();
         } else {
             throw new DataNotFoundException("post not found");
         }
     }
 
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, List<String> hashtags){
+    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, List<String> hashtags) {
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();
@@ -78,7 +78,7 @@ public class PostService {
         return post;
     }
 
-    public PostEntity getPostById(int postId){
+    public PostEntity getPostById(int postId) {
         return postRepository.findById(postId).orElse(null);
     }
 
@@ -108,7 +108,7 @@ public class PostService {
         return voterNicknames.contains(nickname);
     }
 
-    public void viewPost(PostEntity postEntity){
+    public void viewPost(PostEntity postEntity) {
         postRepository.save(postEntity);
     }
 
@@ -129,10 +129,10 @@ public class PostService {
             // 게시물이 존재하지 않으면 빈 리스트 반환
             return Collections.emptyList();
         }
-        
+
         // tags에 해당 게시물의 태그들 추가
         List<String> tags = new ArrayList<>();
-        for (HashtagEntity hashtag : post.getHashtags()){
+        for (HashtagEntity hashtag : post.getHashtags()) {
             tags.add(hashtag.getName());
         }
         return tags;
@@ -233,7 +233,7 @@ public class PostService {
     }
 
     // 검색
-    public List<PostEntity> getPostsByHashtag(String keyword){
+    public List<PostEntity> getPostsByHashtag(String keyword) {
         Specification<PostEntity> hashtagSpec = PostSpecifications.hasHashtag(keyword);
         Specification<PostEntity> searchSpec = PostSpecifications.searchAll(keyword);
 
@@ -244,14 +244,42 @@ public class PostService {
 
     // 삭제
     @Transactional
-    public void deletePost(int postId){
+    public void deletePost(int postId) {
         Optional<PostEntity> postEntity = this.postRepository.findById(postId);
         PostEntity post = postEntity.get();
 
         post.setHashtags(null);
+        this.postRepository.delete(post);
+    }
 
-        if(post.getHashtags() == null){
-            this.postRepository.delete(post);
+    // 수정
+    public void updatePost(int postId, String subject, String content, List<String> hashtags) {
+        Optional<PostEntity> postEntity = this.postRepository.findById(postId);
+        PostEntity post = postEntity.get();
+
+        post.setSubject(subject);
+        post.setContent(content);
+
+        // 기존 해시태그들 일단 모두 관계 해제
+        post.setHashtags(null);
+
+        // 다시 해시태그 추가
+        Set<HashtagEntity> hashtagEntities = new HashSet<>();
+        for (String hashtagName : hashtags) {
+            HashtagEntity existingHashtag = hashtagRepository.findByName(hashtagName);
+            if (existingHashtag == null) {
+                // 데이터베이스에 존재하지 않는 해시태그라면 추가
+                HashtagEntity hashtag = new HashtagEntity();
+                hashtag.setName(hashtagName);
+                hashtagRepository.save(hashtag);
+                hashtagEntities.add(hashtag);
+            } else {
+                // 이미 데이터베이스에 존재하는 해시태그라면 추가하지 않음
+                hashtagEntities.add(existingHashtag);
+            }
         }
+        post.setHashtags(hashtagEntities);
+
+        this.postRepository.save(post); // 수정된 게시물 저장
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -124,10 +125,42 @@ public class PostController {
     public List<PostEntity> getPostsByHashtag(@RequestParam("hashtagName") String hashtagName){
         return postService.getPostsByHashtag(hashtagName);
     }
-
     @GetMapping("/search/post")
     public String showSearchForm(){
         return "search_form";
+    }
+
+    @GetMapping("/post/modify/{postId}")
+    public String postModify(@PathVariable("postId") int postId, Model model, Authentication authentication){
+
+        String nicknameConfirm = null;
+        String userEmail = null;
+        if (authentication != null && authentication.isAuthenticated()) {
+            // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
+            nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
+        }
+        UserEntity loginUserEntity = this.userService.getUserNick(nicknameConfirm);
+        model.addAttribute("loginUser", loginUserEntity);
+
+        PostEntity postEntity = this.postService.getPostById(postId);
+        model.addAttribute("post", postEntity);
+
+        List<String> hashtags = postService.getTagsByPostId(postId);
+        model.addAttribute("hashtags", hashtags);
+
+
+        return "article_modify_form";
+    }
+    @PostMapping("/post/modify/{postId}/{nickname}")
+    public String updatePost(@PathVariable int postId, @PathVariable String nickname, @RequestParam String subject, @RequestParam String content,
+                             @RequestParam List<String> hashtags) {
+        try {
+            postService.updatePost(postId, subject, content, hashtags);
+            return "redirect:/article/details/" + nickname + "/" + postId; // 게시물 상세 페이지로 리다이렉트
+        } catch (Exception e) {
+            // 게시물 수정에 실패한 경우 처리 (예: 에러 페이지 또는 리다이렉트)
+            return "error_page";
+        }
     }
 }
 

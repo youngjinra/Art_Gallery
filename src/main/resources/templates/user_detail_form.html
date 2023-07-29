@@ -147,7 +147,7 @@
                 <div class="update_delete_wrap">
                     <i class="fa-solid fa-ellipsis text-2xl"></i>
                     <form action="" class="update_delete flex flex-col gap-3 text-xl">
-                        <a href="#" class="flex gap-2 items-center text-sm update_btn">
+                        <a th:href="@{|/post/modify/${post.id}|}" class="flex gap-2 items-center text-sm update_btn">
                             <i class="fa-solid fa-pen"></i>
                             <span>수정</span>
                         </a>
