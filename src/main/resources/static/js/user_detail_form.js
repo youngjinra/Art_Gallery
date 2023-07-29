@@ -74,17 +74,34 @@ function updete_delete() {
   });
 }
 
-function delete_function() {
-  $(".delete_btn").click(function () {
-    var confirmDelete = confirm("정말로 삭제하시겠습니까?");
+    // 삭제 버튼을 클릭했을 때 호출되는 함수
+    $('.delete_btn').on('click', function () {
+        var postId = $(this).find('.fa-trash').data('post-id'); // 해당 게시물의 ID 가져오기
 
-    if (confirmDelete) {
-      alert("삭제되었습니다.");
-      // 현재 페이지로 이동 (리다이렉션)
-      location.reload();
-    }
-  });
-}
+        // 게시물 삭제 전에 사용자에게 확인을 받는다.
+        var confirmDelete = confirm('게시물을 삭제하시겠습니까?');
+        if (!confirmDelete) {
+            return; // 사용자가 취소하면 삭제 동작을 수행하지 않음.
+        }
+
+        // 게시물 삭제 요청을 보내는 API 호출
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/post/delete/' + postId, // 게시물 삭제 API 엔드포인트로 변경해야 함
+            success: function (data) {
+                // 삭제 성공 시, 원하는 동작 수행 (예: 해당 게시물을 화면에서 제거하는 등)
+                alert("게시물 삭제 성공");
+                location.reload();
+                console.log('게시물 삭제 성공');
+            },
+            error: function (error) {
+                // 삭제 실패 시, 원하는 동작 수행
+                alert("게시물 삭제 실패");
+                location.reload();
+                console.error('게시물 삭제 실패');
+            }
+        });
+    });
 
 $(function () {
   PageLayout__init();
@@ -92,7 +109,7 @@ $(function () {
   TopBar__init();
   Member__click();
   updete_delete();
-  delete_function();
+//  delete_function();
 });
 
 

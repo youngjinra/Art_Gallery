@@ -12,6 +12,7 @@ import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserRepository;
 import com.example.ArtGallery.user.UserService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -239,5 +240,18 @@ public class PostService {
         return postRepository.findAll(hashtagSpec.or(searchSpec));
 
 //        return postRepository.findAll(PostSpecifications.hasHashtag(hashtagName));
+    }
+
+    // 삭제
+    @Transactional
+    public void deletePost(int postId){
+        Optional<PostEntity> postEntity = this.postRepository.findById(postId);
+        PostEntity post = postEntity.get();
+
+        post.setHashtags(null);
+
+        if(post.getHashtags() == null){
+            this.postRepository.delete(post);
+        }
     }
 }
