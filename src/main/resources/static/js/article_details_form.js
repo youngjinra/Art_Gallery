@@ -51,28 +51,6 @@ function replies_box_ivent() {
   });
 }
 
-function validateAndSubmitCommentForm(event) {
-    var commentContent = document.getElementById('commentContent').value.trim();
-
-    if (commentContent === '') {
-        alert('내용을 입력해주세요.');
-        event.preventDefault(); // 댓글 내용이 비어있으면 폼 제출을 막습니다.
-    }
-}
-
-function validateAndSubmitReplyForm(event) {
-    var replyContent = document.getElementById('replyContent').value.trim();
-
-    if (replyContent === '') {
-        alert('답글을 입력해주세요.');
-        event.preventDefault(); // 답글 내용이 비어있으면 폼 제출을 막습니다.
-    }
-}
-
-// 폼 제출 이벤트 핸들러를 등록합니다.
-document.getElementById('commentForm').addEventListener('submit', validateAndSubmitCommentForm);
-document.getElementById('replyForm').addEventListener('submit', validateAndSubmitReplyForm);
-
 function deleteElements() {
     const deleteElements = $(".delete_btn");
     deleteElements.on('click', function() {
@@ -81,7 +59,6 @@ function deleteElements() {
         }
     });
 }
-
 
 $(function () {
   SideClick__ft();
@@ -93,3 +70,33 @@ $(function () {
   hideUpdateDeleteOnClickDocument();
   deleteElements();
 });
+
+// 댓글 및 답글 유효성 검사 시작
+function validateAndSubmitCommentForm(event) {
+    var commentContent = document.getElementById('commentContent').value.trim();
+
+    if (commentContent === '') {
+        alert('내용을 입력해주세요.');
+        event.preventDefault(); // 댓글 내용이 비어있으면 폼 제출을 막습니다.
+    }
+}
+
+function validateAndSubmitReplyForm(event) {
+    var replyContent = event.target.querySelector('textarea[name="replyContent"]').value.trim();
+
+    if (replyContent === '') {
+        alert('답글을 입력해주세요.');
+        event.preventDefault(); // 답글 내용이 비어있으면 폼 제출을 막습니다.
+    }
+}
+
+// 폼 제출 이벤트 핸들러를 등록합니다.
+document.getElementById('commentForm').addEventListener('submit', validateAndSubmitCommentForm);
+
+// 답글 폼이 여러 개일 수 있으므로 반복문을 통해 모든 답글 폼에 이벤트 핸들러를 등록합니다.
+var replyForms = document.querySelectorAll('.replies_box form');
+for (var i = 0; i < replyForms.length; i++) {
+    replyForms[i].addEventListener('submit', validateAndSubmitReplyForm);
+}
+
+// 댓글 및 답글 유효성 검사 끝
