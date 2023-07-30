@@ -259,7 +259,7 @@
     </div>
 
 
-    <div class="comment_body flex flex-col gap-4">
+    <div class="comment_body flex flex-col gap-4" id="comment_body">
 
 
         <!-- 댓글 입력창 -->
@@ -321,7 +321,7 @@
                                 </a>
                                 <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
                                    th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${comment.id}|}"
-                                   >
+                                   onclick="delete_reply(this.getAttribute('data-uri'))">
                                     <i class="fa-solid fa-trash"></i>
                                     <span>삭제</span>
                                 </a>
@@ -397,7 +397,7 @@
                                         </a>
                                         <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
                                            th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${reply.id}|}"
-                                           >
+                                           onclick="delete_reply(this.getAttribute('data-uri'))">
                                             <i class="fa-solid fa-trash"></i>
                                             <span>삭제</span>
                                         </a>

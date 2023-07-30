@@ -78,16 +78,52 @@ var replyForms = document.querySelectorAll('.replies_box form');
 for (var i = 0; i < replyForms.length; i++) {
     replyForms[i].addEventListener('submit', validateAndSubmitReplyForm);
 }
-
 // 댓글 및 답글 유효성 검사 끝
 
 // 댓글 및 답글 삭제부분
-function delete_reply() {
+/*function delete_reply() {
   $(".delete_btn").click(function() {
     if (confirm("정말로 삭제하시겠습니까?")) {
       location.href = $(this).data("uri");
     }
   });
+}*/
+
+function delete_reply(dataUri) {
+// 수정: 댓글 ID 파라미터를 함수로 전달 받음
+    console.log(dataUri);
+    let commentId = dataUri.match(/\/comment\/delete\/[^/]+\/[^/]+\/(\d+)/)[1];
+    console.log("Comment ID:" + commentId);
+    if (confirm("정말로 삭제하시겠습니까?")) {
+        // AJAX 요청을 보낼 데이터 구성
+        var dataToSend = {
+            id: commentId // 수정: 넘겨받은 댓글 ID를 데이터에 넣어줌
+        };
+
+        // AJAX 요청을 보냅니다.
+        $.ajax({
+            url: dataUri,
+            type: 'GET',
+            async: true,
+            dataType: "json",
+            data: dataToSend, // 요청에 데이터 추가
+            success: function(data) {
+                alert("성공했습니다.");
+
+                // 이벤트 발생 시점의 스크롤 위치 저장
+                $(window).on('scroll', function() {
+                  sessionStorage.setItem('scrollPosition', window.scrollY);
+                });
+
+                // 페이지 새로고침
+                window.location.reload();
+              },
+            error: function(e) {
+                console.log("AJAX 요청 실패:", e);
+                alert("비정상적인 접근입니다. 다시 시도해주십시오.");
+            }
+        });
+    }
 }
 
 $(function () {
@@ -98,5 +134,6 @@ $(function () {
   replies_box_ivent();
   dot_click();
   hideUpdateDeleteOnClickDocument();
-  delete_reply();
 });
+
+

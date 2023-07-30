@@ -5,17 +5,13 @@ import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -64,11 +60,11 @@ public class CommentController {
     }
 
     // 댓글 및 답글 삭제 컨트롤러
+    @ResponseBody
     @GetMapping("/comment/delete/{nickname}/{postId}/{commentId}")
-    public String deleteCommentOrReply(@PathVariable("nickname") String nickname,
-                                       @PathVariable("postId") int postId,
-                                       @PathVariable("commentId") int commentId) {
-
+    public ResponseEntity<String> deleteCommentOrReply(@PathVariable("nickname") String nickname,
+                                                       @PathVariable("postId") int postId,
+                                                       @PathVariable("commentId") int commentId) {
         // 닉네임 안정화(한글인식)
         String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
 
@@ -77,7 +73,9 @@ public class CommentController {
 
         commentService.deleteCommentOrReply(commentId);
 
-        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
+//        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
+//        return "";
+        return ResponseEntity.ok().body("{\"message\": \"댓글이 성공적으로 삭제되었습니다.\"}");
     }
 
 }
