@@ -156,7 +156,8 @@ public class PostController {
                              @RequestParam List<String> hashtags) {
         try {
             postService.updatePost(postId, subject, content, hashtags);
-            return "redirect:/article/details/" + nickname + "/" + postId; // 게시물 상세 페이지로 리다이렉트
+            String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+            return "redirect:/article/details/" + encodedNickname + "/" + postId; // 게시물 상세 페이지로 리다이렉트
         } catch (Exception e) {
             // 게시물 수정에 실패한 경우 처리 (예: 에러 페이지 또는 리다이렉트)
             return "error_page";

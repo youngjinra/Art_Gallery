@@ -233,13 +233,17 @@ public class PostService {
     }
 
     // 검색
-    public List<PostEntity> getPostsByHashtag(String keyword) {
-        Specification<PostEntity> hashtagSpec = PostSpecifications.hasHashtag(keyword);
-        Specification<PostEntity> searchSpec = PostSpecifications.searchAll(keyword);
+    public List<PostEntity> getPostsByHashtag(String keywords) {
+        List<String> keywordList = Arrays.stream(keywords.split(" ")).collect(Collectors.toList());
 
-        return postRepository.findAll(hashtagSpec.or(searchSpec));
+        // 검색어를 OR 연산하여 합침
+        Specification<PostEntity> searchSpec = Specification.where(null);
+        for (String keyword : keywordList) {
+            Specification<PostEntity> spec = PostSpecifications.searchAllWithHashtag(keyword);
+            searchSpec = searchSpec.or(spec);
+        }
 
-//        return postRepository.findAll(PostSpecifications.hasHashtag(hashtagName));
+        return postRepository.findAll(searchSpec);
     }
 
     // 삭제

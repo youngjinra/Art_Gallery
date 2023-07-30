@@ -109,7 +109,6 @@ $(function () {
   TopBar__init();
   Member__click();
   updete_delete();
-//  delete_function();
 });
 
 

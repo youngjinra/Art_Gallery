@@ -144,7 +144,7 @@
                          th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
                          alt="My Image">
                 </a>
-                <div class="update_delete_wrap">
+                <div class="update_delete_wrap" th:if="${isCurrentUser}">
                     <i class="fa-solid fa-ellipsis text-2xl"></i>
                     <form action="" class="update_delete flex flex-col gap-3 text-xl">
                         <a th:href="@{|/post/modify/${post.id}|}" class="flex gap-2 items-center text-sm update_btn">
