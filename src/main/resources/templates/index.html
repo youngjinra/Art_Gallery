@@ -158,10 +158,23 @@
         <div class="masonry-grid">
             <div class="grid-item w-full" th:each="post : ${postList}">
                 <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark">
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark addToCollection"
+                       th:data-uri="@{|/collection/${userEntity.nickname}/${post.id}|}"
+                       th:if="${isSavedMap[post.id] == false}">
                         <i class="fa-solid fa-bookmark"></i>
                     </a>
-                    <a href="#" class="font-awsome heart">
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark bg-green-500 removeToCollection"
+                       th:data-uri="@{|/removeCollection/${userEntity.nickname}/${post.id}|}"
+                       th:if="${isSavedMap[post.id] == true}">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </a>
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome heart recommend"
+                       th:data-uri="@{|/post/vote/${post.id}/${userEntity.nickname}/${post.userEntity.nickname}|}"
+                       th:if="${isLikedMap[post.id] == false}">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome heart bg-green-500"
+                       th:if="${isLikedMap[post.id] == true}">
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>
