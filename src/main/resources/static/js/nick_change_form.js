@@ -61,3 +61,62 @@ $(document).ready(function (){
 
                 checkActivation()
 });
+
+
+/*
+// 이미지 미리보기 함수
+function setThumbnail(event) {
+        // 이미지 파일을 선택한 경우
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = new Image();
+                img.src = e.target.result;
+
+                img.onload = function() {
+                    var imageContainer = document.getElementById('image_container');
+                    imageContainer.innerHTML = '';
+
+                    // 이미지의 실제 크기가 100x100보다 클 경우 중앙을 기준으로 잘라서 표시
+                    if (img.width > 100 || img.height > 100) {
+                        img.style.objectFit = 'cover';
+                        img.style.width = '100px';
+                        img.style.height = '100px';
+                    } else {
+                        img.style.objectFit = 'none';
+                        img.style.width = img.width + 'px';
+                        img.style.height = img.height + 'px';
+                    }
+
+                    imageContainer.appendChild(img);
+                };
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }*/
+
+/*
+    function setThumbnail(event) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = document.createElement("img");
+
+
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("class", "col-lg-6");
+            img.setAttribute("id", "myImage");
+
+            img.style.maxWidth = '30px'; // 이미지 최대 너비 설정
+            img.style.maxHeight = '30px'; // 이미지 최대 높이 설정
+
+            var existingImage = document.getElementById("myImage");
+            if (existingImage) {
+                existingImage.remove();
+            }
+
+            document.querySelector("div#image_container").appendChild(img);
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+    }*/

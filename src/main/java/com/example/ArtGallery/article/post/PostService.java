@@ -48,12 +48,8 @@ public class PostService {
             throw new DataNotFoundException("post not found");
         }
     }
-/*
-<<<<<<< HEAD*/
+
     public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags){
-/*=======
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, List<String> hashtags) {
->>>>>>> 63cdfeb69ff76ab369ed7bd73d70a7f04b6d4812*/
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();

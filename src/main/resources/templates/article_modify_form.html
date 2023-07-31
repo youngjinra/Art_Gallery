@@ -50,14 +50,12 @@
 <form th:action="@{|/post/modify/${post.id}/${loginUser.nickname}|}" method="post" enctype="multipart/form-data" id="modify-form">
   <!-- Uploading2 -->
   <div class="upload-wrapper-2 mt-12">
-    <input class="form-control form-control-user" type="file"
-           name="uploadfile" id="product_image" value="찾아보기" onchange="setThumbnail(event);">
     <div class="container specific-wrapper flex gap-14 flex-grow">
       <div class="specific_upload_box flex-grow flex">
         <div class="img_box flex flex-1">
 
-          <img id="myImage" th:if="${post.fileEntity != null}" th:src="@{/post/image/{uuid}/{fileName}(uuid=${post.fileEntity.uuid}, fileName=${post.fileEntity.fileName})}"
-               alt="My Image" class="img_responsive col-lg-6"/>
+        <img id="myImage" th:if="${post.fileEntity != null}" th:src="@{/post/image/{uuid}/{fileName}(uuid=${post.fileEntity.uuid}, fileName=${post.fileEntity.fileName})}"
+             alt="My Image" class="img_responsive col-lg-6" />
 
         </div>
         <div class="input_box flex flex-1 flex-col gap-4">

@@ -24,20 +24,25 @@ $(function () {
   Click__init_3();
 });
 
-// 이미지 미리보기
-  function setThumbnail(event){
+    // 이미지 미리보기 함수
+    function setThumbnail(event) {
         var reader = new FileReader();
+        reader.onload = function (event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("class", "col-lg-6");
+            img.setAttribute("id", "myImage");
 
-        reader.onload = function(event){
-           var img = document.createElement("img");
-           img.setAttribute("src", event.target.result);
-           img.setAttribute("class", "col-lg-6");
-           document.querySelector("div#image_container").appendChild(img);
+            var existingImage = document.getElementById("myImage");
+            if (existingImage) {
+                existingImage.remove();
+            }
+
+            document.querySelector("div#image_container").appendChild(img);
         };
 
         reader.readAsDataURL(event.target.files[0]);
-
-  }
+    }
 
 // 해시태그 기능 스크립트
   const hashtagsInput = document.getElementById("hashtags-input");

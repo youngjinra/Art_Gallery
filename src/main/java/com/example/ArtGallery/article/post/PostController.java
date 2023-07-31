@@ -53,6 +53,13 @@ public class PostController {
 
             // 닉네임이 한글로 입력되면 리다이렉트가 안되는 현상을 방지
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+
+
+            UserEntity user = this.userService.getUserNick(nickname);
+            user.increaseUserPoint(100);
+            this.userService.increasePoint(user);
+
+
             return "redirect:/article/details/" + encodedNickname + "/" + postId;
         }
 
@@ -61,6 +68,7 @@ public class PostController {
         return "redirect:/article/details/" + encodedNickname;
 
     }
+
 
     @PreAuthorize("isAuthenticated()")
     // id : 게시물 id, loginUserNick : 로그인한 유저의 닉네임, userNick : 게시물을 올린 유저의 닉네임
@@ -71,7 +79,12 @@ public class PostController {
         UserEntity user = this.userService.getUserNick(userNick);
         UserEntity loginUser = this.userService.getUserNick(loginUserNick);
 
+
         this.postService.vote(postEntity, loginUser);
+        user.increaseUserPoint(10);         // 게시물작성자 포인트 적립
+        loginUser.increaseUserPoint(10);    // 로그인유저 포인트 적립
+        this.userService.increasePoint(user);
+        this.userService.increasePoint(loginUser);
 
         String encodedNickname = URLEncoder.encode(userNick, StandardCharsets.UTF_8);
 
@@ -155,6 +168,7 @@ public class PostController {
     public String updatePost(@PathVariable int postId, @PathVariable String nickname, @RequestParam String subject, @RequestParam String content,
                              @RequestParam List<String> hashtags) {
         try {
+
             postService.updatePost(postId, subject, content, hashtags);
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
             return "redirect:/article/details/" + encodedNickname + "/" + postId; // 게시물 상세 페이지로 리다이렉트

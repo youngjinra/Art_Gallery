@@ -16,13 +16,21 @@
             </h2>
             <form th:action="@{/user/nickname_change_form}" th:object="${userNicknameModifyForm}" method="post">
                 <div class="mt-5">
+<!--                    <div>
+                        <input class="form-control form-control-user" type="file"
+                               name="uploadfile" id="product_image" value="찾아보기" onchange="setThumbnail(event);">
+                        <div id="image_container"></div>
+                    </div>-->
                     <div class="id mt-5">
                         <label class="inline-block mb-2">닉네임</label>
                         <label class="inline-block mb-2" id="userNickChkTxt"></label>
-                        <input th:field="*{nickname}" name="nickname" id="nickname" type="text" class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400" placeholder="변경하실 닉네임을 입력해주세요.">
+                        <input th:field="*{nickname}" name="nickname" id="nickname" type="text"
+                               class="border-gray-400 rounded-lg block w-full py-3 px-4 mb-3 text-sm placeholder-gray-400"
+                               placeholder="변경하실 닉네임을 입력해주세요.">
                     </div>
                     <div class="mt-5">
-                        <button id="checkNickFin" class="btn-3 flex justify-center py-3 items-center w-full rounded-lg" disabled>
+                        <button id="checkNickFin" class="btn-3 flex justify-center py-3 items-center w-full rounded-lg"
+                                disabled>
                               <span class="text-white">
                                 확인
                               </span>

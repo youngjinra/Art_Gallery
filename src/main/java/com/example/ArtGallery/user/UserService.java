@@ -1,6 +1,7 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -192,5 +193,13 @@ public class UserService {
         }
 
         return postRepository.findByIdIn(collectionIds);
+    }
+
+    public UserEntity increasePoint(UserEntity user){
+        return userRepository.save(user);
+    }
+
+    public UserEntity setUserImage(UserEntity user) {
+        return userRepository.save(user);
     }
 }

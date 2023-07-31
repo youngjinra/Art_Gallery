@@ -1,6 +1,7 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.follow.FollowEntity;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +67,8 @@ public class UserEntity {
 
     private int usercollection; // 해당 유저가 즐겨찾기 해놓은 게시물 총 개수 > 추후 구현
 
+    @OneToOne
+    private FileEntity userImage;
     public String getRoleValue(){
         return this.role.getValue();    // UserRole 클래스에서 Value속성을 활용하기 위함
     }
@@ -85,5 +89,9 @@ public class UserEntity {
         this.nickname = nickname;
         this.role = role;
         this.provider = provider;
+    }
+
+    public void increaseUserPoint(int pointsToAdd) {
+        this.userpoint += pointsToAdd;
     }
 }
