@@ -71,6 +71,7 @@ public class CommentController {
     @GetMapping("/comment/modify/{postId}/{commentId}")
     public String commentModify(Model model, CommentForm commentForm, @PathVariable("commentId") Integer commentId,
                                 @PathVariable("postId") int postId) {
+
         CommentEntity commentEntity = this.commentService.getComment(commentId);
         commentForm.setContent(commentEntity.getContent());
 
