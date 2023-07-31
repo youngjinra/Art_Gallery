@@ -26,19 +26,15 @@ public class CommentController {
     private final UserService userService;
 
     @PostMapping("/comment/create/{nickname}/{postId}")
-        public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
-        @RequestParam String content) {
+    public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
+                                @RequestParam String content) {
 
-            // 닉네임 안정화(한글인식)
-            String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+        // 닉네임의 userEntity
+        UserEntity userEntity = userService.getUser(nickname);
 
-            // 닉네임의 userEntity
-            UserEntity userEntity = userService.getUser(encodedNickname);
-
-            // 댓글 생성
-            PostEntity post = this.postService.getPost(postId);
+        // 댓글 생성
+        PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, content, userEntity);
-        model.addAttribute("userEntity", userEntity);
 
         return String.format("redirect:/article/details/%s/%d#comment_%d", post.getUserEntity().getNickname(), postId, comment.getId());
     }
@@ -47,20 +43,16 @@ public class CommentController {
     public String createReply(Model model, @PathVariable("postId") int postId, @PathVariable("commentId") int commentId,
                               @PathVariable("nickname") String nickname, @RequestParam String replyContent) {
 
-        // 닉네임 안정화(한글인식)
-        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
-
         // 닉네임의 userEntity
-        UserEntity userEntity = userService.getUser(encodedNickname);
+        UserEntity userEntity = userService.getUser(nickname);
 
         // 답글 생성
         PostEntity post = this.postService.getPost(postId);
         CommentEntity parentComment = this.commentService.getComment(commentId);
         CommentEntity reply = this.commentService.createReply(post, parentComment, replyContent, userEntity);
-        model.addAttribute("userEntity", userEntity);
 
         // 생성한 댓글로 리다이렉트
-        return String.format("redirect:/article/details/%s/%d#reply_%d", encodedNickname, postId, reply.getId());
+        return String.format("redirect:/article/details/%s/%d#reply_%d", post.getUserEntity().getNickname(), postId, reply.getId());
     }
 
     // 댓글 및 답글 삭제 컨트롤러
@@ -69,11 +61,6 @@ public class CommentController {
     public ResponseEntity<String> deleteCommentOrReply(@PathVariable("nickname") String nickname,
                                                        @PathVariable("postId") int postId,
                                                        @PathVariable("commentId") int commentId) {
-        // 닉네임 안정화(한글인식)
-        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
-
-        // 닉네임의 userEntity
-        UserEntity userEntity = userService.getUser(encodedNickname);
 
         commentService.deleteCommentOrReply(commentId);
 
