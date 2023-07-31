@@ -1,30 +1,21 @@
 package com.example.ArtGallery.article.comment;
 
-import com.example.ArtGallery.DataNotFoundException;
-import com.example.ArtGallery.article.answer.Answer;
-import com.example.ArtGallery.article.answer.AnswerForm;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -90,7 +81,6 @@ public class CommentController {
     }
 
     // 수정 기능
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/comment/modify/{postId}/{commentId}")
     public String commentModify(Model model, CommentForm commentForm, @PathVariable("commentId") Integer commentId,
                                 @PathVariable("postId") int postId) {
@@ -102,7 +92,6 @@ public class CommentController {
         return "comment_form";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/comment/modify/{postId}/{commentId}")
     public String commentModify(@Valid CommentForm commentForm, BindingResult bindingResult,
                                 @PathVariable("commentId") Integer commentId, @PathVariable("postId") int postId) {

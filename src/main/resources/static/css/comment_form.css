@@ -1,0 +1,43 @@
+/* 폰트적용 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Plus+Jakarta+Sans:wght@200;400;500;700&display=swap");
+html > body {
+  font-family: "Plus Jakarta Sans", "Noto Sans KR", sans-serif;
+  font-size: 14px;
+}
+
+.container {
+  height: 100vh;
+}
+.textarea {
+  background-color: #f7f7f7;
+  resize: none;
+  outline: 0;
+  font-size: 18px;
+  min-height: 72px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  padding-left: 6px;
+}
+body .textarea:focus {
+  border-color: rgba(5, 160, 129, 0.25);
+  outline: 0;
+  box-shadow: 0 0 6px 0.01rem rgba(5, 160, 129, 0.25);
+}
+.btns {
+   padding: 10px 16px;
+   color: white;
+   background-color: #05a081;
+   border-radius: 8px;
+}
+.btns:hover {
+  color: white;
+  background-color: rgb(52, 211, 153);
+}
+.title_1 {
+  font-size: 30px;
+  font-weight: 500;
+  margin-top: 50px;
+}
+.title_2 {
+  font-size: 24px;
+}
