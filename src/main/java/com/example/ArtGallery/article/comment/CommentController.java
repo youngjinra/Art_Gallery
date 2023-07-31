@@ -78,4 +78,20 @@ public class CommentController {
         return ResponseEntity.ok().body("{\"message\": \"댓글이 성공적으로 삭제되었습니다.\"}");
     }
 
+    @PostMapping("/comment/update/{nickname}/{postId}/{commentId}")
+    public String updateComment(@PathVariable("nickname") String nickname,
+                                @PathVariable("postId") int postId,
+                                @PathVariable("commentId") int commentId,
+                                @RequestParam String updatedContent) {
+
+        // 닉네임 안정화(한글인식)
+        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+
+        // 닉네임의 userEntity
+        UserEntity userEntity = userService.getUser(encodedNickname);
+        CommentEntity updatedComment = commentService.updateComment(commentId, updatedContent);
+
+        return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, updatedComment.getId());
+    }
+
 }

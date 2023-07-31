@@ -56,4 +56,10 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
+    public CommentEntity updateComment(int commentId, String updatedContent) {
+        CommentEntity comment = getComment(commentId);
+        comment.setContent(updatedContent);
+        return commentRepository.save(comment);
+    }
+
 }
