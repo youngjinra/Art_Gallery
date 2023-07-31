@@ -121,3 +121,17 @@ function incrementPostDownloads(postId) {
         console.error('다운로드 횟수 증가 중 오류 발생:', error);
     });
 }
+
+// 관련 이미지 '+' 검색페이지 이동
+$(function() {
+    $(".plus_btn").click(function(e) {
+        e.preventDefault();
+
+        var hashtagsStr = $(this).data("hashtags"); // data-hashtags 값을 가져옴
+        var hashtags = hashtagsStr.replace(/\[|\]/g, '').split(", "); // 대괄호 제거 후 쉼표로 분리하여 배열로 변환
+        var keyword = hashtags.join(' ');       /* 해시태그들을 공백으로 연결 */
+
+        // 검색 페이지로 이동
+        window.location.href = "/search?keyword=" + encodeURIComponent(keyword);
+    });
+});
