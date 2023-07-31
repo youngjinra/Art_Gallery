@@ -38,12 +38,14 @@ public class PostController {
 
     // upload 템플릿에서 form태그의 action: 으로 인해 해당 주소 postmapping
     @PostMapping("/post/create/{nickname}")
-    public String create(@PathVariable String nickname, @RequestParam("uploadfile")MultipartFile uploadFile, @RequestParam String subject, @RequestParam String content,
-                         RedirectAttributes redirectAttributes, @RequestParam Integer category, @RequestParam List<String> hashtags){
+    public String create(@PathVariable String nickname, @RequestParam("uploadfile")MultipartFile uploadFile,
+                         @RequestParam String subject, @RequestParam String content, RedirectAttributes redirectAttributes,
+                         @RequestParam Integer category, @RequestParam List<String> hashtags, @RequestParam String postType,
+                         @RequestParam(required = false) int price){
 
         if(uploadFile != null && !uploadFile.isEmpty()) {
             FileEntity fileEntity = fileService.uploadFile(uploadFile);
-            PostEntity post = postService.create(subject, content, fileEntity, nickname, category, hashtags);
+            PostEntity post = postService.create(subject, content, fileEntity, nickname, category, hashtags, postType, price);
 
             if (fileEntity != null) {
                 redirectAttributes.addFlashAttribute("file", fileEntity);
@@ -54,11 +56,10 @@ public class PostController {
             // 닉네임이 한글로 입력되면 리다이렉트가 안되는 현상을 방지
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
 
-
             UserEntity user = this.userService.getUserNick(nickname);
+
             user.increaseUserPoint(100);
             this.userService.increasePoint(user);
-
 
             return "redirect:/article/details/" + encodedNickname + "/" + postId;
         }

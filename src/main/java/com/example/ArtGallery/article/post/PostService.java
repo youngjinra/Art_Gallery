@@ -49,7 +49,7 @@ public class PostService {
         }
     }
 
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags){
+    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags, String postType, int price){
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();
@@ -58,6 +58,9 @@ public class PostService {
         post.setCreateDate(LocalDateTime.now());
         post.setFileEntity(fileEntity);
         post.setUserEntity(userEntity.get());
+
+        post.setPostType(postType);
+        post.setPrice(price);
 
         post.setCategory(category);
 

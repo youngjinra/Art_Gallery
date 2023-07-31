@@ -58,4 +58,7 @@ public class PostEntity {
     private int postCollects;
 
     private Integer category;
+
+    private String postType;   // 0: 무료, 1: 유료
+    private int price;
 }

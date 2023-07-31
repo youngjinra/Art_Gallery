@@ -86,3 +86,8 @@ $(function () {
       event.preventDefault(); // 엔터나 스페이스바를 입력해도 폼이 전송되는 것을 방지
     }
   }
+
+  function togglePriceInput(isPaid) {
+      const priceInput = document.getElementById('price');
+      priceInput.disabled = !isPaid;
+    }
