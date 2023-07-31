@@ -26,21 +26,21 @@ public class CommentController {
     private final UserService userService;
 
     @PostMapping("/comment/create/{nickname}/{postId}")
-    public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
-                                @RequestParam String content) {
+        public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
+        @RequestParam String content) {
 
-        // 닉네임 안정화(한글인식)
-        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+            // 닉네임 안정화(한글인식)
+            String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
 
-        // 닉네임의 userEntity
-        UserEntity userEntity = userService.getUser(encodedNickname);
+            // 닉네임의 userEntity
+            UserEntity userEntity = userService.getUser(encodedNickname);
 
-        // 댓글 생성
-        PostEntity post = this.postService.getPost(postId);
+            // 댓글 생성
+            PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, content, userEntity);
         model.addAttribute("userEntity", userEntity);
 
-        return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, comment.getId());
+        return String.format("redirect:/article/details/%s/%d#comment_%d", post.getUserEntity().getNickname(), postId, comment.getId());
     }
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")
