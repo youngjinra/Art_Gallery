@@ -41,7 +41,7 @@ public class PostController {
     public String create(@PathVariable String nickname, @RequestParam("uploadfile")MultipartFile uploadFile,
                          @RequestParam String subject, @RequestParam String content, RedirectAttributes redirectAttributes,
                          @RequestParam Integer category, @RequestParam List<String> hashtags, @RequestParam String postType,
-                         @RequestParam(required = false) int price){
+                         @RequestParam(required = false) Integer price){
 
         if(uploadFile != null && !uploadFile.isEmpty()) {
             FileEntity fileEntity = fileService.uploadFile(uploadFile);

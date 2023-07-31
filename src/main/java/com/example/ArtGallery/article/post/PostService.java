@@ -49,7 +49,7 @@ public class PostService {
         }
     }
 
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags, String postType, int price){
+    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags, String postType, Integer price){
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();

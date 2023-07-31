@@ -60,5 +60,10 @@ public class PostEntity {
     private Integer category;
 
     private String postType;   // 0: 무료, 1: 유료
-    private int price;
+    private Integer price;
+
+    public void setPrice(Integer price) {
+        // 만약 price가 null인 경우 0으로 설정합니다.
+        this.price = (price != null) ? price : 0;
+    }
 }
