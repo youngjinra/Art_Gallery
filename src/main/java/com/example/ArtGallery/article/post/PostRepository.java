@@ -24,4 +24,6 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer>, JpaS
     // 여러 개의 ID로 게시물을 조회하는 메소드 정의
     List<PostEntity> findByIdIn(List<Integer> ids);
 
+    // 해당 해시태그들을 포함하는 게시물들을 조회하는 메서드
+    List<PostEntity> findByHashtags_NameIn(List<String> hashtags);
 }

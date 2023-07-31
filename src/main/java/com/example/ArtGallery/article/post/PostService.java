@@ -48,12 +48,9 @@ public class PostService {
             throw new DataNotFoundException("post not found");
         }
     }
-/*
-<<<<<<< HEAD*/
+
     public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, Integer category, List<String> hashtags){
-/*=======
-    public PostEntity create(String subject, String content, FileEntity fileEntity, String nickname, List<String> hashtags) {
->>>>>>> 63cdfeb69ff76ab369ed7bd73d70a7f04b6d4812*/
+
         Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
 
         PostEntity post = new PostEntity();
@@ -291,8 +288,6 @@ public class PostService {
         return this.postRepository.findAll(sort);
     }
 
-/*<<<<<<< HEAD*/
-
     // 검색 (+정렬)
     public List<PostEntity> getPostsByHashtag(String keywords, int sortingOption){
 
@@ -369,13 +364,23 @@ public class PostService {
         this.postRepository.save(post); // 수정된 게시물 저장
     }
 
-
-
     public List<PostEntity> getPostsByCollectionIds(List<Integer> collectionIds) {
         if (collectionIds.isEmpty()) {
             return new ArrayList<>(); // 컬렉션 ID 목록이 비어있는 경우 빈 리스트 반환
         }
 
         return postRepository.findByIdIn(collectionIds);
+    }
+
+    // 관련 이미지 리스트 반환
+    public List<PostEntity> getRandomRelatedImages(List<String> hashtags, int maxCount) {
+        List<PostEntity> relatedImages = postRepository.findByHashtags_NameIn(hashtags);
+
+        // 랜덤으로 이미지를 섞음
+        Collections.shuffle(relatedImages);
+
+        // 최대 maxCount개까지 이미지 선택
+        int count = Math.min(maxCount, relatedImages.size());
+        return relatedImages.subList(0, count);
     }
 }

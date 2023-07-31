@@ -104,6 +104,10 @@ public class ArticleController {
         List<String> hashtags = postService.getTagsByPostId(postId);
         model.addAttribute("hashtags", hashtags);
 
+        // 서비스를 호출하여 관련 게시물 리스트를 가져옴
+        List<PostEntity> relatedPosts = postService.getRandomRelatedImages(hashtags, 5);
+        model.addAttribute("relatedPosts", relatedPosts);
+
         return "article_details_form";
     }
 

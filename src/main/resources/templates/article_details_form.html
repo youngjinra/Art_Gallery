@@ -57,7 +57,8 @@
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
                 <div class="member flex flex-col">
-                    <a th:href="@{|/user/detail_form/${user.nickname}|}" class="nName font-bold" th:text="${user.nickname}"></a>
+                    <a th:href="@{|/user/detail_form/${user.nickname}|}" class="nName font-bold"
+                       th:text="${user.nickname}"></a>
                     <span class="text-xs" th:text="${followerCount} + ' followers'"></span>
                 </div>
                 <a href="javascript: void(0);" sec:authorize="isAuthenticated()"
@@ -95,15 +96,17 @@
                     <i class="fa-regular fa-bookmark gr-300"></i>
                     <span>저장하기</span>
                 </a>
-                <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 recommend"
-                th:data-uri="@{|/post/vote/${post.id}/${loginUser.nickname}/${user.nickname}|}"
-                th:if="${!isLiked}">
+                <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                   class="click font-awsome heart flex items-center gap-2 recommend"
+                   th:data-uri="@{|/post/vote/${post.id}/${loginUser.nickname}/${user.nickname}|}"
+                   th:if="${!isLiked}">
                     <i class="fa-regular fa-heart gr-300"></i>
                     <span>좋아요</span>
                     <span class="heart_count gr-300"></span>
                 </a>
-                <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="click font-awsome heart flex items-center gap-2 active"
-                th:if=${isLiked} disabled>
+                <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                   class="click font-awsome heart flex items-center gap-2 active"
+                   th:if=${isLiked} disabled>
                     <i class="fa-regular fa-heart gr-300"></i>
                     <span>좋아요</span>
                     <span class="heart_count gr-300"></span>
@@ -111,7 +114,9 @@
 
                 <!-- btn 수정   ======================================================  -->
                 <!--<button class="donwload">무료 다운로드</button>-->
-                <button class="donwload" onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">무료 다운로드</button>
+                <button class="donwload" onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">무료
+                    다운로드
+                </button>
 
             </div>
         </div>
@@ -129,11 +134,12 @@
 
             <!-- img 수정   ======================================================  -->
             <!--<img src="https://cdn.pixabay.com/photo/2023/07/05/04/45/european-shorthair-8107433_1280.jpg" alt="">-->
-            <img id="myImage" th:if="${post.fileEntity != null}" th:src="@{/post/image/{uuid}/{fileName}(uuid=${post.fileEntity.uuid}, fileName=${post.fileEntity.fileName})}" alt="My Image" />
+            <img id="myImage" th:if="${post.fileEntity != null}"
+                 th:src="@{/post/image/{uuid}/{fileName}(uuid=${post.fileEntity.uuid}, fileName=${post.fileEntity.fileName})}"
+                 alt="My Image"/>
 
         </div>
     </div>
-    <!-- 안쓰이는 거 같아요
     <div class="side_info flex flex-col gap-14">
         <div class="specific_box flex flex-col">
             <div class="title">갤러리 세부정보</div>
@@ -146,7 +152,6 @@
                     </div>
                     <div class="view flex-1 flex flex-col gap-1 flex-1">
                         <i class="fa-solid fa-heart"></i>
-&lt;!&ndash;                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>&ndash;&gt;
                         <span class="view_count text-xs font-bold" th:text="${post.postLike}"></span>
                         <span class="gr-300 text-xs">좋아요</span>
                     </div>
@@ -160,7 +165,6 @@
                     <div class="view flex-1 flex flex-col gap-1">
                         <i class="fa-solid fa-bookmark"></i>
                         <span class="text-xs" th:text="${savedUserCount}"></span>
-                        <span class="text-xs" th:text="${followerCount} + ' followers'"></span>
                         <span class="gr-300 text-xs">저장</span>
                     </div>
                 </div>
@@ -174,7 +178,7 @@
                 <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
             </div>
             <div class="tag_box_body flex gap-2 mt-2">
-                <div  th:each="hashtag : ${hashtags}">
+                <div th:each="hashtag : ${hashtags}">
                     <span th:text=${hashtag}></span>
                 </div>
             </div>
@@ -189,7 +193,7 @@
                 <span class="gr-300" th:text="${post.content}"></span>
             </div>
         </div>
-    </div>-->
+    </div>
 </div>
 
 <!-- side_info_2 -->
@@ -243,7 +247,7 @@
             <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
         </div>
         <div class="tag_box_body flex gap-2 mt-2">
-            <div  th:each="hashtag : ${hashtags}">
+            <div th:each="hashtag : ${hashtags}">
                 <span th:text=${hashtag}></span>
             </div>
         </div>
@@ -255,150 +259,149 @@
     <hr class="my-8">
     <div class="img_box_title flex gap-1">
         <span>관련 이미지</span>
-        <a href="https://cdpn.io/pen/debug/PoxRpWy" class="gr-300 plus_btn">
+        <a href="javascript:void(0);" th:data-hashtags="${hashtags}" class="gr-300 plus_btn">
             <i class="fa-solid fa-plus"></i>
         </a>
     </div>
     <div class="img_view flex mx-auto gap-4 mt-3">
-        <div class="img_box flex-1">
-            <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg" alt="">
+        <!--     반복 이미지 -->
+        <div class="img_box flex-1 relatedImg" th:each="relatedPost : ${relatedPosts}"
+             th:unless="${relatedPost.id == post.id}">
+            <img th:src="@{|/post/image/${relatedPost.fileEntity.uuid}/${relatedPost.fileEntity.fileName}|}"
+                 alt="Related Image">
         </div>
-        <div class="img_box flex-1">
-            <img src="https://cdn.pixabay.com/photo/2015/03/27/13/16/maine-coon-694730_640.jpg" alt="">
-        </div>
-        <div class="img_box flex-1">
-            <img src="https://cdn.pixabay.com/photo/2015/11/16/14/43/cat-1045782_640.jpg" alt="">
-        </div>
-        <div class="img_box flex-1">
-            <img src="https://cdn.pixabay.com/photo/2014/04/13/20/49/cat-323262_640.jpg" alt="">
-        </div>
+        <th:block th:if="${relatedPosts.size() <= 5}">
+            <div th:each="count : ${#numbers.sequence(relatedPosts.size(), 5)}" class="img_box flex-1"></div>
+        </th:block>
+        <!--        -->
     </div>
-</div>
 
-<!-- comments -->
-<div class="comment_box_wrapper container mt-16" id="comment_box_wrapper">
-    <div class="comment_top_bar flex justify-between items-center">
-        <div class="comment_top_bar_text flex gap-3">
-            <span>댓글 모음</span>
-            <span class="gr-300 comment_count">2</span>
+    <!-- comments -->
+    <div class="comment_box_wrapper container mt-16" id="comment_box_wrapper">
+        <div class="comment_top_bar flex justify-between items-center">
+            <div class="comment_top_bar_text flex gap-3">
+                <span>댓글 모음</span>
+                <span class="gr-300 comment_count">2</span>
+            </div>
+            <select class="form-select">
+                <option value="1" selected>최신순</option>
+                <option value="2">오래된순</option>
+                <option value="3">좋아요순</option>
+            </select>
         </div>
-        <select class="form-select">
-            <option value="1" selected>최신순</option>
-            <option value="2">오래된순</option>
-            <option value="3">좋아요순</option>
-        </select>
-    </div>
-    <div class="comment_body flex flex-col gap-4">
-        <div class="comment_body_form_wrapper flex gap-4 mt-4 mb-4">
-            <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                <img src="https://picsum.photos/300/300" alt="">
-            </a>
-            <form class="flex flex-col w-full">
-                <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" id="target-textarea"></textarea>
-                <div class="comment_body_registration flex">
-                    <input type="submit" value="댓글 등록">
-                </div>
-            </form>
-        </div>
-        <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
-            <div class="particle flex gap-4">
+        <div class="comment_body flex flex-col gap-4">
+            <div class="comment_body_form_wrapper flex gap-4 mt-4 mb-4">
                 <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
-                <div class="regi_wrapper_body flex flex-col gap-3">
-                    <div class="member-info flex gap-3 justify-between items-center">
-                        <span class="font-bold">lilac</span>
-                        <div class="date_representation gr-300 text-xs flex gap-3">
-                            <span>수정된 날짜</span>
-                            <span class="whitespace-pre">2023-07-14 18:40</span>
-                        </div>
+                <form class="flex flex-col w-full">
+                    <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full"
+                              id="target-textarea"></textarea>
+                    <div class="comment_body_registration flex">
+                        <input type="submit" value="댓글 등록">
                     </div>
-                    <div class="writing">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum,
-                        perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis
-                        alias reprehenderit inventore molestiae.
-                        Nesciunt beatae velit rerum quisquam, nemo possimus reiciendis dolore excepturi libero laborum
-                        veritatis tempore molestiae, quos incidunt. Possimus magnam voluptatibus soluta asperiores
-                        similique nostrum assumenda quisquam. Laboriosam veritatis suscipit repellat.
-                    </div>
-                    <div class="additional flex gap-3">
-                        <div class="reply flex gr-300">
-                            <i class="fa-regular fa-message"></i>
-                            <span>Reply</span>
+                </form>
+            </div>
+            <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
+                <div class="particle flex gap-4">
+                    <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+                        <img src="https://picsum.photos/300/300" alt="">
+                    </a>
+                    <div class="regi_wrapper_body flex flex-col gap-3">
+                        <div class="member-info flex gap-3 justify-between items-center">
+                            <span class="font-bold">lilac</span>
+                            <div class="date_representation gr-300 text-xs flex gap-3">
+                                <span>수정된 날짜</span>
+                                <span class="whitespace-pre">2023-07-14 18:40</span>
+                            </div>
                         </div>
-                        <div class="heart gr-300">
-                            <i class="fa-regular fa-heart self-center heart_1"></i>
-                            <i class="fa-solid fa-heart heart_2 hidden"></i>
+                        <div class="writing">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum,
+                            perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis
+                            alias reprehenderit inventore molestiae.
+                            Nesciunt beatae velit rerum quisquam, nemo possimus reiciendis dolore excepturi libero
+                            laborum
+                            veritatis tempore molestiae, quos incidunt. Possimus magnam voluptatibus soluta asperiores
+                            similique nostrum assumenda quisquam. Laboriosam veritatis suscipit repellat.
                         </div>
-                    </div>
-                    <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                        <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                            <img src="https://picsum.photos/300/300" alt="">
-                        </a>
-                        <form class="flex flex-col w-full">
+                        <div class="additional flex gap-3">
+                            <div class="reply flex gr-300">
+                                <i class="fa-regular fa-message"></i>
+                                <span>Reply</span>
+                            </div>
+                            <div class="heart gr-300">
+                                <i class="fa-regular fa-heart self-center heart_1"></i>
+                                <i class="fa-solid fa-heart heart_2 hidden"></i>
+                            </div>
+                        </div>
+                        <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
+                            <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+                                <img src="https://picsum.photos/300/300" alt="">
+                            </a>
+                            <form class="flex flex-col w-full">
                             <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full"
                                       id="target-textarea"></textarea>
-                            <div class="comment_body_registration flex">
-                                <input type="submit" value="답글 등록">
+                                <div class="comment_body_registration flex">
+                                    <input type="submit" value="답글 등록">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
+                <div class="particle flex gap-4">
+                    <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+                        <img src="https://picsum.photos/300/300" alt="">
+                    </a>
+                    <div class="regi_wrapper_body flex flex-col gap-3">
+                        <div class="member-info flex gap-3 justify-between items-center">
+                            <span class="font-bold">lilac</span>
+                            <div class="date_representation gr-300 text-xs flex gap-3">
+                                <span>등록 날짜</span>
+                                <span class="whitespace-pre">2023-07-12 12:15</span>
                             </div>
-                        </form>
+                        </div>
+                        <div class="writing">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum,
+                            perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis
+                            alias reprehenderit inventore molestiae.
+                        </div>
+                        <div class="additional flex gap-3">
+                            <div class="reply flex gr-300">
+                                <i class="fa-regular fa-message"></i>
+                                <span>Reply</span>
+                            </div>
+                            <div class="heart gr-300">
+                                <i class="fa-regular fa-heart self-center heart_1"></i>
+                                <i class="fa-solid fa-heart heart_2 hidden"></i>
+                            </div>
+                        </div>
+                        <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
+                            <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+                                <img src="https://picsum.photos/300/300" alt="">
+                            </a>
+                            <form class="flex flex-col w-full">
+                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full"
+                                      id="target-textarea"></textarea>
+                                <div class="comment_body_registration flex">
+                                    <input type="submit" value="답글 등록">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
-            <div class="particle flex gap-4">
-                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                    <img src="https://picsum.photos/300/300" alt="">
-                </a>
-                <div class="regi_wrapper_body flex flex-col gap-3">
-                    <div class="member-info flex gap-3 justify-between items-center">
-                        <span class="font-bold">lilac</span>
-                        <div class="date_representation gr-300 text-xs flex gap-3">
-                            <span>등록 날짜</span>
-                            <span class="whitespace-pre">2023-07-12 12:15</span>
-                        </div>
-                    </div>
-                    <div class="writing">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum,
-                        perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis
-                        alias reprehenderit inventore molestiae.
-                    </div>
-                    <div class="additional flex gap-3">
-                        <div class="reply flex gr-300">
-                            <i class="fa-regular fa-message"></i>
-                            <span>Reply</span>
-                        </div>
-                        <div class="heart gr-300">
-                            <i class="fa-regular fa-heart self-center heart_1"></i>
-                            <i class="fa-solid fa-heart heart_2 hidden"></i>
-                        </div>
-                    </div>
-                    <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                        <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                            <img src="https://picsum.photos/300/300" alt="">
-                        </a>
-                        <form class="flex flex-col w-full">
-                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full"
-                                      id="target-textarea"></textarea>
-                            <div class="comment_body_registration flex">
-                                <input type="submit" value="답글 등록">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-
-<script src="/js/jquery-3.7.0.min.js"></script>
-<script src="/js/increase_view.js"></script>
-<script src="/js/article_details_form.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <script src="/js/increase_view.js"></script>
+    <script src="/js/article_details_form.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/5.0.0/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
