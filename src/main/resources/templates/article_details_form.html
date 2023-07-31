@@ -290,8 +290,12 @@
                     <div class="member-info flex gap-3 justify-between items-center">
                         <span class="font-bold" th:text="${comment.userEntity.nickname}"></span>
                         <div class="date_representation gr-300 text-xs flex gap-3">
-                            <span>등록일</span>
-                            <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div class="gr-300 text-xs">등록일:
+                                <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
+                            <div th:if="${comment.modifyDate}" class="gr-300 text-xs">수정일:
+                                <span th:text="${#temporals.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="writing" th:text="${comment.content}"></div>
@@ -305,17 +309,13 @@
                                 <i class="fa-regular fa-message"></i>
                                 <span>Reply</span>
                             </div>
-                            <div class="heart gr-300">
-                                <i class="fa-regular fa-heart self-center heart_1"></i>
-                                <i class="fa-solid fa-heart heart_2 hidden"></i>
-                            </div>
                         </div>
 
                         <!-- 수정삭제부분 -->
                         <div class="update_delete_wrap">
                             <i class="fa-solid fa-ellipsis text-xl dot"></i>
                             <div class="update_delete flex flex-col gap-3 text-xl hidden">
-                                <a href="" class="flex gap-2 items-center text-sm update_btn">
+                                <a th:href="@{|/comment/modify/${post.id}/${comment.id}|}" class="flex gap-2 items-center text-sm update_btn">
                                     <i class="fa-solid fa-pen"></i>
                                     <span>수정</span>
                                 </a>
@@ -366,8 +366,12 @@
                             <div class="member-info flex gap-3 justify-between items-center">
                                 <span class="font-bold" th:text="${reply.userEntity.nickname}"></span>
                                 <div class="date_representation gr-300 text-xs flex gap-3">
-                                    <span>등록일</span>
-                                    <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                                    <div class="gr-300 text-xs">등록일:
+                                        <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                    </div>
+                                    <div th:if="${comment.modifyDate}" class="gr-300 text-xs">수정일:
+                                        <span th:text="${#temporals.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div th:text="${reply.content}"></div>
@@ -378,12 +382,6 @@
                                 <!--댓글 입력 부분-->
                                 <div class="reply_wrapper flex gap-3">
                                     <div class="reply flex gr-300">
-                                        <i class="fa-regular fa-message"></i>
-                                        <span>Reply</span>
-                                    </div>
-                                    <div class="heart gr-300">
-                                        <i class="fa-regular fa-heart self-center heart_1"></i>
-                                        <i class="fa-solid fa-heart heart_2 hidden"></i>
                                     </div>
                                 </div>
 
@@ -391,7 +389,7 @@
                                 <div class="update_delete_wrap">
                                     <i class="fa-solid fa-ellipsis text-xl dot"></i>
                                     <div class="update_delete flex flex-col gap-3 text-xl hidden">
-                                        <a href="" class="flex gap-2 items-center text-sm update_btn">
+                                        <a th:href="@{|/comment/modify/${post.id}/${reply.id}|}" class="flex gap-2 items-center text-sm update_btn">
                                             <i class="fa-solid fa-pen"></i>
                                             <span>수정</span>
                                         </a>

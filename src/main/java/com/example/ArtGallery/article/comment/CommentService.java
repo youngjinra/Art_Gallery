@@ -2,6 +2,7 @@ package com.example.ArtGallery.article.comment;
 
 
 import com.example.ArtGallery.DataNotFoundException;
+import com.example.ArtGallery.article.answer.Answer;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.user.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -50,16 +51,18 @@ public class CommentService {
         return this.commentRepository.save(reply);
     }
 
-    // 댓글 삭제
+    // 댓글 및 답글 삭제
     public void deleteCommentOrReply(int commentId) {
         CommentEntity comment = getComment(commentId);
         commentRepository.delete(comment);
     }
 
-    public CommentEntity updateComment(int commentId, String updatedContent) {
-        CommentEntity comment = getComment(commentId);
-        comment.setContent(updatedContent);
-        return commentRepository.save(comment);
+    // 댓글 및 답글 수정
+    public void modify(CommentEntity commentEntity, String content) {
+        commentEntity.setContent(content);
+        commentEntity.setModifyDate(LocalDateTime.now());
+        this.commentRepository.save(commentEntity);
     }
 
 }
+

@@ -19,7 +19,7 @@ public class CommentEntity {
     private int id;
 
     // 댓글 (부모)
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "parent_id")
     private CommentEntity parent;
 
@@ -27,11 +27,13 @@ public class CommentEntity {
     private String content;
 
     // CommentEntity
-    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
     @OrderBy("id DESC")
     private List<CommentEntity> commentList = new ArrayList<>();
 
     private LocalDateTime createDate;
+
+    private LocalDateTime modifyDate;
 
     @ManyToOne
     private PostEntity postEntity;

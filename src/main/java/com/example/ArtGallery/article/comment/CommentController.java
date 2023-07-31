@@ -1,17 +1,30 @@
 package com.example.ArtGallery.article.comment;
 
+import com.example.ArtGallery.DataNotFoundException;
+import com.example.ArtGallery.article.answer.Answer;
+import com.example.ArtGallery.article.answer.AnswerForm;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.user.UserEntity;
 import com.example.ArtGallery.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -73,25 +86,37 @@ public class CommentController {
 
         commentService.deleteCommentOrReply(commentId);
 
-//        return String.format("redirect:/article/details/%s/%d", encodedNickname, postId);
-//        return "";
         return ResponseEntity.ok().body("{\"message\": \"댓글이 성공적으로 삭제되었습니다.\"}");
     }
 
-    @PostMapping("/comment/update/{nickname}/{postId}/{commentId}")
-    public String updateComment(@PathVariable("nickname") String nickname,
-                                @PathVariable("postId") int postId,
-                                @PathVariable("commentId") int commentId,
-                                @RequestParam String updatedContent) {
+    // 수정 기능
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/comment/modify/{postId}/{commentId}")
+    public String commentModify(Model model, CommentForm commentForm, @PathVariable("commentId") Integer commentId,
+                                @PathVariable("postId") int postId) {
+        CommentEntity commentEntity = this.commentService.getComment(commentId);
+        commentForm.setContent(commentEntity.getContent());
 
-        // 닉네임 안정화(한글인식)
-        String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+        model.addAttribute("postId", postId);
+        model.addAttribute("commentId", commentId);
+        return "comment_form";
+    }
 
-        // 닉네임의 userEntity
-        UserEntity userEntity = userService.getUser(encodedNickname);
-        CommentEntity updatedComment = commentService.updateComment(commentId, updatedContent);
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/comment/modify/{postId}/{commentId}")
+    public String commentModify(@Valid CommentForm commentForm, BindingResult bindingResult,
+                                @PathVariable("commentId") Integer commentId, @PathVariable("postId") int postId) {
+        if (bindingResult.hasErrors()) {
+            return "comment_form"; // 유효성 검사 오류가 있을 경우, 같은 폼 뷰를 다시 보여주어 에러 메시지를 표시합니다.
+        }
 
-        return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, updatedComment.getId());
+        CommentEntity commentEntity = this.commentService.getComment(commentId);
+
+        PostEntity post = this.postService.getPostById(postId);
+
+        this.commentService.modify(commentEntity, commentForm.getContent());
+
+        return "redirect:/article/details/" + post.getUserEntity().getNickname() + "/" + post.getId();
     }
 
 }
