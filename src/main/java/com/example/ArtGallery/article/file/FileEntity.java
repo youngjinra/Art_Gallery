@@ -21,7 +21,7 @@ public class FileEntity {
     private String contentType;
     private String filePath;
 
-    @OneToOne(mappedBy = "fileEntity", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "fileEntity")
     private PostEntity postEntity;
 
     public FileEntity(){

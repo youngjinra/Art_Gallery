@@ -31,7 +31,7 @@ public class PostEntity {
 
     private LocalDateTime createDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private FileEntity fileEntity;
 
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE)

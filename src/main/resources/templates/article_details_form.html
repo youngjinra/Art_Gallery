@@ -116,12 +116,16 @@
             </div>
         </div>
         <div class="main_img_box flex items-center justify-center">
-            <form action="" class="update_delete flex gap-2 gr-300 text-xl">
-                <a href="https://cdpn.io/pen/debug/oNQoKxM">
-                    <i class="fa-solid fa-pen"></i>
-                </a>
-                <i class="fa-solid fa-trash delete_btn"></i>
-            </form>
+            <div th:if="${isCurrentUser}">
+                <form action="" class="update_delete flex gap-2 gr-300 text-xl">
+                    <a th:href="@{|/post/modify/${post.id}|}">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <div class="delete_btn">
+                        <i class="fa-solid fa-trash" th:data-post-id="${post.id}"></i>
+                    </div>
+                </form>
+            </div>
 
             <!-- img 수정   ======================================================  -->
             <!--<img src="https://cdn.pixabay.com/photo/2023/07/05/04/45/european-shorthair-8107433_1280.jpg" alt="">-->

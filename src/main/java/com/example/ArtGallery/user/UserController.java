@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -223,11 +225,20 @@ public class UserController {
             List<PostEntity> postEntityList = this.postService.getList();
             model.addAttribute("postList", postEntityList);
 
+            // 해당 게시물에 좋아요, 저장하기를 누른 유저인지 아닌지 판별하여 post별로 Map에 저장
+            Map<Integer, Boolean> isLikedMap = new HashMap<>();
+            Map<Integer, Boolean> isSavedMap = new HashMap<>();
+            if (!postEntityList.isEmpty()) {
+                for (PostEntity post : postEntityList) {
+                    boolean isLiked = postService.isLikedByCurrentUser(post.getId(), userEntity.getNickname());
+                    boolean isSaved = userService.checkIfSavedByCurrentUser(userEntity.getNickname(), post.getId());
+                    isLikedMap.put(post.getId(), isLiked);
+                    isSavedMap.put(post.getId(), isSaved);
+                }
+            }
+            model.addAttribute("isLikedMap", isLikedMap);
+            model.addAttribute("isSavedMap", isSavedMap);
         }
-
-
-//        List<PostEntity> postEntityList = this.postService.getList();
-//        model.addAttribute("postList", postEntityList);
 
         // 사용자가 선택한 정렬 기준을 서비스에 전달
         List<PostEntity> sortedPosts = postService.getSortedPosts(sortingOption, nicknameConfirm);

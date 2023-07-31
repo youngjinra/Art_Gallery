@@ -122,6 +122,7 @@
             <!--<option value="3">팔로우</option>-->
         </select>
     </div>
+<!--<<<<<<< HEAD
     <div id="imageList">
         <section class="section-1">
             <div class="masonry-grid">
@@ -136,6 +137,40 @@
                     <a th:href="@{|/user/detail_form/${post.userEntity.nickname}|}" class="img_bottom_function flex gap-2">
                         <div class="img_badge">
                             <img src="https://picsum.photos/300/300" alt="">
+=======-->
+    <section class="section-1">
+        <div class="masonry-grid">
+            <div class="grid-item" th:each="post : ${postList}">
+                <div class="img_top_function flex gap-2">
+                    <a href="#" class="font-awsome bookmark"> <i class="fa-solid fa-bookmark"></i>
+                    </a>
+                    <a href="#" class="font-awsome heart">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                </div>
+                <a th:href="@{|/user/detail_form/${post.userEntity.nickname}|}" class="img_bottom_function flex gap-2">
+                    <div class="img_badge">
+                        <img src="https://picsum.photos/300/300" alt="">
+                    </div>
+                    <div class="nName flex items-center" th:text="${post.userEntity.nickname}"></div>
+                </a>
+                <a th:href="@{|/article/details/${post.userEntity.nickname}/${post.id}|}"
+                   th:data-post-id="${post.id}" class="img_box post-link">
+                    <img id="myImage" th:if="${post.fileEntity != null}"
+                         th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
+                         alt="My Image">
+                </a>
+                <div class="update_delete_wrap" th:if="${isCurrentUser}">
+                    <i class="fa-solid fa-ellipsis text-2xl"></i>
+                    <form action="" class="update_delete flex flex-col gap-3 text-xl">
+                        <a th:href="@{|/post/modify/${post.id}|}" class="flex gap-2 items-center text-sm update_btn">
+                            <i class="fa-solid fa-pen"></i>
+                            <span>수정</span>
+                        </a>
+                        <div class="flex gap-2 items-center text-sm delete_btn">
+                            <i class="fa-solid fa-trash" th:data-post-id="${post.id}"></i>
+                            <span>삭제</span>
+<!--&gt;>>>>>> 63cdfeb69ff76ab369ed7bd73d70a7f04b6d4812
                         </div>
                         <div class="nName flex items-center" th:text="${post.userEntity.nickname}"></div>
                     </a>
@@ -154,7 +189,7 @@
                             </a>
                             <div class="flex gap-2 items-center text-sm delete_btn">
                                 <i class="fa-solid fa-trash"></i>
-                                <span>삭제</span>
+                                <span>삭제</span>-->
                             </div>
                         </form>
                     </div>
