@@ -319,7 +319,8 @@
                                     <i class="fa-solid fa-pen"></i>
                                     <span>수정</span>
                                 </a>
-                                <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                <a sec:authorize="isAuthenticated()"
+                                   href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
                                    th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${comment.id}|}"
                                    onclick="delete_reply(this.getAttribute('data-uri'))">
                                     <i class="fa-solid fa-trash"></i>
@@ -393,7 +394,8 @@
                                             <i class="fa-solid fa-pen"></i>
                                             <span>수정</span>
                                         </a>
-                                        <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                        <a sec:authorize="isAuthenticated()"
+                                           href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
                                            th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${reply.id}|}"
                                            onclick="delete_reply(this.getAttribute('data-uri'))">
                                             <i class="fa-solid fa-trash"></i>
