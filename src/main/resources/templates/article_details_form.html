@@ -112,10 +112,13 @@
                     <span class="heart_count gr-300"></span>
                 </a>
 
-                <!-- btn 수정   ======================================================  -->
-                <!--<button class="donwload">무료 다운로드</button>-->
-                <button class="donwload" onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">무료
+                <button class="donwload" th:if="${isPurchase || isCurrentUser}" sec:authorize="isAuthenticated()"
+                        onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">
                     다운로드
+                </button>
+                <button class="donwload" th:if="${!isPurchase && !isCurrentUser}" sec:authorize="isAuthenticated()"
+                        onclick="purchaseImage()" id="articlePurchase" th:data-post-id="${post.id}" th:data-user-id="${loginUser.id}"
+                        th:text="${post.price} + ' ' + Point">
                 </button>
 
             </div>

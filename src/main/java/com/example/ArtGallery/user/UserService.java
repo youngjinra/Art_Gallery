@@ -4,13 +4,17 @@ package com.example.ArtGallery.user;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostRepository;
+import com.example.ArtGallery.article.post.PurchaseEntity;
+import com.example.ArtGallery.article.post.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -20,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final PostRepository postRepository;
+    private final PurchaseRepository purchaseRepository;
 
     public UserEntity create(String username, String nickname, String email, String password) {
         UserEntity user = new UserEntity();
@@ -201,5 +206,36 @@ public class UserService {
 
     public UserEntity setUserImage(UserEntity user) {
         return userRepository.save(user);
+    }
+
+    // 게시물 포인트 결제
+    public boolean purchasePost(UserEntity user, PostEntity post) {
+        if (user != null && post != null) { // 유료 게시물인지 확인
+            int postPrice = post.getPrice();
+
+            if (user.getUserpoint() >= postPrice) {
+                // 포인트가 충분한 경우 결제를 성공시키고 유저 포인트를 감소시킵니다.
+                user.setUserpoint(user.getUserpoint() - postPrice);
+                // 게시물 작성자 포인트 증가
+                post.getUserEntity().setUserpoint(post.getUserEntity().getUserpoint() + postPrice);
+                userRepository.save(user);
+                userRepository.save(post.getUserEntity());
+
+                // PurchaseEntity 생성 및 저장
+                PurchaseEntity purchase = new PurchaseEntity();
+                purchase.setUser(user);
+                purchase.setPost(post);
+                purchase.setPurchaseDate(LocalDateTime.now());
+                purchaseRepository.save(purchase);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 구매 여부 확인
+    public boolean hasPurchasedPost(UserEntity user, PostEntity post) {
+        return purchaseRepository.existsByUserAndPost(user, post);
     }
 }

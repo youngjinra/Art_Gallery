@@ -3,6 +3,7 @@ package com.example.ArtGallery.user;
 
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.post.PostEntity;
+import com.example.ArtGallery.article.post.PurchaseEntity;
 import com.example.ArtGallery.follow.FollowEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -54,6 +55,10 @@ public class UserEntity {
     /*private int following; // 해당 유저의 팔로잉 수 > 추후 구현*/
     @OneToMany(mappedBy = "follower")
     private List<FollowEntity> following;
+
+    // 구매기록
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<PurchaseEntity> purchases = new ArrayList<>();
 
     public List<UserEntity> getFollowing() {
         return following.stream().map(FollowEntity::getFollowing).collect(Collectors.toList());

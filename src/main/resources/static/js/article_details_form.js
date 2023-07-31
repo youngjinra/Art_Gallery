@@ -135,3 +135,48 @@ $(function() {
         window.location.href = "/search?keyword=" + encodeURIComponent(keyword);
     });
 });
+
+// 포인트 결제
+function purchaseImage() {
+    var postId = parseInt(document.getElementById("articlePurchase").getAttribute("data-post-id"));
+    var userId = parseInt(document.getElementById("articlePurchase").getAttribute("data-user-id"));
+
+    var confirmMessage = "결제하시겠습니까?";
+    if (!confirm(confirmMessage)) {
+        return; // 사용자가 취소를 누른 경우 함수 종료
+    }
+    var requestData = {
+        postId: postId,
+        userId: userId
+    };
+
+    fetch("/purchase", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // 성공 시 JSON 데이터를 파싱하여 반환
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    })
+    .then(result => {
+        // 서버로부터 받은 결과 데이터(result)를 처리
+        if (result) {
+            // 결제가 성공한 경우
+            alert("결제 성공!");
+            location.reload();
+        } else {
+            // 결제가 실패한 경우 (포인트 부족 등)
+            alert("결제에 실패하였습니다. 잔여 포인트를 확인해주세요.");
+        }
+    })
+    .catch(error => {
+        alert("서버와의 통신 중에 오류가 발생하였습니다.");
+    });
+}
+

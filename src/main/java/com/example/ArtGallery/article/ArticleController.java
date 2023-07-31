@@ -13,13 +13,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -90,6 +88,9 @@ public class ArticleController {
             // 해당 게시물에 좋아요를 누른 유저인지 아닌지 판별
             boolean isLiked = postService.isLikedByCurrentUser(postId, loginUserEntity.getNickname());
             model.addAttribute("isLiked", isLiked);
+
+            boolean isPurchase = userService.hasPurchasedPost(loginUserEntity, post);
+            model.addAttribute("isPurchase", isPurchase);
         }
 
         // 게시물을 올린 유저의 팔로워 수 템플릿에 반환
@@ -177,5 +178,21 @@ public class ArticleController {
         }
     }
 
+    @PostMapping("/purchase")
+    @ResponseBody
+    public boolean purchaseImage(@RequestBody Map<String, Integer> requestData) {
+        int postId = requestData.get("postId");
+        int userId = requestData.get("userId");
+
+        // postId와 userId를 이용하여 유저와 게시물의 정보를 조회합니다.
+        UserEntity user = userService.getUser(userId);
+        PostEntity post = postService.getPostById(postId);
+
+        if (user != null && post != null) {
+            return userService.purchasePost(user, post);
+        }
+
+        return false;
+    }
 }
 

@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,6 +62,10 @@ public class PostEntity {
 
     private String postType;   // 0: 무료, 1: 유료
     private Integer price;
+
+    // 구매기록
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PurchaseEntity> purchases = new ArrayList<>();
 
     public void setPrice(Integer price) {
         // 만약 price가 null인 경우 0으로 설정합니다.
