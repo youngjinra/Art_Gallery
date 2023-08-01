@@ -112,6 +112,13 @@
                     <span class="heart_count gr-300"></span>
                 </a>
 
+                <div th:if="${post.postType == 'free'}">
+                    <button class="donwload"
+                            onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">
+                        다운로드
+                    </button>
+                </div>
+                <div th:if="${post.postType == 'paid'}">
                 <button class="donwload" th:if="${isPurchase || isCurrentUser}" sec:authorize="isAuthenticated()"
                         onclick="downloadImage()" id="articleDownloads" th:data-post-id="${post.id}">
                     다운로드
@@ -120,7 +127,7 @@
                         onclick="purchaseImage()" id="articlePurchase" th:data-post-id="${post.id}" th:data-user-id="${loginUser.id}"
                         th:text="${post.price} + ' ' + Point">
                 </button>
-
+                </div>
             </div>
         </div>
         <div class="main_img_box flex items-center justify-center">
