@@ -1,7 +1,7 @@
 package com.example.ArtGallery.article.comment;
 
-
 import com.example.ArtGallery.article.post.PostEntity;
+import com.example.ArtGallery.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,21 +26,29 @@ public class CommentEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    // 댓글(부모) - 답글(자식) 설정
-    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    // CommentEntity
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+    @OrderBy("id DESC")
     private List<CommentEntity> commentList = new ArrayList<>();
 
     private LocalDateTime createDate;
 
+    private LocalDateTime modifyDate;
+
     @ManyToOne
     private PostEntity postEntity;
 
+    @Column(nullable = false)
     private int depth;
 
-    public int getDepth(){
+    @ManyToOne
+    private UserEntity userEntity;
+
+    public int getDepth() {
         return depth;
     }
-    public void setDepth(int depth){
+
+    public void setDepth(int depth) {
         this.depth = depth;
     }
 }

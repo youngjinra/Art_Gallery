@@ -125,7 +125,7 @@
         </div>
         <div class="main_img_box flex items-center justify-center">
             <div th:if="${isCurrentUser}">
-                <form action="" class="update_delete flex gap-2 gr-300 text-xl">
+                <form action="" class="update_delete_2 flex gap-2 gr-300 text-xl">
                     <a th:href="@{|/post/modify/${post.id}|}">
                         <i class="fa-solid fa-pen"></i>
                     </a>
@@ -281,10 +281,13 @@
 
     <!-- comments -->
     <div class="comment_box_wrapper container mt-16" id="comment_box_wrapper">
-        <div class="comment_top_bar flex justify-between items-center">
+
+        <!-- 조회필터 -->
+        <div class="comment_top_bar flex justify-between items-center mb-4">
             <div class="comment_top_bar_text flex gap-3">
                 <span>댓글 모음</span>
-                <span class="gr-300 comment_count">2</span>
+                <span class="gr-300 comment_count" th:if="${#lists.size(post.commentList) > 0}"
+                      th:text="${#lists.size(post.commentList)}"></span>
             </div>
             <select class="form-select">
                 <option value="1" selected>최신순</option>
@@ -292,106 +295,162 @@
                 <option value="3">좋아요순</option>
             </select>
         </div>
-        <div class="comment_body flex flex-col gap-4">
-            <div class="comment_body_form_wrapper flex gap-4 mt-4 mb-4">
-                <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+
+
+        <div class="comment_body flex flex-col gap-4" id="comment_body">
+
+
+            <!-- 댓글 입력창 -->
+            <div class="comment_body_form_wrapper flex gap-4 mt-4" sec:authorize="isAuthenticated()">
+                <a th:href="@{|/user/detail_form/${loginUser.nickname}|}" class="img_box">
                     <img src="https://picsum.photos/300/300" alt="">
                 </a>
-                <form class="flex flex-col w-full">
-                    <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full"
-                              id="target-textarea"></textarea>
+                <form class="flex flex-col w-full" method="post" th:action="@{|/comment/create/${loginUser.nickname}/${post.id}|}"
+                      id="commentForm">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <textarea placeholder="새 댓글 추가" class="comment_body_textarea w-full" name="content"
+                              id="commentContent"></textarea>
                     <div class="comment_body_registration flex">
                         <input type="submit" value="댓글 등록">
                     </div>
                 </form>
             </div>
-            <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
+
+            <!-- 댓글 등록창 -->
+            <div class="particle_2 comment_body_regi_wrapper flex flex-col" th:each="comment : ${post.commentList}">
+                <a th:id="|comment_${comment.id}|" class="anchor"></a>
                 <div class="particle flex gap-4">
-                    <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+                    <a th:href="@{|/user/detail_form/${comment.userEntity.nickname}|}" class="img_box">
                         <img src="https://picsum.photos/300/300" alt="">
                     </a>
                     <div class="regi_wrapper_body flex flex-col gap-3">
+
                         <div class="member-info flex gap-3 justify-between items-center">
-                            <span class="font-bold">lilac</span>
+                            <span class="font-bold" th:text="${comment.userEntity.nickname}"></span>
                             <div class="date_representation gr-300 text-xs flex gap-3">
-                                <span>수정된 날짜</span>
-                                <span class="whitespace-pre">2023-07-14 18:40</span>
+                                <div class="gr-300 text-xs">등록일:
+                                    <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+                                <div th:if="${comment.modifyDate}" class="gr-300 text-xs">수정일:
+                                    <span th:text="${#temporals.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="writing">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum,
-                            perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis
-                            alias reprehenderit inventore molestiae.
-                            Nesciunt beatae velit rerum quisquam, nemo possimus reiciendis dolore excepturi libero
-                            laborum
-                            veritatis tempore molestiae, quos incidunt. Possimus magnam voluptatibus soluta asperiores
-                            similique nostrum assumenda quisquam. Laboriosam veritatis suscipit repellat.
-                        </div>
-                        <div class="additional flex gap-3">
-                            <div class="reply flex gr-300">
-                                <i class="fa-regular fa-message"></i>
-                                <span>Reply</span>
+                        <div class="writing" th:text="${comment.content}"></div>
+
+                        <!-- 하단 추가기능 -->
+                        <div class="additional flex gap-3 mt-3 justify-between gr-300">
+
+                            <!--댓글 입력 부분-->
+                            <div class="reply_wrapper flex gap-3">
+                                <div class="reply flex gr-300">
+                                    <i class="fa-regular fa-message"></i>
+                                    <span>Reply</span>
+                                </div>
                             </div>
-                            <div class="heart gr-300">
-                                <i class="fa-regular fa-heart self-center heart_1"></i>
-                                <i class="fa-solid fa-heart heart_2 hidden"></i>
+
+                            <!-- 수정삭제부분 -->
+                            <div sec:authorize="isAuthenticated()">
+                                <div class="update_delete_wrap" th:if="${comment.userEntity.nickname == loginUser.nickname}">
+                                    <i class="fa-solid fa-ellipsis text-xl dot"></i>
+                                    <div class="update_delete flex flex-col gap-3 text-xl hidden">
+                                        <a th:href="@{|/comment/modify/${post.id}/${comment.id}|}" class="flex gap-2 items-center text-sm update_btn">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span>수정</span>
+                                        </a>
+                                        <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                           th:data-uri="@{|/comment/delete/${loginUser.nickname}/${post.id}/${comment.id}|}"
+                                           onclick="delete_reply(this.getAttribute('data-uri'))">
+                                            <i class="fa-solid fa-trash"></i>
+                                            <span>삭제</span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
-                        <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                            <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+
+
+                        <!-- 답글 입력창 -->
+                        <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden" sec:authorize="isAuthenticated()">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <a th:href="@{|/user/detail_form/${loginUser.nickname}|}" class="img_box">
                                 <img src="https://picsum.photos/300/300" alt="">
                             </a>
-                            <form class="flex flex-col w-full">
-                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full"
-                                      id="target-textarea"></textarea>
+                            <form class="flex flex-col w-full" th:action="@{|/comment/create/${loginUser.nickname}/${post.id}/${comment.id}|}" method="post"
+                                  id="replyForm">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full" name="replyContent"
+                                          th:id="replyContent"></textarea>
                                 <div class="comment_body_registration flex">
                                     <input type="submit" value="답글 등록">
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="comment_body_regi_wrapper mt-4 flex flex-col gap-16">
-                <div class="particle flex gap-4">
-                    <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
-                        <img src="https://picsum.photos/300/300" alt="">
-                    </a>
-                    <div class="regi_wrapper_body flex flex-col gap-3">
-                        <div class="member-info flex gap-3 justify-between items-center">
-                            <span class="font-bold">lilac</span>
-                            <div class="date_representation gr-300 text-xs flex gap-3">
-                                <span>등록 날짜</span>
-                                <span class="whitespace-pre">2023-07-12 12:15</span>
-                            </div>
-                        </div>
-                        <div class="writing">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi aliquid ut sit vitae ipsum,
-                            perferendis quia, vero, ipsa quam corporis voluptatibus porro pariatur rem temporibus omnis
-                            alias reprehenderit inventore molestiae.
-                        </div>
-                        <div class="additional flex gap-3">
-                            <div class="reply flex gr-300">
-                                <i class="fa-regular fa-message"></i>
-                                <span>Reply</span>
-                            </div>
-                            <div class="heart gr-300">
-                                <i class="fa-regular fa-heart self-center heart_1"></i>
-                                <i class="fa-solid fa-heart heart_2 hidden"></i>
-                            </div>
-                        </div>
-                        <div class="replies_box comment_body_form_wrapper flex gap-4 mt-4 hidden">
-                            <a href="https://cdpn.io/pen/debug/bGQogqX" class="img_box">
+
+
+                        <!-- 답글 등록 창 -->
+                        <div class="particle flex gap-4 particle_2" th:each="reply : ${comment.commentList}">
+
+                            <!-- 앵커 -->
+                            <a th:id="|reply_${reply.id}|" class="anchor"></a>
+
+                            <!-- 썸네일 -->
+                            <a th:href="@{|/user/detail_form/${reply.userEntity.nickname}|}" class="img_box">
                                 <img src="https://picsum.photos/300/300" alt="">
                             </a>
-                            <form class="flex flex-col w-full">
-                            <textarea placeholder="새 답글 추가" class="comment_body_textarea w-full"
-                                      id="target-textarea"></textarea>
-                                <div class="comment_body_registration flex">
-                                    <input type="submit" value="답글 등록">
+
+                            <div class="regi_wrapper_body flex flex-col gap-3">
+
+                                <!-- 닉네임,등록일,내용 -->
+                                <div class="member-info flex gap-3 justify-between items-center">
+                                    <span class="font-bold" th:text="${reply.userEntity.nickname}"></span>
+                                    <div class="date_representation gr-300 text-xs flex gap-3">
+                                        <div class="gr-300 text-xs">등록일:
+                                            <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                        </div>
+                                        <div th:if="${reply.modifyDate}" class="gr-300 text-xs">수정일:
+                                            <span th:text="${#temporals.format(reply.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </form>
+                                <div th:text="${reply.content}"></div>
+
+                                <!-- 하단 추가기능 -->
+                                <div class="additional flex gap-3 mt-3 justify-between gr-300">
+
+                                    <!-- 답글 입력 부분-->
+                                    <div class="reply_wrapper flex gap-3">
+                                        <div class="reply flex gr-300">
+                                        </div>
+                                    </div>
+
+                                    <!-- 수정삭제부분 -->
+                                    <div sec:authorize="isAuthenticated()">
+                                        <div class="update_delete_wrap" th:if="${comment.userEntity.nickname == loginUser.nickname}">
+                                            <i class="fa-solid fa-ellipsis text-xl dot"></i>
+                                            <div class="update_delete flex flex-col gap-3 text-xl hidden">
+                                                <a th:href="@{|/comment/modify/${post.id}/${reply.id}|}" class="flex gap-2 items-center text-sm update_btn">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                    <span>수정</span>
+                                                </a>
+                                                <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                                   th:data-uri="@{|/comment/delete/${loginUser.nickname}/${post.id}/${reply.id}|}"
+                                                   onclick="delete_reply(this.getAttribute('data-uri'))">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                    <span>삭제</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>

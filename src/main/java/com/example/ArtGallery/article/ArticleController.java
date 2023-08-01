@@ -43,7 +43,7 @@ public class ArticleController {
         }
 
         // 해당 nickname을 사용하여 유저 정보 가져오기
-        UserEntity loginUser = userService.getUserNick(nicknameConfirm);
+        UserEntity loginUser = userService.getUser(nicknameConfirm);
         model.addAttribute("loginUser", loginUser);
 
         return "upload_form";     // 로그인한 상태일 때는 로그인한 유저의 데이터 객체가 인덱스로 넘어감
@@ -61,7 +61,7 @@ public class ArticleController {
         }
 
         // 해당 게시물 주인의 userEntity를 'user'로 템플릿에서 활용할 수 있게 반환
-        UserEntity userEntity = this.userService.getUserNick(nickname);
+        UserEntity userEntity = this.userService.getUser(nickname);
         model.addAttribute("user", userEntity);
 
         // 해당 게시물의 정보(postEntity)를 'post'로 템플릿에 활용할 수 있게 반환
@@ -75,7 +75,7 @@ public class ArticleController {
             model.addAttribute("isCurrentUser", nicknameConfirm.equals(nickname));
             
             // 현재 로그인한 유저의 정보를 'loginUser'로 템플릿에서 활용할 수 있게 반환
-            UserEntity loginUserEntity = this.userService.getUserNick(nicknameConfirm);
+            UserEntity loginUserEntity = this.userService.getUser(nicknameConfirm);
             model.addAttribute("loginUser", loginUserEntity);
 
             boolean isFollowing = followService.isFollowing(loginUserEntity, userEntity);
@@ -123,7 +123,7 @@ public class ArticleController {
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
 
             // 해당 nickname을 사용하여 유저 정보 가져오기
-            UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+            UserEntity userEntity = userService.getUser(nicknameConfirm);
             model.addAttribute("userEntity", userEntity);
 
             List<PostEntity> postEntityList = this.postService.getList();

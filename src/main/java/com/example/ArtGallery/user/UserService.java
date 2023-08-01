@@ -1,6 +1,9 @@
 package com.example.ArtGallery.user;
 
 
+import com.example.ArtGallery.DataNotFoundException;
+import com.example.ArtGallery.article.comment.CommentEntity;
+import com.example.ArtGallery.article.comment.CommentRepository;
 import com.example.ArtGallery.article.file.FileEntity;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostRepository;
@@ -25,6 +28,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final PostRepository postRepository;
     private final PurchaseRepository purchaseRepository;
+    private final CommentRepository commentRepository;
+
 
     public UserEntity create(String username, String nickname, String email, String password) {
         UserEntity user = new UserEntity();
@@ -82,11 +87,16 @@ public class UserService {
         return null;
     }
 
-    // 닉네임으로 체크해 해당유저객체 반환
-    public UserEntity getUserNick(String nickname) {
-        Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
-        return userEntity.get();
+    public UserEntity getUser(String nickname) {
+        Optional<UserEntity> user = this.userRepository.findByNickname(nickname);
+        return user.get();
     }
+
+//    // 닉네임으로 체크해 해당유저객체 반환
+//    public UserEntity getUserNick(String nickname) {
+//        Optional<UserEntity> userEntity = this.userRepository.findByNickname(nickname);
+//        return userEntity.get();
+//    }
 
     // 유저 닉네임 변경
     public void nickModify(UserEntity userEntity, String nickname){

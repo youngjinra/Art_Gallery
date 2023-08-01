@@ -1,8 +1,6 @@
 package com.example.ArtGallery.user;
 
 
-import com.example.ArtGallery.article.file.FileEntity;
-import com.example.ArtGallery.article.file.FileService;
 import com.example.ArtGallery.article.post.PostEntity;
 import com.example.ArtGallery.article.post.PostService;
 import com.example.ArtGallery.follow.FollowService;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +58,7 @@ public class UserController {
         }
 
         // 해당 유저정보 주인의 userEntity를 'user'로 템플릿에서 활용할 수 있게 반환
-        UserEntity userEntity = this.userService.getUserNick(loginUserNick);
+        UserEntity userEntity = this.userService.getUser(loginUserNick);
         model.addAttribute("user", userEntity);
 
         if (nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
@@ -71,7 +68,7 @@ public class UserController {
 
             model.addAttribute("isCurrentUser", nicknameConfirm.equals(loginUserNick));
 
-            UserEntity loginUser = this.userService.getUserNick(nicknameConfirm);
+            UserEntity loginUser = this.userService.getUser(nicknameConfirm);
             model.addAttribute("loginUser", loginUser);
 
             // 내가 해당 유저를 팔로잉중인지 확인하기 위한 true, false 반환
@@ -142,7 +139,7 @@ public class UserController {
         }
 
         // 해당 유저정보 주인의 userEntity를 'user'로 템플릿에서 활용할 수 있게 반환
-        UserEntity userEntity = this.userService.getUserNick(loginUserNick);
+        UserEntity userEntity = this.userService.getUser(loginUserNick);
         model.addAttribute("user", userEntity);
 
         if (nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
@@ -152,7 +149,7 @@ public class UserController {
 
             model.addAttribute("isCurrentUser", nicknameConfirm.equals(loginUserNick));
 
-            UserEntity loginUser = this.userService.getUserNick(nicknameConfirm);
+            UserEntity loginUser = this.userService.getUser(nicknameConfirm);
             model.addAttribute("loginUser", loginUser);
 
             // 내가 해당 유저를 팔로잉중인지 확인하기 위한 true, false 반환
@@ -220,7 +217,7 @@ public class UserController {
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
 
             // 해당 nickname을 사용하여 유저 정보 가져오기
-            UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+            UserEntity userEntity = userService.getUser(nicknameConfirm);
             model.addAttribute("userEntity", userEntity);
 
             List<PostEntity> postEntityList = this.postService.getList();
@@ -263,7 +260,7 @@ public class UserController {
         }
 
         // 해당 nickname을 사용하여 유저 정보 가져오기
-        UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+        UserEntity userEntity = userService.getUser(nicknameConfirm);
         userNicknameModifyForm.setNickname(userEntity.getNickname());
         return "nick_change_form";
     }
@@ -278,7 +275,7 @@ public class UserController {
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
 
         }
-        UserEntity userEntity = userService.getUserNick(nicknameConfirm);
+        UserEntity userEntity = userService.getUser(nicknameConfirm);
         userService.nickModify(userEntity, userNicknameModifyForm.getNickname());
 
         return "redirect:/";

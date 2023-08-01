@@ -72,7 +72,7 @@ public class FileService {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setUuid(uuid);
         fileEntity.setFileName("fileName.jpg");
-        fileEntity.setFilePath("D:/springBoot/testDB/" + uuid + "_fileName.jpg");
+        fileEntity.setFilePath("C:\\Users\\Administrator\\uploadFileFolder\\" + uuid + "_fileName.jpg");
         return fileEntity;
     }
 }

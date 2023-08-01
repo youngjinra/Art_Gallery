@@ -5,6 +5,10 @@ function Click__init_1() {
   });
 }
 
+function triggerFileInput() {
+  document.getElementById('product_image').click();
+}
+
 function Click__init_2() {
   $(".upload-wrapper-2 .trash").click(function () {
     $(".upload-wrapper").removeClass("hidden");
@@ -22,6 +26,7 @@ $(function () {
   Click__init_1();
   Click__init_2();
   Click__init_3();
+  triggerFileInput();
 });
 
     // 이미지 미리보기 함수

@@ -56,7 +56,7 @@ public class PostController {
             // 닉네임이 한글로 입력되면 리다이렉트가 안되는 현상을 방지
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
 
-            UserEntity user = this.userService.getUserNick(nickname);
+            UserEntity user = this.userService.getUser(nickname);
 
             user.increaseUserPoint(100);
             this.userService.increasePoint(user);
@@ -77,8 +77,8 @@ public class PostController {
     public String postVote(Model model, @PathVariable("id") Integer id, @PathVariable("loginUserNick") String loginUserNick, @PathVariable("userNick") String userNick) {
 
         PostEntity postEntity = this.postService.getPostById(id);
-        UserEntity user = this.userService.getUserNick(userNick);
-        UserEntity loginUser = this.userService.getUserNick(loginUserNick);
+        UserEntity user = this.userService.getUser(userNick);
+        UserEntity loginUser = this.userService.getUser(loginUserNick);
 
 
         this.postService.vote(postEntity, loginUser);
@@ -116,7 +116,7 @@ public class PostController {
     // image 반환하기
     @GetMapping(value = "/post/image/{uuid}/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> userSearch(@PathVariable("uuid") String uuid, @PathVariable("fileName") String fileName ) throws IOException {
-        String imagePath = "D:\\springBoot\\testDB\\" + uuid + "_" + fileName;
+        String imagePath = "C:\\Users\\Administrator\\uploadFileFolder\\" + uuid + "_" + fileName;
         Path imageFilePath = Paths.get(imagePath);
         byte[] imageBytes = Files.readAllBytes(imageFilePath);
 
@@ -153,7 +153,7 @@ public class PostController {
             // UserService에서 로그인 유저 닉네임 반환하는 메소드 호출
             nicknameConfirm = userService.getAuthNickname(userEmail, nicknameConfirm, authentication);
         }
-        UserEntity loginUserEntity = this.userService.getUserNick(nicknameConfirm);
+        UserEntity loginUserEntity = this.userService.getUser(nicknameConfirm);
         model.addAttribute("loginUser", loginUserEntity);
 
         PostEntity postEntity = this.postService.getPostById(postId);

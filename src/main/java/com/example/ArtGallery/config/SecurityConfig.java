@@ -20,7 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     private CustomOAuth2UserService customOAuth2UserService;
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService){
+    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
         this.customOAuth2UserService = customOAuth2UserService;
     }
 
@@ -33,14 +33,19 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf
-//                        .ignoringRequestMatchers(
-//                                new AntPathRequestMatcher("/h2-console/**"),
-//                                new AntPathRequestMatcher("/user/signup/mailConfirm/**"),
-//                                new AntPathRequestMatcher("/user/signup/checkid/**"),
-//                                new AntPathRequestMatcher("/user/signup/checknickname"),
-//                                new AntPathRequestMatcher("/user/signup/checkemail")
-//                        )
-                                .disable()
+                                .ignoringRequestMatchers(
+                                        new AntPathRequestMatcher("/h2-console/**"),
+                                        new AntPathRequestMatcher("/user/signup/mailConfirm/**"),
+                                        new AntPathRequestMatcher("/user/signup/checkid/**"),
+                                        new AntPathRequestMatcher("/user/signup/checknickname"),
+                                        new AntPathRequestMatcher("/user/signup/checkemail"),
+                                        new AntPathRequestMatcher("/collection/**"),
+                                        new AntPathRequestMatcher("/removeCollection/**"),
+                                        new AntPathRequestMatcher("/purchase"),
+                                        new AntPathRequestMatcher("/api/**"),
+                                        new AntPathRequestMatcher("/post/**")
+                                )
+//                                .disable()
                 )
                 .formLogin(login -> login
                         .loginPage("/user/login")
@@ -68,7 +73,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

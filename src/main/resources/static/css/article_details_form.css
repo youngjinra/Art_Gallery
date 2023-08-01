@@ -223,23 +223,23 @@ body .sign-in:hover {
   padding: 0 100px;
   position: relative;
 }
-.content .main_img_box .update_delete {
+.content .main_img_box .update_delete_2 {
   display: none;
   position: absolute;
   top: 3%;
   right: 1%;
 }
-.content .main_img_box:hover .update_delete {
+.content .main_img_box:hover .update_delete_2 {
   display: flex;
   position: absolute;
   top: 2%;
   right: 0;
   cursor: pointer;
 }
-.content .main_img_box .update_delete i {
+.content .main_img_box .update_delete_2 i {
   padding: 10px;
 }
-.content .main_img_box .update_delete i:hover {
+.content .main_img_box .update_delete_2 i:hover {
   color: rgb(52, 211, 153);
   animation: shake 0.5s ease-in-out;
 }
@@ -417,9 +417,46 @@ body .side_info_imoji:hover {
   font-size: 16px;
   user-select: none;
 }
-.regi_wrapper_body .additional div:hover {
+.regi_wrapper_body .additional .reply_wrapper > div:hover {
   color: rgb(52, 211, 153);
 }
+.particle_2 {
+  border-radius: 20px;
+  border: 1px solid #ceced2;
+  padding: 10px;
+}
+.anchor{
+  scroll-margin-top: 380px;
+}
+
+/* 수정 및 삭제 */
+.update_delete_wrap {
+  position: relative;
+  margin-right: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.update_delete_wrap .update_delete {
+  background-color: white;
+  border-radius: 8px;
+  justify-content: center;
+  padding: 10px;
+  position: absolute;
+  bottom: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  box-shadow: 0px 0px 5px 2px #ceced2;
+}
+.update_delete_wrap > i:hover {
+  color: rgb(52, 211, 153);
+}
+.update_delete_wrap .update_delete > a:hover {
+  color: rgb(52, 211, 153);
+}
+
+
+
+
 
 /* 반응형 */
 @media (min-width: 1600px) {
