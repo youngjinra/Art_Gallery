@@ -37,6 +37,7 @@ public class PostEntity {
 
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE)
     @Where(clause = "parent_id is null")
+    @OrderBy("id DESC")
     private List<CommentEntity> commentList;
 
     @ManyToOne

@@ -339,9 +339,9 @@
                             <span class="font-bold" th:text="${comment.userEntity.nickname}"></span>
                             <div class="date_representation gr-300 text-xs flex gap-4">
                                 <div class="gr-300 text-xs">등록일:
-                                    <span th:text="${#temporals.format(comment.modifyDate, 'yyyy-MM-dd')}"></span>
+                                    <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd')}"></span>
                                     &nbsp;&nbsp; <!-- 간격 조절을 위해 여러 개의 공백 삽입 -->
-                                    <span th:text="${#temporals.format(comment.modifyDate, 'HH:mm')}"></span>
+                                    <span th:text="${#temporals.format(comment.createDate, 'HH:mm')}"></span>
                                 </div>
                                 <div th:if="${comment.modifyDate}" class="gr-300 text-xs">
                                     수정일:
@@ -423,9 +423,9 @@
                                     <span class="font-bold" th:text="${reply.userEntity.nickname}"></span>
                                     <div class="date_representation gr-300 text-xs flex gap-4">
                                         <div class="gr-300 text-xs">등록일:
-                                            <span th:text="${#temporals.format(reply.modifyDate, 'yyyy-MM-dd')}"></span>
+                                            <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd')}"></span>
                                             &nbsp;&nbsp; <!-- 간격 조절을 위해 여러 개의 공백 삽입 -->
-                                            <span th:text="${#temporals.format(reply.modifyDate, 'HH:mm')}"></span>
+                                            <span th:text="${#temporals.format(reply.createDate, 'HH:mm')}"></span>
                                         </div>
                                         <div th:if="${reply.modifyDate}" class="gr-300 text-xs">
                                             수정일:
