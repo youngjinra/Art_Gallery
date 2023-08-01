@@ -312,23 +312,24 @@
                         </div>
 
                         <!-- 수정삭제부분 -->
-                        <div class="update_delete_wrap" sec:authorize="isAuthenticated()">
-                            <i class="fa-solid fa-ellipsis text-xl dot"></i>
-                            <div class="update_delete flex flex-col gap-3 text-xl hidden">
-                                <a th:href="@{|/comment/modify/${post.id}/${comment.id}|}" class="flex gap-2 items-center text-sm update_btn"
-                                   th:if="${comment.userEntity.nickname == userEntity.nickname}">
-                                    <i class="fa-solid fa-pen"></i>
-                                    <span>수정</span>
-                                </a>
-                                <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
-                                   th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${comment.id}|}"
-                                   th:if="${comment.userEntity.nickname == userEntity.nickname}"
-                                   onclick="delete_reply(this.getAttribute('data-uri'))">
-                                    <i class="fa-solid fa-trash"></i>
-                                    <span>삭제</span>
-                                </a>
+                        <div sec:authorize="isAuthenticated()">
+                            <div class="update_delete_wrap" th:if="${comment.userEntity.nickname == userEntity.nickname}">
+                                <i class="fa-solid fa-ellipsis text-xl dot"></i>
+                                <div class="update_delete flex flex-col gap-3 text-xl hidden">
+                                    <a th:href="@{|/comment/modify/${post.id}/${comment.id}|}" class="flex gap-2 items-center text-sm update_btn">
+                                        <i class="fa-solid fa-pen"></i>
+                                        <span>수정</span>
+                                    </a>
+                                    <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                       th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${comment.id}|}"
+                                       onclick="delete_reply(this.getAttribute('data-uri'))">
+                                        <i class="fa-solid fa-trash"></i>
+                                        <span>삭제</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+
 
                     </div>
 
@@ -388,23 +389,24 @@
                                 </div>
 
                                 <!-- 수정삭제부분 -->
-                                <div class="update_delete_wrap" sec:authorize="isAuthenticated()">
-                                    <i class="fa-solid fa-ellipsis text-xl dot"></i>
-                                    <div class="update_delete flex flex-col gap-3 text-xl hidden">
-                                        <a th:href="@{|/comment/modify/${post.id}/${reply.id}|}" class="flex gap-2 items-center text-sm update_btn"
-                                           th:if="${reply.userEntity.nickname == userEntity.nickname}">
-                                            <i class="fa-solid fa-pen"></i>
-                                            <span>수정</span>
-                                        </a>
-                                        <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
-                                           th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${reply.id}|}"
-                                           th:if="${reply.userEntity.nickname == userEntity.nickname}"
-                                           onclick="delete_reply(this.getAttribute('data-uri'))">
-                                            <i class="fa-solid fa-trash"></i>
-                                            <span>삭제</span>
-                                        </a>
+                                <div sec:authorize="isAuthenticated()">
+                                    <div class="update_delete_wrap" th:if="${comment.userEntity.nickname == userEntity.nickname}">
+                                        <i class="fa-solid fa-ellipsis text-xl dot"></i>
+                                        <div class="update_delete flex flex-col gap-3 text-xl hidden">
+                                            <a th:href="@{|/comment/modify/${post.id}/${reply.id}|}" class="flex gap-2 items-center text-sm update_btn">
+                                                <i class="fa-solid fa-pen"></i>
+                                                <span>수정</span>
+                                            </a>
+                                            <a href="javascript:void(0);" class="flex gap-2 items-center text-sm delete_btn"
+                                               th:data-uri="@{|/comment/delete/${userEntity.nickname}/${post.id}/${reply.id}|}"
+                                               onclick="delete_reply(this.getAttribute('data-uri'))">
+                                                <i class="fa-solid fa-trash"></i>
+                                                <span>삭제</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
+
 
                             </div>
                         </div>
