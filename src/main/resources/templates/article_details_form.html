@@ -330,7 +330,7 @@
 
                         <div class="member-info flex gap-3 justify-between items-center">
                             <span class="font-bold" th:text="${comment.userEntity.nickname}"></span>
-                            <div class="date_representation gr-300 text-xs flex gap-3">
+                            <div class="date_representation gr-300 text-xs flex gap-4">
                                 <div class="gr-300 text-xs">등록일:
                                     <span th:text="${#temporals.format(comment.modifyDate, 'yyyy-MM-dd')}"></span>
                                     &nbsp;&nbsp; <!-- 간격 조절을 위해 여러 개의 공백 삽입 -->
@@ -414,7 +414,7 @@
                                 <!-- 닉네임,등록일,내용 -->
                                 <div class="member-info flex gap-3 justify-between items-center">
                                     <span class="font-bold" th:text="${reply.userEntity.nickname}"></span>
-                                    <div class="date_representation gr-300 text-xs flex gap-3">
+                                    <div class="date_representation gr-300 text-xs flex gap-4">
                                         <div class="gr-300 text-xs">등록일:
                                             <span th:text="${#temporals.format(reply.modifyDate, 'yyyy-MM-dd')}"></span>
                                             &nbsp;&nbsp; <!-- 간격 조절을 위해 여러 개의 공백 삽입 -->
