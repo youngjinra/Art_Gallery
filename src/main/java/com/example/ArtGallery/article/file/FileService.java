@@ -72,7 +72,8 @@ public class FileService {
         FileEntity fileEntity = new FileEntity();
         fileEntity.setUuid(uuid);
         fileEntity.setFileName("fileName.jpg");
-        fileEntity.setFilePath("C:\\IT\\DB\\" + uuid + "_fileName.jpg");
+        fileEntity.setFilePath("C:/Users/Administrator/uploadFileFolder/" + uuid + "_fileName.jpg");
+        fileEntity.setFilePath("C:\\Temp\\upload\\" + uuid + "_fileName.jpg");
         return fileEntity;
     }
 }
