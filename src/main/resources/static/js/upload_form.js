@@ -54,12 +54,15 @@ $(function () {
   const hashtagsHidden = document.getElementById("hashtags-hidden");
   const addedHashtags = new Set();
 
-  hashtagsInput.addEventListener("keypress", addHashtagInput);
+  hashtagsInput.addEventListener("keydown", addHashtagInput);
 
   function addHashtagInput(event) {
     if (event.key === "Enter" || event.key === " ") {
       const input = document.getElementById("hashtags-input");
       const hashtag = input.value.trim();
+
+      // 추가된 해시태그의 개수를 체크
+      const currentHashtagsCount = addedHashtags.size;
 
       if (hashtag.length > 0 && addedHashtags.size < 8) {
         const container = document.getElementById("hashtags-display");
@@ -87,7 +90,6 @@ $(function () {
           hashtagsHidden.value = Array.from(addedHashtags).join(","); // 숨겨진 input 업데이트
         });
       }
-
       event.preventDefault(); // 엔터나 스페이스바를 입력해도 폼이 전송되는 것을 방지
     }
   }
@@ -96,3 +98,17 @@ $(function () {
       const priceInput = document.getElementById('price');
       priceInput.disabled = !isPaid;
     }
+
+document.getElementById("createSubmit").addEventListener("submit", function(event) {
+  const currentHashtagsCount = addedHashtags.size;
+
+  if (currentHashtagsCount === 0) {
+    // 게시물 등록 시 해시태그가 0개인 경우 알림창 띄우기
+    alert("최소 1개 이상의 해시태그를 입력해주세요.");
+    event.preventDefault(); // 폼 제출을 막습니다.
+  } else if (currentHashtagsCount > 8) {
+    // 게시물 등록 시 해시태그가 8개 초과인 경우 알림창 띄우기
+    alert("최대 8개까지의 해시태그를 입력해주세요.");
+    event.preventDefault(); // 폼 제출을 막습니다.
+  }
+});

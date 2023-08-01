@@ -78,8 +78,20 @@ existingTags.forEach((tag) => {
     // 확인창을 띄우고 사용자가 확인 버튼을 눌렀을 때만 폼 제출
     const confirmMessage = "정말 수정하시겠습니까?";
     if (confirm(confirmMessage)) {
-      // 폼 제출
-      document.getElementById("modify-form").submit();
+      const currentHashtagsCount = addedHashtags.size;
+
+      if (currentHashtagsCount === 0) {
+        // 게시물 등록 시 해시태그가 0개인 경우 알림창 띄우기
+        alert("최소 1개 이상의 해시태그를 입력해주세요.");
+        event.preventDefault(); // 폼 제출을 막습니다.
+      } else if (currentHashtagsCount > 8) {
+        // 게시물 등록 시 해시태그가 8개 초과인 경우 알림창 띄우기
+        alert("최대 8개까지의 해시태그를 입력해주세요.");
+        event.preventDefault(); // 폼 제출을 막습니다.
+      } else{
+            // 폼 제출
+            document.getElementById("modify-form").submit();
+      }
     }
   });
 
