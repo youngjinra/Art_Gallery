@@ -336,12 +336,13 @@ public class PostService {
     }
 
     // 수정
-    public void updatePost(int postId, String subject, String content, List<String> hashtags) {
+    public void updatePost(int postId, String subject, String content, List<String> hashtags, int category) {
         Optional<PostEntity> postEntity = this.postRepository.findById(postId);
         PostEntity post = postEntity.get();
 
         post.setSubject(subject);
         post.setContent(content);
+        post.setCategory(category);
 
         // 기존 해시태그들 일단 모두 관계 해제
         post.setHashtags(null);

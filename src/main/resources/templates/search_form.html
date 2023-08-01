@@ -65,6 +65,9 @@
   <section class="section-1">
     <div class="masonry-grid">
       <div class="grid-item" th:each="post : ${posts}">
+        <div th:if="${post.postType == 'paid'}" class="insignia absolute px-1">
+          <i class="fa-brands fa-envira"></i>
+        </div>
         <div class="img_top_function flex gap-2">
           <a href="#" class="font-awsome bookmark">
             <i class="fa-solid fa-bookmark"></i>

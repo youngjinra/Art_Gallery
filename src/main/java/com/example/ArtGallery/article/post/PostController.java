@@ -167,10 +167,9 @@ public class PostController {
     }
     @PostMapping("/post/modify/{postId}/{nickname}")
     public String updatePost(@PathVariable int postId, @PathVariable String nickname, @RequestParam String subject, @RequestParam String content,
-                             @RequestParam List<String> hashtags) {
+                             @RequestParam List<String> hashtags, @RequestParam int category) {
         try {
-
-            postService.updatePost(postId, subject, content, hashtags);
+            postService.updatePost(postId, subject, content, hashtags, category);
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
             return "redirect:/article/details/" + encodedNickname + "/" + postId; // 게시물 상세 페이지로 리다이렉트
         } catch (Exception e) {

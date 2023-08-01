@@ -158,6 +158,9 @@
     <section class="section-1">
         <div class="masonry-grid">
             <div class="grid-item w-full" th:each="post : ${postList}">
+                <div th:if="${post.postType == 'paid'}" class="insignia absolute px-1">
+                    <i class="fa-brands fa-envira"></i>
+                </div>
                 <div class="img_top_function flex gap-2">
                     <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark addToCollection"
                        th:data-uri="@{|/collection/${userEntity.nickname}/${post.id}|}"
