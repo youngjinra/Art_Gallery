@@ -39,8 +39,8 @@ function side_info_2_click() {
 }
 
     // 삭제 버튼을 클릭했을 때 호출되는 함수
-    $('.delete_btn').on('click', function () {
-        var postId = $(this).find('.fa-trash').data('post-id'); // 해당 게시물의 ID 가져오기
+    $('.delete_btn_2').on('click', function () {
+        var postId = $(this).find('.trash').data('post-id'); // 해당 게시물의 ID 가져오기
 
         // 게시물 삭제 전에 사용자에게 확인을 받는다.
         var confirmDelete = confirm('게시물을 삭제하시겠습니까?');
