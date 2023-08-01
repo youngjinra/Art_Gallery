@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -25,6 +28,7 @@ public class CommentController {
     public String createComment(Model model, @PathVariable("postId") int postId, @PathVariable("nickname") String nickname,
                                 @RequestParam String content) {
 
+
         // 닉네임의 userEntity
         UserEntity userEntity = userService.getUser(nickname);
 
@@ -32,7 +36,9 @@ public class CommentController {
         PostEntity post = this.postService.getPost(postId);
         CommentEntity comment = this.commentService.create(post, content, userEntity);
 
-        return String.format("redirect:/article/details/%s/%d#comment_%d", post.getUserEntity().getNickname(), postId, comment.getId());
+        String encodedNickname = URLEncoder.encode(post.getUserEntity().getNickname(), StandardCharsets.UTF_8);
+
+        return String.format("redirect:/article/details/%s/%d#comment_%d", encodedNickname, postId, comment.getId());
     }
 
     @PostMapping("/comment/create/{nickname}/{postId}/{commentId}")
@@ -47,8 +53,10 @@ public class CommentController {
         CommentEntity parentComment = this.commentService.getComment(commentId);
         CommentEntity reply = this.commentService.createReply(post, parentComment, replyContent, userEntity);
 
+        String encodedNickname = URLEncoder.encode(post.getUserEntity().getNickname(), StandardCharsets.UTF_8);
+
         // 생성한 댓글로 리다이렉트
-        return String.format("redirect:/article/details/%s/%d#reply_%d", post.getUserEntity().getNickname(), postId, reply.getId());
+        return String.format("redirect:/article/details/%s/%d#reply_%d", encodedNickname, postId, reply.getId());
     }
 
     // 댓글 및 답글 삭제 컨트롤러
