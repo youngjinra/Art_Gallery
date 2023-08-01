@@ -456,7 +456,7 @@
                                     <!-- 수정삭제부분 -->
                                     <div sec:authorize="isAuthenticated()">
                                         <div class="update_delete_wrap"
-                                             th:if="${comment.userEntity.nickname == loginUser.nickname}">
+                                             th:if="${reply.userEntity.nickname == loginUser.nickname}">
                                             <i class="fa-solid fa-ellipsis text-xl dot"></i>
                                             <div class="update_delete flex flex-col gap-3 text-xl hidden">
                                                 <a th:href="@{|/comment/modify/${post.id}/${reply.id}|}"
