@@ -100,8 +100,8 @@
                 <span class="head">포인트</span>
                 <span class="body" th:text="${user.userpoint}"></span>
             </div>
-            <div class="flex flex-col flex-1 items-center collection" onclick="toggleLists()">
-                <a href="#" class="head flex gap-2 items-center">
+            <div class="flex flex-col flex-1 items-center collection">
+                <a href="#" class="head flex gap-2 items-center" onclick="toggleLists()">
                     <i class="fa-solid fa-bookmark"></i>
                     <span>컬렉션</span>
                 </a>
@@ -129,9 +129,28 @@
                     <i class="fa-brands fa-envira"></i>
                 </div>
                 <div class="img_top_function flex gap-2">
-                    <a href="#" class="font-awsome bookmark"> <i class="fa-solid fa-bookmark"></i>
+<!--                    <a href="#" class="font-awsome bookmark"> <i class="fa-solid fa-bookmark"></i>-->
+<!--                    </a>-->
+<!--                    <a href="#" class="font-awsome heart">-->
+<!--                        <i class="fa-solid fa-heart"></i>-->
+<!--                    </a>-->
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark addToCollection"
+                       th:data-uri="@{|/collection/${user.nickname}/${post.id}|}"
+                       th:if="${isSavedMap[post.id] == false}">
+                        <i class="fa-solid fa-bookmark"></i>
                     </a>
-                    <a href="#" class="font-awsome heart">
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark bg-green-500 removeToCollection"
+                       th:data-uri="@{|/removeCollection/${user.nickname}/${post.id}|}"
+                       th:if="${isSavedMap[post.id] == true}">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </a>
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome heart recommend"
+                       th:data-uri="@{|/post/vote/${post.id}/${user.nickname}/${post.userEntity.nickname}|}"
+                       th:if="${isLikedMap[post.id] == false}">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome heart bg-green-500"
+                       th:if="${isLikedMap[post.id] == true}">
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </div>

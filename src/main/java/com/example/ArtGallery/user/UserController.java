@@ -61,6 +61,11 @@ public class UserController {
         UserEntity userEntity = this.userService.getUser(loginUserNick);
         model.addAttribute("user", userEntity);
 
+        // loginUserNick: 게시물 주인
+        // nicknameConfirm: 현재 로그인한 유저의 닉네임
+        // 사용자가 선택한 정렬 기준을 서비스에 전달
+        List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
+
         if (nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
 
         } else {
@@ -74,16 +79,25 @@ public class UserController {
             // 내가 해당 유저를 팔로잉중인지 확인하기 위한 true, false 반환
             boolean isFollowing = followService.isFollowing(loginUser, userEntity);
             model.addAttribute("isFollowing", isFollowing);
+
+            // 해당 게시물에 좋아요, 저장하기를 누른 유저인지 아닌지 판별하여 post별로 Map에 저장
+            Map<Integer, Boolean> isLikedMap = new HashMap<>();
+            Map<Integer, Boolean> isSavedMap = new HashMap<>();
+            if (!sortedPosts.isEmpty()) {
+                for (PostEntity post : sortedPosts) {
+                    boolean isLiked = postService.isLikedByCurrentUser(post.getId(), loginUser.getNickname());
+                    boolean isSaved = userService.checkIfSavedByCurrentUser(loginUser.getNickname(), post.getId());
+                    isLikedMap.put(post.getId(), isLiked);
+                    isSavedMap.put(post.getId(), isSaved);
+                }
+            }
+            model.addAttribute("isLikedMap", isLikedMap);
+            model.addAttribute("isSavedMap", isSavedMap);
         }
 
         // 닉네임을 기준으로 해당 닉네임을 갖는 사용자의 게시물만 가져옴
 //        List<PostEntity> postEntityList = this.postService.getPostsByNickname(loginUserNick);
 
-
-        // loginUserNick: 게시물 주인
-        // nicknameConfirm: 현재 로그인한 유저의 닉네임
-        // 사용자가 선택한 정렬 기준을 서비스에 전달
-        List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
 
         // 뷰에 필요한 데이터 전달
 //        model.addAttribute("postList", sortedPosts);
@@ -142,6 +156,11 @@ public class UserController {
         UserEntity userEntity = this.userService.getUser(loginUserNick);
         model.addAttribute("user", userEntity);
 
+        // loginUserNick: 게시물 주인
+        // nicknameConfirm: 현재 로그인한 유저의 닉네임
+        // 사용자가 선택한 정렬 기준을 서비스에 전달
+        List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
+
         if (nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
 
         } else {
@@ -155,13 +174,21 @@ public class UserController {
             // 내가 해당 유저를 팔로잉중인지 확인하기 위한 true, false 반환
             boolean isFollowing = followService.isFollowing(loginUser, userEntity);
             model.addAttribute("isFollowing", isFollowing);
+
+            // 해당 게시물에 좋아요, 저장하기를 누른 유저인지 아닌지 판별하여 post별로 Map에 저장
+            Map<Integer, Boolean> isLikedMap = new HashMap<>();
+            Map<Integer, Boolean> isSavedMap = new HashMap<>();
+            if (!sortedPosts.isEmpty()) {
+                for (PostEntity post : sortedPosts) {
+                    boolean isLiked = postService.isLikedByCurrentUser(post.getId(), loginUser.getNickname());
+                    boolean isSaved = userService.checkIfSavedByCurrentUser(loginUser.getNickname(), post.getId());
+                    isLikedMap.put(post.getId(), isLiked);
+                    isSavedMap.put(post.getId(), isSaved);
+                }
+            }
+            model.addAttribute("isLikedMap", isLikedMap);
+            model.addAttribute("isSavedMap", isSavedMap);
         }
-
-        // loginUserNick: 게시물 주인
-        // nicknameConfirm: 현재 로그인한 유저의 닉네임
-        // 사용자가 선택한 정렬 기준을 서비스에 전달
-        List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
-
 
         List<Integer> collectionIds = userService.getUserCollections(loginUserNick);
         List<PostEntity> collectionList = postService.getPostsByCollectionIds(collectionIds);
