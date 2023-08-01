@@ -60,9 +60,10 @@ $(function () {
 function sortPosts() {
    // 1. 선택된 옵션 값 가져오기
    var selectedOption = document.getElementById("sortingOption").value;
+   var category = getCategoryFromURL();
 
    // 2. 새로운 URL 생성
-   var newUrl = "/by_topic?sortingOption=" + selectedOption;
+   var newUrl = "/by_topic/" + category + "?sortingOption=" + selectedOption;
 
    // 3. URL로 이동
    location.href = newUrl;
