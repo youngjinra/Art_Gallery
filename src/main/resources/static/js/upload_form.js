@@ -29,77 +29,77 @@ $(function () {
   triggerFileInput();
 });
 
-    // 이미지 미리보기 함수
-    function setThumbnail(event) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            img.setAttribute("class", "col-lg-6");
-            img.setAttribute("id", "myImage");
+// 이미지 미리보기 함수
+function setThumbnail(event) {
+  var reader = new FileReader();
+  reader.onload = function (event) {
+    var img = document.createElement("img");
+    img.setAttribute("src", event.target.result);
+    img.setAttribute("class", "col-lg-6");
+    img.setAttribute("id", "myImage");
 
-            var existingImage = document.getElementById("myImage");
-            if (existingImage) {
-                existingImage.remove();
-            }
-
-            document.querySelector("div#image_container").appendChild(img);
-        };
-
-        reader.readAsDataURL(event.target.files[0]);
+    var existingImage = document.getElementById("myImage");
+    if (existingImage) {
+      existingImage.remove();
     }
+
+    document.querySelector("div#image_container").appendChild(img);
+  };
+
+  reader.readAsDataURL(event.target.files[0]);
+}
 
 // 해시태그 기능 스크립트
-  const hashtagsInput = document.getElementById("hashtags-input");
-  const hashtagsHidden = document.getElementById("hashtags-hidden");
-  const addedHashtags = new Set();
+const hashtagsInput = document.getElementById("hashtags-input");
+const hashtagsHidden = document.getElementById("hashtags-hidden");
+const addedHashtags = new Set();
 
-  hashtagsInput.addEventListener("keydown", addHashtagInput);
+hashtagsInput.addEventListener("keydown", addHashtagInput);
 
-  function addHashtagInput(event) {
-    if (event.key === "Enter" || event.key === " ") {
-      const input = document.getElementById("hashtags-input");
-      const hashtag = input.value.trim();
+function addHashtagInput(event) {
+  if (event.key === "Enter" || event.key === " ") {
+    const input = document.getElementById("hashtags-input");
+    const hashtag = input.value.trim();
 
-      // 추가된 해시태그의 개수를 체크
-      const currentHashtagsCount = addedHashtags.size;
+    // 추가된 해시태그의 개수를 체크
+    const currentHashtagsCount = addedHashtags.size;
 
-      if (hashtag.length > 0 && addedHashtags.size < 8) {
-        const container = document.getElementById("hashtags-display");
-        const tagDiv = document.createElement("div");
-        tagDiv.classList.add("tag", "flex", "gap-1");
-        tagDiv.textContent = "#" + hashtag;
+    if (hashtag.length > 0 && addedHashtags.size < 8) {
+      const container = document.getElementById("hashtags-display");
+      const tagDiv = document.createElement("div");
+      tagDiv.classList.add("tag", "flex", "gap-1");
+      tagDiv.textContent = "#" + hashtag;
 
-        const xIcon = document.createElement("span");
-        xIcon.innerHTML = "<i class='fa-solid fa-xmark'></i>";
+      const xIcon = document.createElement("span");
+      xIcon.innerHTML = "<i class='fa-solid fa-xmark'></i>";
 
-        tagDiv.appendChild(xIcon);
-        container.appendChild(tagDiv);
+      tagDiv.appendChild(xIcon);
+      container.appendChild(tagDiv);
 
-        // 입력란 초기화
-        input.value = "";
+      // 입력란 초기화
+      input.value = "";
 
-        // 숨겨진 input 태그에 값을 추가
-        addedHashtags.add(hashtag);
-        hashtagsHidden.value = Array.from(addedHashtags).join(",");
+      // 숨겨진 input 태그에 값을 추가
+      addedHashtags.add(hashtag);
+      hashtagsHidden.value = Array.from(addedHashtags).join(",");
 
-        // i태그 클릭 이벤트 추가
-        xIcon.addEventListener("click", function() {
-          tagDiv.remove(); // 클릭한 해시태그 삭제
-          addedHashtags.delete(hashtag); // Set에서도 삭제
-          hashtagsHidden.value = Array.from(addedHashtags).join(","); // 숨겨진 input 업데이트
-        });
-      }
-      event.preventDefault(); // 엔터나 스페이스바를 입력해도 폼이 전송되는 것을 방지
+      // i태그 클릭 이벤트 추가
+      xIcon.addEventListener("click", function () {
+        tagDiv.remove(); // 클릭한 해시태그 삭제
+        addedHashtags.delete(hashtag); // Set에서도 삭제
+        hashtagsHidden.value = Array.from(addedHashtags).join(","); // 숨겨진 input 업데이트
+      });
     }
+    event.preventDefault(); // 엔터나 스페이스바를 입력해도 폼이 전송되는 것을 방지
   }
+}
 
-  function togglePriceInput(isPaid) {
-      const priceInput = document.getElementById('price');
-      priceInput.disabled = !isPaid;
-    }
+function togglePriceInput(isPaid) {
+  const priceInput = document.getElementById('price');
+  priceInput.disabled = !isPaid;
+}
 
-document.getElementById("createSubmit").addEventListener("submit", function(event) {
+document.getElementById("createSubmit").addEventListener("submit", function (event) {
   const currentHashtagsCount = addedHashtags.size;
 
   if (currentHashtagsCount === 0) {

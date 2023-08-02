@@ -88,26 +88,26 @@ function sortPosts() {
 
 // 서버 응답이 필요 없고 즉시 페이지를 새로고침하고 싶다면
 function sortPosts() {
-   // 1. 선택된 옵션 값 가져오기
-   var selectedOption = document.getElementById("sortingOption").value;
+  // 1. 선택된 옵션 값 가져오기
+  var selectedOption = document.getElementById("sortingOption").value;
 
-   // 2. 새로운 URL 생성
-   var newUrl = "/?sortingOption=" + selectedOption;
+  // 2. 새로운 URL 생성
+  var newUrl = "/?sortingOption=" + selectedOption;
 
-   // 3. URL로 이동
-   location.href = newUrl;
+  // 3. URL로 이동
+  location.href = newUrl;
 }
 
 
 // 좋아요 확인창
 const recommend_elements = document.getElementsByClassName("recommend");
-Array.from(recommend_elements).forEach(function(element) {
-    element.addEventListener('click', function() {
-        const confirmed = confirm("좋아요를 누르시겠습니까?");
-        if (confirmed) {
-//            alert("10 point가 적립되었습니다.");
-            location.href = this.dataset.uri;
-        }
-    });
+Array.from(recommend_elements).forEach(function (element) {
+  element.addEventListener('click', function () {
+    const confirmed = confirm("좋아요를 누르시겠습니까?");
+    if (confirmed) {
+      //            alert("10 point가 적립되었습니다.");
+      location.href = this.dataset.uri;
+    }
+  });
 });
 

@@ -1,71 +1,71 @@
 function textarea_resize() {
-  $(".comment_body_textarea").on("keydown keyup", function () {
-    $(this).height(1).height($(this).prop("scrollHeight"));
-  });
+    $(".comment_body_textarea").on("keydown keyup", function () {
+        $(this).height(1).height($(this).prop("scrollHeight"));
+    });
 }
 
 function dot_click() {
-  $(".update_delete_wrap .dot").click(function (event) {
-    event.stopPropagation();
-    var target = $(this).siblings(".update_delete");
-    target.toggleClass("hidden");
-  });
+    $(".update_delete_wrap .dot").click(function (event) {
+        event.stopPropagation();
+        var target = $(this).siblings(".update_delete");
+        target.toggleClass("hidden");
+    });
 }
 
 // 문서(document) 클릭 시, .update_delete 요소를 숨기는 함수
 function hideUpdateDeleteOnClickDocument() {
-  $(document).click(function (event) {
-    var target = $(".update_delete");
-    if (!target.is(event.target) && target.has(event.target).length === 0) {
-      target.addClass("hidden");
-    }
-  });
+    $(document).click(function (event) {
+        var target = $(".update_delete");
+        if (!target.is(event.target) && target.has(event.target).length === 0) {
+            target.addClass("hidden");
+        }
+    });
 }
 
 function replies_box_ivent() {
-  $(".reply").click(function () {
-    var repliesBox = $(this).closest(".particle").find(".replies_box");
-    repliesBox.toggleClass("hidden");
-    $(".replies_box")
-      .not(repliesBox)
-      .addClass("hidden");
-  });
+    $(".reply").click(function () {
+        var repliesBox = $(this).closest(".particle").find(".replies_box");
+        repliesBox.toggleClass("hidden");
+        $(".replies_box")
+            .not(repliesBox)
+            .addClass("hidden");
+    });
 }
 
 function side_info_2_click() {
-  $("body .side_info_imoji").click(function () {
-    $(this).addClass("hidden");
-  });
+    $("body .side_info_imoji").click(function () {
+        $(this).addClass("hidden");
+    });
 }
 
-    // 삭제 버튼을 클릭했을 때 호출되는 함수
-    $('.delete_btn_2').on('click', function () {
-        var postId = $(this).find('.trash').data('post-id'); // 해당 게시물의 ID 가져오기
+// 삭제 버튼을 클릭했을 때 호출되는 함수
+$('.delete_btn_2').on('click', function () {
+    var postId = $(this).find('.trash').data('post-id'); // 해당 게시물의 ID 가져오기
 
-        // 게시물 삭제 전에 사용자에게 확인을 받는다.
-        var confirmDelete = confirm('게시물을 삭제하시겠습니까?');
-        if (!confirmDelete) {
-            return; // 사용자가 취소하면 삭제 동작을 수행하지 않음.
+    // 게시물 삭제 전에 사용자에게 확인을 받는다.
+    var confirmDelete = confirm('게시물을 삭제하시겠습니까?');
+    if (!confirmDelete) {
+        return; // 사용자가 취소하면 삭제 동작을 수행하지 않음.
+    }
+
+    // 게시물 삭제 요청을 보내는 API 호출
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/post/delete/' + postId, // 게시물 삭제 API 엔드포인트로 변경해야 함
+        success: function (data) {
+            // 삭제 성공 시, 원하는 동작 수행 (예: 해당 게시물을 화면에서 제거하는 등)
+            alert("게시물 삭제 성공");
+            history.back(); // 이전 페이지로 돌아감
+            console.log('게시물 삭제 성공');
+        },
+        error: function (error) {
+            // 삭제 실패 시, 원하는 동작 수행
+            alert("게시물 삭제 실패");
+            history.back(); // 이전 페이지로 돌아감
+            console.error('게시물 삭제 실패');
         }
-
-        // 게시물 삭제 요청을 보내는 API 호출
-        $.ajax({
-            type: 'DELETE',
-            url: '/api/post/delete/' + postId, // 게시물 삭제 API 엔드포인트로 변경해야 함
-            success: function (data) {
-                // 삭제 성공 시, 원하는 동작 수행 (예: 해당 게시물을 화면에서 제거하는 등)
-                alert("게시물 삭제 성공");
-                history.back(); // 이전 페이지로 돌아감
-                console.log('게시물 삭제 성공');
-            },
-            error: function (error) {
-                // 삭제 실패 시, 원하는 동작 수행
-                alert("게시물 삭제 실패");
-                history.back(); // 이전 페이지로 돌아감
-                console.error('게시물 삭제 실패');
-            }
-        });
     });
+});
 
 // 댓글 및 답글 유효성 검사 시작
 function validateAndSubmitCommentForm(event) {
@@ -87,8 +87,8 @@ function validateAndSubmitReplyForm(event) {
 }
 
 // 관련 이미지 '+' 검색페이지 이동
-$(function() {
-    $(".plus_btn").click(function(e) {
+$(function () {
+    $(".plus_btn").click(function (e) {
         e.preventDefault();
 
         var hashtagsStr = $(this).data("hashtags"); // data-hashtags 값을 가져옴
@@ -112,7 +112,7 @@ for (var i = 0; i < replyForms.length; i++) {
 
 // 댓글 및 답글 삭제부분
 function delete_reply(dataUri) {
-// 수정: 댓글 ID 파라미터를 함수로 전달 받음
+    // 수정: 댓글 ID 파라미터를 함수로 전달 받음
     console.log(dataUri);
     let commentId = dataUri.match(/\/comment\/delete\/[^/]+\/[^/]+\/(\d+)/)[1];
     console.log("Comment ID:" + commentId);
@@ -129,18 +129,18 @@ function delete_reply(dataUri) {
             async: true,
             dataType: "json",
             data: dataToSend, // 요청에 데이터 추가
-            success: function(data) {
+            success: function (data) {
                 alert("성공했습니다.");
 
                 // 이벤트 발생 시점의 스크롤 위치 저장
-                $(window).on('scroll', function() {
-                  sessionStorage.setItem('scrollPosition', window.scrollY);
+                $(window).on('scroll', function () {
+                    sessionStorage.setItem('scrollPosition', window.scrollY);
                 });
 
                 // 페이지 새로고침
                 window.location.reload();
-              },
-            error: function(e) {
+            },
+            error: function (e) {
                 console.log("AJAX 요청 실패:", e);
                 alert("비정상적인 접근입니다. 다시 시도해주십시오.");
             }
@@ -149,17 +149,17 @@ function delete_reply(dataUri) {
 }
 
 $(function () {
-  textarea_resize();
-  side_info_2_click();
-  dot_click();
-  hideUpdateDeleteOnClickDocument();
-  replies_box_ivent();
+    textarea_resize();
+    side_info_2_click();
+    dot_click();
+    hideUpdateDeleteOnClickDocument();
+    replies_box_ivent();
 });
 
 // 좋아요 확인창
 const recommend_elements = document.getElementsByClassName("recommend");
-Array.from(recommend_elements).forEach(function(element) {
-    element.addEventListener('click', function() {
+Array.from(recommend_elements).forEach(function (element) {
+    element.addEventListener('click', function () {
         const confirmed = confirm("좋아요를 누르시겠습니까?");
         if (confirmed) {
             alert("10 point가 적립되었습니다.");
@@ -182,31 +182,31 @@ function downloadImage() {
     const postId = document.querySelector('.donwload').dataset.postId;
     const encodedPostId = encodeURIComponent(postId); // postId를 인코딩
     incrementPostDownloads(encodedPostId);
-  }
+}
 
-  function getFileNameFromURL(url) {
+function getFileNameFromURL(url) {
     const urlParts = url.split('/');
     return urlParts[urlParts.length - 1];
-  }
+}
 
 // 다운로드 클릭시 ajax요청 메서드
 function incrementPostDownloads(postId) {
-    fetch("/post/incrementDownloads/" + postId , {
+    fetch("/post/incrementDownloads/" + postId, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
-        if (response.ok) {
-            console.log('다운로드 횟수 증가 성공');
-        } else {
-            console.error('다운로드 횟수 증가 실패');
-        }
-    })
-    .catch(error => {
-        console.error('다운로드 횟수 증가 중 오류 발생:', error);
-    });
+        .then(response => {
+            if (response.ok) {
+                console.log('다운로드 횟수 증가 성공');
+            } else {
+                console.error('다운로드 횟수 증가 실패');
+            }
+        })
+        .catch(error => {
+            console.error('다운로드 횟수 증가 중 오류 발생:', error);
+        });
 }
 
 // 포인트 결제
@@ -230,26 +230,26 @@ function purchaseImage() {
         },
         body: JSON.stringify(requestData)
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); // 성공 시 JSON 데이터를 파싱하여 반환
-        } else {
-            throw new Error('Network response was not ok');
-        }
-    })
-    .then(result => {
-        // 서버로부터 받은 결과 데이터(result)를 처리
-        if (result) {
-            // 결제가 성공한 경우
-            alert("결제 성공!");
-            location.reload();
-        } else {
-            // 결제가 실패한 경우 (포인트 부족 등)
-            alert("결제에 실패하였습니다. 잔여 포인트를 확인해주세요.");
-        }
-    })
-    .catch(error => {
-        alert("서버와의 통신 중에 오류가 발생하였습니다.");
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // 성공 시 JSON 데이터를 파싱하여 반환
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .then(result => {
+            // 서버로부터 받은 결과 데이터(result)를 처리
+            if (result) {
+                // 결제가 성공한 경우
+                alert("결제 성공!");
+                location.reload();
+            } else {
+                // 결제가 실패한 경우 (포인트 부족 등)
+                alert("결제에 실패하였습니다. 잔여 포인트를 확인해주세요.");
+            }
+        })
+        .catch(error => {
+            alert("서버와의 통신 중에 오류가 발생하였습니다.");
+        });
 }
 

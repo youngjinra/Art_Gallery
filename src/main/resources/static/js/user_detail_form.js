@@ -74,38 +74,38 @@ function updete_delete() {
   });
 }
 
-    // 삭제 버튼을 클릭했을 때 호출되는 함수
-    $('.delete_btn').on('click', function () {
-        var postId = $(this).find('.fa-trash').data('post-id'); // 해당 게시물의 ID 가져오기
+// 삭제 버튼을 클릭했을 때 호출되는 함수
+$('.delete_btn').on('click', function () {
+  var postId = $(this).find('.fa-trash').data('post-id'); // 해당 게시물의 ID 가져오기
 
-        // 게시물 삭제 전에 사용자에게 확인을 받는다.
-        var confirmDelete = confirm('게시물을 삭제하시겠습니까?');
-        if (!confirmDelete) {
-            return; // 사용자가 취소하면 삭제 동작을 수행하지 않음.
-        }
+  // 게시물 삭제 전에 사용자에게 확인을 받는다.
+  var confirmDelete = confirm('게시물을 삭제하시겠습니까?');
+  if (!confirmDelete) {
+    return; // 사용자가 취소하면 삭제 동작을 수행하지 않음.
+  }
 
-        // 게시물 삭제 요청을 보내는 API 호출
-        $.ajax({
-            type: 'DELETE',
-            url: '/api/post/delete/' + postId, // 게시물 삭제 API 엔드포인트로 변경해야 함
-            success: function (data) {
-                // 삭제 성공 시, 원하는 동작 수행 (예: 해당 게시물을 화면에서 제거하는 등)
-                alert("게시물 삭제 성공");
-                location.reload();
-                console.log('게시물 삭제 성공');
-            },
-            error: function (error) {
-                // 삭제 실패 시, 원하는 동작 수행
-                alert("게시물 삭제 실패");
-                location.reload();
-                console.error('게시물 삭제 실패');
-            }
-        });
-    });
+  // 게시물 삭제 요청을 보내는 API 호출
+  $.ajax({
+    type: 'DELETE',
+    url: '/api/post/delete/' + postId, // 게시물 삭제 API 엔드포인트로 변경해야 함
+    success: function (data) {
+      // 삭제 성공 시, 원하는 동작 수행 (예: 해당 게시물을 화면에서 제거하는 등)
+      alert("게시물 삭제 성공");
+      location.reload();
+      console.log('게시물 삭제 성공');
+    },
+    error: function (error) {
+      // 삭제 실패 시, 원하는 동작 수행
+      alert("게시물 삭제 실패");
+      location.reload();
+      console.error('게시물 삭제 실패');
+    }
+  });
+});
 
 $(function () {
   PageLayout__init();
-//  Click__init();
+  //  Click__init();
   TopBar__init();
   Member__click();
   updete_delete();
@@ -136,10 +136,10 @@ $(function () {
 
 
 function sortPosts2() {
-   var selectedOption = document.getElementById("sortingOption").value;
-   var newUrl = "/user/detail_form/" + postNickname + "?sortingOption=" + selectedOption;
+  var selectedOption = document.getElementById("sortingOption").value;
+  var newUrl = "/user/detail_form/" + postNickname + "?sortingOption=" + selectedOption;
 
-   location.href = newUrl;
+  location.href = newUrl;
 }
 
 
@@ -159,55 +159,55 @@ function sortPosts2() {
 //    }
 //}
 
-document.getElementById("collectionLink").addEventListener("click", function(event) {
-    event.preventDefault(); // 이벤트의 기본 동작 방지 (이 경우 링크의 클릭 동작 방지)
+document.getElementById("collectionLink").addEventListener("click", function (event) {
+  event.preventDefault(); // 이벤트의 기본 동작 방지 (이 경우 링크의 클릭 동작 방지)
 
-    var imageList = document.getElementById("imageList");
-    var collectionList = document.getElementById("collectionList");
-    var currentUrl = window.location.href;
-    var isCollectionVisible = currentUrl.includes("/collection");
+  var imageList = document.getElementById("imageList");
+  var collectionList = document.getElementById("collectionList");
+  var currentUrl = window.location.href;
+  var isCollectionVisible = currentUrl.includes("/collection");
 
-    var postNickname = $(this).data('post-nick');
+  var postNickname = $(this).data('post-nick');
 
-    if (!isCollectionVisible) {
-        $.ajax({
-            type: 'GET',
-            url: '/user/detail_form/' + postNickname + '/collection',
-            success: function (data) {
-                window.location.href = '/user/detail_form/' + postNickname + '/collection';
-            },
-            error: function (error) {
+  if (!isCollectionVisible) {
+    $.ajax({
+      type: 'GET',
+      url: '/user/detail_form/' + postNickname + '/collection',
+      success: function (data) {
+        window.location.href = '/user/detail_form/' + postNickname + '/collection';
+      },
+      error: function (error) {
 
-            }
-        });
-        document.getElementById('sortingOption').style.display = 'none';
-    } else {
-        var newUrl = currentUrl.replace("/collection", "");
-        window.location.href = newUrl;
-    }
+      }
+    });
+    document.getElementById('sortingOption').style.display = 'none';
+  } else {
+    var newUrl = currentUrl.replace("/collection", "");
+    window.location.href = newUrl;
+  }
 });
 
 
-window.onload = function() {
-    var currentUrl = window.location.href;
-    var isCollectionVisible = currentUrl.includes("/collection");
-    var sortingOption = document.getElementById("sortingOption");
+window.onload = function () {
+  var currentUrl = window.location.href;
+  var isCollectionVisible = currentUrl.includes("/collection");
+  var sortingOption = document.getElementById("sortingOption");
 
-    if (isCollectionVisible) {
-        sortingOption.style.display = "none";
-    } else {
-        sortingOption.style.display = "block";
-    }
+  if (isCollectionVisible) {
+    sortingOption.style.display = "none";
+  } else {
+    sortingOption.style.display = "block";
+  }
 }
 
 // 좋아요 확인창
 const recommend_elements = document.getElementsByClassName("recommend");
-Array.from(recommend_elements).forEach(function(element) {
-    element.addEventListener('click', function() {
-        const confirmed = confirm("좋아요를 누르시겠습니까?");
-        if (confirmed) {
-            alert("10 point가 적립되었습니다.");
-            location.href = this.dataset.uri;
-        }
-    });
+Array.from(recommend_elements).forEach(function (element) {
+  element.addEventListener('click', function () {
+    const confirmed = confirm("좋아요를 누르시겠습니까?");
+    if (confirmed) {
+      alert("10 point가 적립되었습니다.");
+      location.href = this.dataset.uri;
+    }
+  });
 });
