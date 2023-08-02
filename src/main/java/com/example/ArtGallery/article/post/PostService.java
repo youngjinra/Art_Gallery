@@ -330,6 +330,11 @@ public class PostService {
     public void deletePost(int postId) {
         Optional<PostEntity> postEntity = this.postRepository.findById(postId);
         PostEntity post = postEntity.get();
+        UserEntity user = post.getUserEntity(); // 게시물 작성자
+
+        // 게시물 ID를 유저의 컬렉션에서 제거
+        user.getCollection().removeIf(collectionId -> collectionId == postId);
+        this.userRepository.save(user); // 컬렉션 업데이트
 
         post.setHashtags(null);
         this.postRepository.delete(post);
