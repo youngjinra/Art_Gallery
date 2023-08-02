@@ -287,11 +287,6 @@ body .sign-in:hover {
   font-size: 1.1rem;
 }
 
-/* .side_info_2 */
-body .side_info_imoji:hover {
-  color: rgb(52, 211, 153);
-}
-
 /* img_view */
 .img_view .img_box {
   width: 380px;
@@ -477,43 +472,16 @@ body .side_info_imoji:hover {
   .section-1 .grid-item {
     width: calc(100% / 3);
   }
-  .side_info {
-    display: none !important;
-  }
-  body .side_info_2 {
-    display: flex;
-    margin-top: 24px;
-  }
 }
 
 @media (max-width: 799px) and (min-width: 600px) {
   .section-1 .grid-item {
     width: calc(100% / 2);
   }
-  body .side_info {
-    display: none;
-  }
-  body .side_info_2 {
-    display: flex;
-    gap: 24px;
-    padding: 0 140px;
-    font-size: 0.85rem;
-    margin-top: -60px;
-  }
 }
 
 @media (max-width: 599px) {
   .section-1 .grid-item {
     width: calc(100% / 1);
-  }
-  body .side_info {
-    display: none !important;
-  }
-  body .side_info_2 {
-    display: flex;
-    gap: 20px !important;
-    padding: 0 100px;
-    font-size: 0.7rem;
-    margin-top: -100px;
   }
 }

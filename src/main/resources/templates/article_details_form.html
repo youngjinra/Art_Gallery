@@ -208,64 +208,6 @@
     </div>
 </div>
 
-<!-- side_info_2 -->
-<div class="side_info_2 flex flex-col px-52 hidden">
-    <div class="flex gap-28">
-        <div class="bottom_content flex flex-col gap-3">
-            <div class="subject flex flex-col gap-1">
-                <span class="title">제목</span>
-                <span class="gr-300" th:text="${post.subject}"></span>
-            </div>
-            <div class="content_sm flex flex-col gap-1">
-                <span class="title">내용</span>
-                <span class="gr-300" th:text="${post.content}"></span>
-            </div>
-        </div>
-        <div class="specific_box flex flex-col">
-            <div class="title">갤러리 세부정보</div>
-            <div class="section_1 flex flex-col gap-3 mt-3">
-                <div class="row row_1 flex">
-                    <div class="view flex-1 flex flex-col gap-1 flex-1">
-                        <i class="fa-solid fa-eye"></i>
-                        <span class="view_count text-xs font-bold" th:text="${post.postView}"></span>
-                        <span class="gr-300 text-xs">뷰</span>
-                    </div>
-                    <div class="view flex-1 flex flex-col gap-1 flex-1">
-                        <i class="fa-solid fa-heart"></i>
-                        <span class="view_count text-xs font-bold" th:text="${#lists.size(post.voter)}"></span>
-                        <span class="gr-300 text-xs">좋아요</span>
-                    </div>
-                </div>
-                <div class="row row_2 flex">
-                    <div class="view flex-1 flex flex-col gap-1">
-                        <i class="fa-solid fa-download"></i>
-                        <span class="view_count text-xs font-bold" th:text="${post.postDownloads}"></span>
-                        <span class="gr-300 text-xs">다운로드</span>
-                    </div>
-                    <div class="view flex-1 flex flex-col gap-1">
-                        <i class="fa-solid fa-bookmark"></i>
-                        <span class="view_count text-xs font-bold" th:text="${savedUserCount}"></span>
-                        <span class="gr-300 text-xs">저장</span>
-                    </div>
-                </div>
-            </div>
-            <div class="create_date text-xs gr-300 mt-4" th:text="|게시일 : ${post.createDate}|">
-            </div>
-        </div>
-    </div>
-    <div class="tag_box mt-12">
-        <div class="title flex justify-between">
-            <span>태그</span>
-            <i class="fa-solid fa-flag text-xs self-center gr-300"></i>
-        </div>
-        <div class="tag_box_body flex gap-2 mt-2">
-            <div th:each="hashtag : ${hashtags}">
-                <span th:text=${hashtag}></span>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- img_view -->
 <div class="img_box_wrapper container">
     <hr class="my-8">
