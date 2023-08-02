@@ -73,6 +73,7 @@ public class FileService {
         fileEntity.setUuid(uuid);
         fileEntity.setFileName("fileName.jpg");
         fileEntity.setFilePath("C:/IT/DB/" + uuid + "_fileName.jpg");
+
         return fileEntity;
     }
 }
