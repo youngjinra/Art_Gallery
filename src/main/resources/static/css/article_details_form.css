@@ -243,9 +243,12 @@ body .sign-in:hover {
   color: rgb(52, 211, 153);
   animation: shake 0.5s ease-in-out;
 }
-.content .main_img_box .content .main_img_box img {
-  object-fit: cover;
-  object-position: center center;
+
+.content .main_img_box img {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* side_info__specific_box */
