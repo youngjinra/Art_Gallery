@@ -216,7 +216,7 @@ body .sign-in:hover {
 
 /* main__img_box */
 .content .main_img_box {
-  height: 528px;
+  height: 528px; /* 원하는 높이로 유지하시기 바랍니다. */
   overflow: hidden;
   width: min(6000px, 100vw, 100%);
   max-height: 4000px;
@@ -243,9 +243,11 @@ body .sign-in:hover {
   color: rgb(52, 211, 153);
   animation: shake 0.5s ease-in-out;
 }
-.content .main_img_box .content .main_img_box img {
-  object-fit: cover;
-  object-position: center center;
+.content .main_img_box img {
+  object-fit: contain; /* 이미지를 부모 요소의 높이에 맞게 축소하되, 가로 비율 유지 */
+  object-position: center; /* 이미지를 세로 가운데에 위치시킴 */
+  width: 100%; /* 이미지의 너비를 100%로 설정하여 가로 비율 유지 */
+  height: 100%; /* 이미지의 높이를 100%로 설정하여 세로 비율 유지 */
 }
 
 /* side_info__specific_box */
