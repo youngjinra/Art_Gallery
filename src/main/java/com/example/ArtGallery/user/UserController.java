@@ -83,21 +83,23 @@ public class UserController {
             // 해당 게시물에 좋아요, 저장하기를 누른 유저인지 아닌지 판별하여 post별로 Map에 저장
             Map<Integer, Boolean> isLikedMap = new HashMap<>();
             Map<Integer, Boolean> isSavedMap = new HashMap<>();
+            Map<Integer, Boolean> isCurrentUserMap = new HashMap<>();
             if (!sortedPosts.isEmpty()) {
                 for (PostEntity post : sortedPosts) {
                     boolean isLiked = postService.isLikedByCurrentUser(post.getId(), loginUser.getNickname());
                     boolean isSaved = userService.checkIfSavedByCurrentUser(loginUser.getNickname(), post.getId());
                     isLikedMap.put(post.getId(), isLiked);
                     isSavedMap.put(post.getId(), isSaved);
+
+                    // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
+                    boolean isCurrentUser = nicknameConfirm.equals(post.getUserEntity().getNickname());
+                    isCurrentUserMap.put(post.getId(), isCurrentUser);
                 }
             }
+            model.addAttribute("isCurrentUserPost", isCurrentUserMap);
             model.addAttribute("isLikedMap", isLikedMap);
             model.addAttribute("isSavedMap", isSavedMap);
         }
-
-        // 닉네임을 기준으로 해당 닉네임을 갖는 사용자의 게시물만 가져옴
-//        List<PostEntity> postEntityList = this.postService.getPostsByNickname(loginUserNick);
-
 
         // 뷰에 필요한 데이터 전달
 //        model.addAttribute("postList", sortedPosts);
@@ -106,15 +108,6 @@ public class UserController {
 
         int totalViews = 0;
         int totalLikes = 0;
-
-/*        for(PostEntity post : postEntityList){
-            totalViews += post.getPostView();
-            totalLikes += post.getVoter().size();
-        }
-
-        model.addAttribute("postList", postEntityList);
-        model.addAttribute("postTotalView", totalViews);
-        model.addAttribute("postTotalLikes", totalLikes);*/
 
         // list 수정중
         for (PostEntity post : sortedPosts) {
@@ -160,12 +153,12 @@ public class UserController {
         // nicknameConfirm: 현재 로그인한 유저의 닉네임
         // 사용자가 선택한 정렬 기준을 서비스에 전달
         List<PostEntity> sortedPosts = postService.getSortedPosts_userdetail(sortingOption, loginUserNick);
+        List<Integer> collectionIds = userService.getUserCollections(loginUserNick);
+        List<PostEntity> collectionList = postService.getPostsByCollectionIds(collectionIds);
 
         if (nicknameConfirm == null) {   // 비로그인 유저들을 위한 조건 추가
 
         } else {
-            // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
-
             model.addAttribute("isCurrentUser", nicknameConfirm.equals(loginUserNick));
 
             UserEntity loginUser = this.userService.getUser(nicknameConfirm);
@@ -178,36 +171,26 @@ public class UserController {
             // 해당 게시물에 좋아요, 저장하기를 누른 유저인지 아닌지 판별하여 post별로 Map에 저장
             Map<Integer, Boolean> isLikedMap = new HashMap<>();
             Map<Integer, Boolean> isSavedMap = new HashMap<>();
+            Map<Integer, Boolean> isCurrentUserMap = new HashMap<>();
             if (!sortedPosts.isEmpty()) {
-                for (PostEntity post : sortedPosts) {
+                for (PostEntity post : collectionList) {
                     boolean isLiked = postService.isLikedByCurrentUser(post.getId(), loginUser.getNickname());
                     boolean isSaved = userService.checkIfSavedByCurrentUser(loginUser.getNickname(), post.getId());
                     isLikedMap.put(post.getId(), isLiked);
                     isSavedMap.put(post.getId(), isSaved);
+
+                    // 현재 로그인한 유저의 닉네임과 해당 프로필의 유저의 닉네임을 비교해서 isCurrentUser에 true, false를 반환
+                    boolean isCurrentUser = nicknameConfirm.equals(post.getUserEntity().getNickname());
+                    isCurrentUserMap.put(post.getId(), isCurrentUser);
                 }
             }
+            model.addAttribute("isCurrentUserPost", isCurrentUserMap);
             model.addAttribute("isLikedMap", isLikedMap);
             model.addAttribute("isSavedMap", isSavedMap);
         }
 
-        List<Integer> collectionIds = userService.getUserCollections(loginUserNick);
-        List<PostEntity> collectionList = postService.getPostsByCollectionIds(collectionIds);
-        model.addAttribute("collectionList", collectionList);
-
-
         int totalViews = 0;
         int totalLikes = 0;
-
-
-/*       for(PostEntity post : postEntityList){
-            totalViews += post.getPostView();
-            totalLikes += post.getVoter().size();
-        }
-
-        model.addAttribute("postList", postEntityList);
-        model.addAttribute("postTotalView", totalViews);
-        model.addAttribute("postTotalLikes", totalLikes);*/
-
 
         // list 수정중
         for (PostEntity post : sortedPosts) {

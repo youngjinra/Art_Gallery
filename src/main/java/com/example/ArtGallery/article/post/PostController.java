@@ -116,7 +116,7 @@ public class PostController {
     // image 반환하기
     @GetMapping(value = "/post/image/{uuid}/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> userSearch(@PathVariable("uuid") String uuid, @PathVariable("fileName") String fileName ) throws IOException {
-        String imagePath = "D:/springBoot/testDB/" + uuid + "_" + fileName;
+        String imagePath = "C:/IT/DB/" + uuid + "_" + fileName;
         Path imageFilePath = Paths.get(imagePath);
         byte[] imageBytes = Files.readAllBytes(imageFilePath);
 

@@ -143,21 +143,50 @@ function sortPosts2() {
 }
 
 
-function toggleLists() {
+//function toggleLists() {
+//    var imageList = document.getElementById("imageList");
+//    var collectionList = document.getElementById("collectionList");
+//    var currentUrl = window.location.href;
+//    var isCollectionVisible = currentUrl.includes("/collection");
+//
+//    if (!isCollectionVisible) {
+//        var newUrl = currentUrl + "/collection";
+//        window.location.href = newUrl;
+//        document.getElementById('sortingOption').style.display = 'none';
+//    } else {
+//        var newUrl = currentUrl.replace("/collection", "");
+//        window.location.href = newUrl;
+//    }
+//}
+
+document.getElementById("collectionLink").addEventListener("click", function(event) {
+    event.preventDefault(); // 이벤트의 기본 동작 방지 (이 경우 링크의 클릭 동작 방지)
+
     var imageList = document.getElementById("imageList");
     var collectionList = document.getElementById("collectionList");
     var currentUrl = window.location.href;
     var isCollectionVisible = currentUrl.includes("/collection");
 
+    var postNickname = $(this).data('post-nick');
+
     if (!isCollectionVisible) {
-        var newUrl = currentUrl + "/collection";
-        window.location.href = newUrl;
+        $.ajax({
+            type: 'GET',
+            url: '/user/detail_form/' + postNickname + '/collection',
+            success: function (data) {
+                window.location.href = '/user/detail_form/' + postNickname + '/collection';
+            },
+            error: function (error) {
+
+            }
+        });
         document.getElementById('sortingOption').style.display = 'none';
     } else {
         var newUrl = currentUrl.replace("/collection", "");
         window.location.href = newUrl;
     }
-}
+});
+
 
 window.onload = function() {
     var currentUrl = window.location.href;

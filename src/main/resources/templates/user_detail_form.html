@@ -101,7 +101,8 @@
                 <span class="body" th:text="${user.userpoint}"></span>
             </div>
             <div class="flex flex-col flex-1 items-center collection">
-                <a href="#" class="head flex gap-2 items-center" onclick="toggleLists()">
+                <a class="head flex gap-2 items-center post_collection" id="collectionLink" style="cursor: pointer;"
+                   th:data-post-nick="${user.nickname}">
                     <i class="fa-solid fa-bookmark"></i>
                     <span>컬렉션</span>
                 </a>
@@ -129,17 +130,14 @@
                     <i class="fa-brands fa-envira"></i>
                 </div>
                 <div class="img_top_function flex gap-2">
-<!--                    <a href="#" class="font-awsome bookmark"> <i class="fa-solid fa-bookmark"></i>-->
-<!--                    </a>-->
-<!--                    <a href="#" class="font-awsome heart">-->
-<!--                        <i class="fa-solid fa-heart"></i>-->
-<!--                    </a>-->
-                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark addToCollection"
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                       class="font-awsome bookmark addToCollection"
                        th:data-uri="@{|/collection/${user.nickname}/${post.id}|}"
                        th:if="${isSavedMap[post.id] == false}">
                         <i class="fa-solid fa-bookmark"></i>
                     </a>
-                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome bookmark bg-green-500 removeToCollection"
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                       class="font-awsome bookmark bg-green-500 removeToCollection"
                        th:data-uri="@{|/removeCollection/${user.nickname}/${post.id}|}"
                        th:if="${isSavedMap[post.id] == true}">
                         <i class="fa-solid fa-bookmark"></i>
@@ -149,7 +147,8 @@
                        th:if="${isLikedMap[post.id] == false}">
                         <i class="fa-solid fa-heart"></i>
                     </a>
-                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);" class="font-awsome heart bg-green-500"
+                    <a sec:authorize="isAuthenticated()" href="javascript: void(0);"
+                       class="font-awsome heart bg-green-500"
                        th:if="${isLikedMap[post.id] == true}">
                         <i class="fa-solid fa-heart"></i>
                     </a>
@@ -166,7 +165,7 @@
                          th:src="@{|/post/image/${post.fileEntity.uuid}/${post.fileEntity.fileName}|}"
                          alt="My Image">
                 </a>
-                <div class="update_delete_wrap" th:if="${isCurrentUser}">
+                <div class="update_delete_wrap" th:if="${isCurrentUserPost[post.id] == true}" sec:authorize="isAuthenticated()">
                     <i class="fa-solid fa-ellipsis text-2xl"></i>
                     <form action="" class="update_delete flex flex-col gap-3 text-xl">
                         <a th:href="@{|/post/modify/${post.id}|}" class="flex gap-2 items-center text-sm update_btn">
@@ -176,13 +175,13 @@
                         <div class="flex gap-2 items-center text-sm delete_btn">
                             <i class="fa-solid fa-trash" th:data-post-id="${post.id}"></i>
                             <span>삭제</span>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 </div>
 
 <!-- 서버에서 계산된 sortingOption의 값을 클라이언트 사이드의 JavaScript 변수에 넣습니다.-->
@@ -204,6 +203,7 @@
     if (!isCollectionVisible) {
         document.getElementById('sortingOption').style.display = 'none';
     }
+
 
 </script>
 <script src="/js/jquery-3.7.0.min.js"></script>
